@@ -15,7 +15,7 @@ library(dplyr)
 library(car)
 library(stargazer)
 library(ggplot2)
-library(gridExtra)
+library(gridExtra) 
 library(knitr)
 library(kableExtra)
 library(RItools) #xBalance
@@ -301,8 +301,6 @@ p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
   guides(color=FALSE) +
   scale_colour_manual(values=c("white", "black"))
-
-
 
 p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
