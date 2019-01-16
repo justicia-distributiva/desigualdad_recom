@@ -251,13 +251,15 @@ texreg::htmlreg(list(e1ad03,e1bd03,e2cd03),
                 custom.model.names = c("Condición A", "Condición B", "Condición C"),
                 caption = "Log(máximo/mínimo)",
                 custom.coef.names = c("(Intercepto)","Tratamiento"),
-                caption.above = TRUE)
+                caption.above = TRUE,
+                file = "log_min_max.doc")
 #Máximos/mínimo sin log ----
 texreg::htmlreg(list(e1ad200,e1bd200,e2cd200), 
                 custom.model.names = c("Condición A", "Condición B", "Condición C"),
                 caption = "(máximo/mínimo) sin log",
                 custom.coef.names = c("(Intercepto)","Tratamiento"),
-                caption.above = TRUE)
+                caption.above = TRUE,
+                file = "slog_min_max.doc")
 ```
 
 ```{r predicted-log(max/min), include=FALSE}
@@ -316,7 +318,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
 library(gridExtra)
 barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3) #Logaritmizado
 
-ggsave("C:/Users/JC/Dropbox/Investigación Trump/presentacion-alas/barplot3.png", barplot2,units = "cm", width = 20,height = 15, dpi = "retina")
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/presentacion-alas/barplot3.png", barplot2,units = "cm", width = 20,height = 15)
 ```
 
 ###Comparación de tratamientos Log(salario máximo/salario mínimo)
@@ -332,7 +334,8 @@ texreg::htmlreg(list(e1ab03,e1ac03,e2bc03),
                 custom.model.names = c("Condición A vs B", "Condición A vs C", "Condición B vs C"),
                 caption = "Log(Ingreso Recomendado)",
                 custom.coef.names = c("(Intercepto)","Tratamiento"),
-                caption.above = TRUE)
+                caption.above = TRUE,
+                file = "compare_treats.doc")
 ```
 
 # Log(Gerente/obrero)
@@ -360,7 +363,8 @@ texreg::htmlreg(list(e1ad04,e1bd04,e2cd04,logOG),
                                       "Tratamiento A",
                                       "Tratamiento B",
                                       "Tratamiento C"),
-                caption.above = TRUE)
+                caption.above = TRUE,
+                file = "C:/Users/JC/Dropbox/Investigacion-Trump/Resultados/tables/log_min_max.xls")
 
 ```
 
@@ -453,7 +457,9 @@ texreg::htmlreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
                 custom.coef.names = c("(Intercepto)","Tratamiento información","Creencia Mundo Justo",
                                       "Centro", "Derecha/Centro Derecha", "Ninguno", "NS/NR", 
                                       "Log(Desigualdad percibida)"),
-                caption.above = TRUE)
+                caption.above = TRUE,
+                reorder.coef = c(2:8,1),
+                file = "C:/Users/JC/Dropbox/Investigacion-Trump/Resultados/tables/log_min_max_controls.xls")
 
 # texreg::texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3), 
 #                 custom.model.names = c("Modelo A", "Controles", "Modelo B","Controles", "Modelo C", "Controles"),
