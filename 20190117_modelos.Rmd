@@ -184,10 +184,12 @@ sjt.itemanalysis(just)
 sjt.fa(data = just)
 #---CFA----
 
-# bjw <- 'just=~JW1+JW2+JW3+JW4+JW5'
+bjw <- 'just=~JW1+JW2+JW3+JW4+JW5'
 bjw <- 'just=~JW2+JW3+JW4+JW5'
 
 # fit <- cfa(model = bjw,data = st,ordered = c("JW1","JW2","JW3","JW4","JW5"))
+fit <- cfa(model = bjw,data = st,ordered = c("JW1","JW2","JW3","JW4","JW5"))
+
 fit <- cfa(model = bjw,data = st,ordered = c("JW2","JW3","JW4","JW5"))
 
 summary(fit, standardized=TRUE)
