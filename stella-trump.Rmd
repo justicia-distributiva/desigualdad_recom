@@ -15,7 +15,7 @@ library(dplyr)
 library(car)
 library(stargazer)
 library(ggplot2)
-library(gridExtra)
+library(gridExtra) 
 library(knitr)
 library(kableExtra)
 library(RItools) #xBalance
@@ -465,14 +465,24 @@ library(texreg)
 texreg::htmlreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
                 custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3","Modelo 4", "Modelo 5", "Modelo 6"),
                 caption = "Log(Gerente/Obrero)",
+<<<<<<< HEAD
                 custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
                                       "Centro", "Derecha", "Ninguno", "No sabe",
                                       "Desigualdad percibida (Log)"),
+=======
+                custom.coef.names = c("(Intercepto)","Tratamiento información","Creencia Mundo Justo",
+                                      "Centro", "Derecha/Centro Derecha", "Ninguno", "NS/NR", 
+                                      "Log(Desigualdad percibida)"),
+>>>>>>> f1d6cd68443eec9156c1fb9af0acfb8ed779bf4a
                 caption.above = TRUE,
                 reorder.coef = c(2:8,1),
                 file = "C:/Users/JC/Dropbox/Investigacion-Trump/Resultados/tables/log_min_max_controls.xls")
 
+<<<<<<< HEAD
 # texreg::texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
+=======
+# texreg::texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3), 
+>>>>>>> f1d6cd68443eec9156c1fb9af0acfb8ed779bf4a
 #                 custom.model.names = c("Modelo A", "Controles", "Modelo B","Controles", "Modelo C", "Controles"),
 #                 caption = "Log(Gerente/Obrero)",
 #                 custom.coef.names = c("(Intercepto)","Tratamiento información","Creencia Mundo Justo",
