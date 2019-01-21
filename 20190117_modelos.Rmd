@@ -31,7 +31,7 @@ library(sjPlot)
 rm(list=ls())
 load("trump2019.Rdata")
 # st <- st %>% na.omit
-st$jus2 <- (st$JW2+st$JW3+st$JW4+st$JW4)/4
+st$jus2 <- (st$JW2+st$JW3+st$JW4+st$JW4)/4 #BJW scale 
 ```
 
 <!-- P40,# Sexo del entrevistado 1= hombre 2 = mujer -->
