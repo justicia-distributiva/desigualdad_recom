@@ -5,7 +5,7 @@ csl: C:/Users/JC/Dropbox/Bibtex/apa6.csl
 
 # Kriss-Stella @Trump2017
 
-Code-Experiment @Trump2017
+Código Experimento @Trump2017
 
 ## Iturra J., Rufs C., Castillo JC.
 * Replicación Experimento Kriss-Stella Trump
