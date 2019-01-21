@@ -12,4 +12,9 @@ Code-Experiment @Trump2017
 * Código de Modelos
 * Código de Plots
 
+
+$$D_1 = \ln\Bigg(\frac{\text{Máximo salario recomendado}}{\text{Mínimo salario recomendado}} \Bigg)$$
+
+
+
 ###Referencias
