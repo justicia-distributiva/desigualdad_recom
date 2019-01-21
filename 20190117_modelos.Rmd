@@ -1,0 +1,202 @@
+---
+title: "Modelos"
+author: "Julio Iturra - jciturra@uc.cl"
+date: "17 de enero de 2019"
+output:
+  pdf_document: default
+header-includes:
+  - \usepackage{booktabs}  
+  - \usepackage{dcolumn}
+  - \usepackage{float} #fijar tabla
+---
+
+```{r library, message=FALSE, warning=FALSE}
+options(scipen=999)
+library(haven)
+library(dplyr)
+library(car)
+library(stargazer)
+library(ggplot2)
+library(gridExtra)
+library(knitr)
+library(kableExtra)
+library(RItools) #xBalance
+library(texreg)
+library(lavaan)
+library(sjPlot)
+
+```
+
+```{r datos, message=FALSE, warning=FALSE, include=FALSE}
+rm(list=ls())
+load("trump2019.Rdata")
+# st <- st %>% na.omit
+st$jus2 <- (st$JW2+st$JW3+st$JW4+st$JW4)/4
+```
+
+<!-- P40,# Sexo del entrevistado 1= hombre 2 = mujer -->
+<!-- P41,# Edad del entrevistado -->
+<!-- P45,# Estado civil -->
+<!-- P44,# Nivel educacional -->
+<!-- P49,# Rango de ingreso total mensual del hogar -->
+<!-- P3,#Posición política -->
+
+
+```{r subset-treatment-groups, message=FALSE, warning=FALSE, include=FALSE, results='asis'}
+#Subset según variable TIPO2 full muestra
+# st <- st %>% filter(reco < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
+tpab2 <- st %>% filter(TIPO2==1 | TIPO2==2) #Subset según TIPO==1 & 2 | A vs B
+tpac2 <- st %>% filter(TIPO2==1 | TIPO2==3) #Subset según TIPO==1 & 3 | A vs C
+tpad2 <- st %>% filter(TIPO2==1 | TIPO2==4) #Subset según TIPO==1 & 3 | A vs D
+tpbc2 <- st %>% filter(TIPO2==2 | TIPO2==3) #Subset según TIPO==1 & 3 | B vs C
+tpbd2 <- st %>% filter(TIPO2==2 | TIPO2==4) #Subset según TIPO==1 & 3 | B vs D
+tpcd2 <- st %>% filter(TIPO2==3 | TIPO2==4) #Subset según TIPO==3 & 4 | C vs D
+
+# tpab2$TIPO2 <- recode(tpab2$TIPO2,"2=0;1=1")  #Recode tratamiento y control: Condción A y Control B| para comparar tratamientos
+# tpac2$TIPO2 <- recode(tpac2$TIPO2,"3=0;1=1")  #Recode tratamiento y control: Condción A y Control C| para comparar tratamientos
+# tpbc2$TIPO2 <- recode(tpbc2$TIPO2,"2=0;3=1")  #Recode tratamiento y control: Condción C y Control B| para comparar tratamientos
+
+tpad2$TIPO2 <- recode(tpad2$TIPO2,"4=0;1=1") #Recode tratamiento y control: Condción A y Control D| para testear tratamiento
+tpbd2$TIPO2 <- recode(tpbd2$TIPO2,"4=0;2=1") #Recode tratamiento y control: Condción B y Control D| para testear tratamiento
+tpcd2$TIPO2 <- recode(tpcd2$TIPO2,"4=0;3=1") #Recode tratamiento y control: Condción C y Control D| para testear tratamiento
+
+table(tpad2$TIPO2)
+table(tpbd2$TIPO2)
+table(tpcd2$TIPO2)
+
+st$treat <- relevel(factor(st$TIPO2), ref = 4)
+```
+
+```{r balance}
+bal1 <- lm(TIPO2~factor(P40)+P41+factor(educ)+jus2+ppol+log_perc_OG,data =tpad2 )# balance asignación aleatoria Grupo A vs D
+bal2 <- lm(TIPO2~factor(P40)+P41+factor(educ)+jus2+ppol+log_perc_OG,data =tpbd2 )# balance asignación aleatoria Grupo B vs D
+bal3 <- lm(TIPO2~factor(P40)+P41+factor(educ)+jus2+ppol+log_perc_OG,data =tpcd2 )# balance asignación aleatoria Grupo C vs D
+
+screenreg(list(bal1,bal2,bal3))
+```
+
+
+```{r Modelos}
+e1ab03 <- lm(log_reco~factor(TIPO2), data = tpab2) #Grupo A vs B | Log(máximo/mínimo)
+e1ac03 <- lm(log_reco~factor(TIPO2), data = tpac2) #Grupo A vs C | Log(máximo/mínimo)
+e2bc03 <- lm(log_reco~factor(TIPO2), data = tpbc2) #Grupo B vs C | Log(máximo/mínimo)
+
+e1ad04 <- lm(log_reco_OG~factor(TIPO2), data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
+e1bd04 <- lm(log_reco_OG~factor(TIPO2), data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
+e2cd04 <- lm(log_reco_OG~factor(TIPO2), data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
+
+pdesi1 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpad2) #Grupo A vs D | Dif ingreso son demasiado grandes + cov
+pdesi2 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpbd2) #Grupo B vs D | Dif ingreso son demasiado grandes + cov
+pdesi3 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpcd2) #Grupo C vs D | Dif ingreso son demasiado grandes + cov
+
+logOGcov1 <- lm(log_reco_OG~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpad2) #Grupo A vs D | Log(Gerente/obrero) + cov
+logOGcov2 <- lm(log_reco_OG~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + cov
+logOGcov3 <- lm(log_reco_OG~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero) + cov
+
+logOGcov4 <- lm(log_reco_OG~treat+jus2+ppol+log_perc_OG, data = st) #Grupo simultáneo | Log(Gerente/obrero) + cov
+logOGcov2a <- lm(log_reco_OG~jus2, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + BJW scale
+```
+
+```{r HC2}
+library(sandwich) #HC2
+library(lmtest) #coeftest
+
+#---Test según cada Tratamiento Log(Gerente/obrero) con HC2--------------------
+logOGhc2a <- coeftest(logOGcov1, vcov.= vcovHC(logOGcov1, "HC2"))#Grupo A vs D | Log(Gerente/obrero) + cov (HC2)
+logOGhc2b <- coeftest(logOGcov2, vcov.= vcovHC(logOGcov2, "HC2"))#Grupo B vs D | Log(Gerente/obrero) + cov (HC2)
+logOGhc2c <- coeftest(logOGcov3, vcov.= vcovHC(logOGcov3, "HC2"))#Grupo C vs D | Log(Gerente/obrero) + cov (HC2)
+
+#---Test simultáneo Log(Gerente/obrero) con HC2--------------------
+logOGhc2 <- coeftest(logOGcov4, vcov.= vcovHC(logOGcov4, "HC2"))
+logOGhc2[,1] #coef
+logOGhc2[,2] #SE
+nobs(logOGcov2)
+# EL SE HC2 es consistente en muestras finitas e infinitas. Además, no asume ni homoscedasticidad ni linealidad.
+```
+
+```{r Test-treat-Log(gerente/obrero)+controles, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+library(texreg)
+texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
+                custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3","Modelo 4", "Modelo 5", "Modelo 6"),
+                caption = "Log(Gerente/Obrero)",
+                custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
+                                      "Centro", "Derecha", "Ninguno", "No sabe",
+                                      "Desigualdad percibida (Log)"),
+                caption.above = TRUE,
+                reorder.coef = c(2:8,1),
+       label = "tab:logcov",no.margin = T,
+       booktabs = TRUE,
+       dcolumn = TRUE,
+       single.row = FALSE,
+       bold = FALSE,
+       digits = 2,
+       leading.zero = TRUE,
+       use.packages = FALSE,
+       float.pos = "H",
+       scalebox = 0.75,
+       include.rs = FALSE,
+       include.rmse = FALSE)
+       file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/log_min_max_controls.tex")
+
+screenreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3))
+```
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+
+texreg(list(e1ab03,e1ac03,e2bc03,e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
+       custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3","Modelo 4", "Modelo 5", "Modelo 6",
+                                       "Modelo 7","Modelo 8","Modelo 9"),
+       custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
+                                      "Centro", "Derecha", "Ninguno", "No sabe",
+                                      "Desigualdad percibida (Log)"),
+       caption = "Modelos de regresi\\'on",
+       caption.above = TRUE,
+       reorder.coef = c(2:8,1),
+       label = "tab:logcov",
+       no.margin = T,
+       booktabs = TRUE,
+       dcolumn = TRUE,
+       single.row = FALSE,
+       bold = FALSE,
+       digits = 2,
+       leading.zero = TRUE,
+       use.packages = FALSE,
+       float.pos = "H",
+       scalebox = 0.75,
+       include.rs = FALSE,
+       include.rmse = FALSE,
+       file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/log_min_max_controls2.tex")
+
+```
+
+
+```{r Creencia mundo justo}
+st$JW1 <-  recode(st$P30_1,"1=5;2=4;3=3;4=2;5=1;9=NA")
+st$JW2 <-  recode(st$P30_2,"1=5;2=4;3=3;4=2;5=1;9=NA")
+st$JW3 <-  recode(st$P30_3,"1=5;2=4;3=3;4=2;5=1;9=NA")
+st$JW4 <-  recode(st$P30_4,"1=5;2=4;3=3;4=2;5=1;9=NA")
+st$JW5 <-  recode(st$P30_5,"1=5;2=4;3=3;4=2;5=1;9=NA")
+#----correlacion----
+just <- st %>% select(JW1,JW2,JW3,JW4,JW5)
+
+#---EFA----
+sjt.itemanalysis(just)
+sjt.fa(data = just)
+#---CFA----
+
+# bjw <- 'just=~JW1+JW2+JW3+JW4+JW5'
+bjw <- 'just=~JW2+JW3+JW4+JW5'
+
+# fit <- cfa(model = bjw,data = st,ordered = c("JW1","JW2","JW3","JW4","JW5"))
+fit <- cfa(model = bjw,data = st,ordered = c("JW2","JW3","JW4","JW5"))
+
+summary(fit, standardized=TRUE)
+fitmeasures(fit, fit.measures = c("chisq","pvalue","df","cfi","rmsea"))
+```
+
+```{r}
+cor1 <-st %>%  select(log_perc_OG,log_reco_OG, just)
+cor2 <- cor(cor1,use = "pairwise.complete.obs")
+sjt.corr(cor1)
+psych::cor2latex(cor1,stars = TRUE)
+```

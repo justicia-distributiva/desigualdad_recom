@@ -1,0 +1,233 @@
+---
+title: "Plots"
+author: "Julio Iturra - jciturra@uc.cl"
+date: "17 de enero de 2019"
+output: pdf_document
+---
+
+```{r library, message=FALSE, warning=FALSE}
+options(scipen=999)
+library(haven)
+library(dplyr) 
+library(car)
+library(stargazer)
+library(ggplot2)
+library(gridExtra) 
+library(knitr)
+library(kableExtra)
+library(RItools) #xBalance
+library(texreg) 
+``` 
+
+```{r datos, message=FALSE, warning=FALSE, include=FALSE}
+rm(list=ls())
+load("trump2019.Rdata")
+```
+
+```{r subset-treatment-groups, message=FALSE, warning=FALSE, include=FALSE, results='asis'}
+st$jus2 <- (st$JW2+st$JW3+st$JW4+st$JW4)/4 #en base al EFA y al CFA decidí dejar estos ítems
+#Subset según variable TIPO2 full muestra
+# st <- st %>% filter(reco < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
+tpab2 <- st %>% filter(TIPO2==1 | TIPO2==2) #Subset según TIPO==1 & 2 | A vs B
+tpac2 <- st %>% filter(TIPO2==1 | TIPO2==3) #Subset según TIPO==1 & 3 | A vs C
+tpad2 <- st %>% filter(TIPO2==1 | TIPO2==4) #Subset según TIPO==1 & 3 | A vs D
+tpbc2 <- st %>% filter(TIPO2==2 | TIPO2==3) #Subset según TIPO==1 & 3 | B vs C
+tpbd2 <- st %>% filter(TIPO2==2 | TIPO2==4) #Subset según TIPO==1 & 3 | B vs D
+tpcd2 <- st %>% filter(TIPO2==3 | TIPO2==4) #Subset según TIPO==3 & 4 | C vs D
+
+tpab2$TIPO2 <- recode(tpab2$TIPO2,"2=0;1=1")#Recode tratamiento y control: Condción A y Control B| para comparar tratamientos
+tpac2$TIPO2 <- recode(tpac2$TIPO2,"3=0;1=1")#Recode tratamiento y control: Condción A y Control C| para comparar tratamientos
+tpbc2$TIPO2 <- recode(tpbc2$TIPO2,"2=0;3=1")#Recode tratamiento y control: Condción C y Control B| para comparar tratamientos
+
+tpad2$TIPO2 <- recode(tpad2$TIPO2,"4=0;1=1")#Recode tratamiento y control: Condción A y Control D| para testear tratamiento
+tpbd2$TIPO2 <- recode(tpbd2$TIPO2,"4=0;2=1")#Recode tratamiento y control: Condción B y Control D| para testear tratamiento
+tpcd2$TIPO2 <- recode(tpcd2$TIPO2,"4=0;3=1")#Recode tratamiento y control: Condción C y Control D| para testear tratamiento
+st$treat <- relevel(factor(st$TIPO2), ref = 4)
+```
+
+
+```{r predicted-log(max/min), include=FALSE}
+#Predited logaritmizado Max/min
+predad05 <- as.data.frame(predict.lm(lm(log_reco~factor(TIPO2), data = tpad2), interval = "confidence")) #loged
+predbd05 <- as.data.frame(predict.lm(lm(log_reco~factor(TIPO2), data = tpbd2), interval = "confidence")) #loged
+predcd05 <- as.data.frame(predict.lm(lm(log_reco~factor(TIPO2), data = tpcd2), interval = "confidence")) #loged
+
+m01 <-tpad2 %>% select(COR,log_reco)%>% na.omit() %>% select(-(log_reco))
+m02 <-tpbd2 %>% select(COR,log_reco)%>% na.omit() %>% select(-(log_reco))
+m03 <-tpcd2 %>% select(COR,log_reco)%>% na.omit() %>% select(-(log_reco))
+
+f04 <- cbind(m01,predad05)
+f05 <- cbind(m02,predbd05)
+f06 <- cbind(m03,predcd05)
+
+tpad2lg <- merge(tpad2,f04, by="COR")#para hacer los barplot 
+tpbd2lg <- merge(tpbd2,f05, by="COR")#para hacer los barplot
+tpcd2lg <- merge(tpcd2,f06, by="COR")#para hacer los barplot
+```
+
+```{r barplot-log(max/min), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
+p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[1]*')'), limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_classic() +
+  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black")) 
+
+p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_classic() +
+  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_classic() +
+  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+library(gridExtra)
+barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3)
+           #Logaritmizado
+
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot1.pdf", barplot2,units = "cm", width = 25,height = 10)
+
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot1.png", barplot2,units = "cm", width = 25,height = 15)
+```
+
+
+```{r predicted-log(gerente/obrero), include=FALSE}
+#Predited logaritmizado
+predad04 <- as.data.frame(predict.lm(lm(log_reco_OG~factor(TIPO2), data = tpad2), interval = "confidence")) #loged
+predbd04 <- as.data.frame(predict.lm(lm(log_reco_OG~factor(TIPO2), data = tpbd2), interval = "confidence")) #loged
+predcd04 <- as.data.frame(predict.lm(lm(log_reco_OG~factor(TIPO2), data = tpcd2), interval = "confidence")) #loged
+
+m01 <-tpad2 %>% select(COR,log_reco_OG)%>% na.omit() %>% select(-(log_reco_OG))
+m02 <-tpbd2 %>% select(COR,log_reco_OG)%>% na.omit() %>% select(-(log_reco_OG))
+m03 <-tpcd2 %>% select(COR,log_reco_OG)%>% na.omit() %>% select(-(log_reco_OG))
+
+f01 <- cbind(m01,predad04)
+f02 <- cbind(m02,predbd04)
+f03 <- cbind(m03,predcd04)
+
+tpad2lg <- merge(tpad2,f01, by="COR")#para hacer los barplot 
+tpbd2lg <- merge(tpbd2,f02, by="COR")#para hacer los barplot
+tpcd2lg <- merge(tpcd2,f03, by="COR")#para hacer los barplot
+```
+
+```{r barplot-log(gerente/obrero), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
+p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[2]*')'), limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_classic() +
+  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_classic() +
+  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+
+
+p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_classic() +
+  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+library(gridExtra)
+barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3) #Logaritmizado
+
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot2.pdf", barplot2,units = "cm", width = 25,height = 10)
+
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot2.png", barplot2,units = "cm", width = 25,height = 15)
+```
+
+
+```{r predicted-(gerente/obrero), include=FALSE}
+#predicted-normal 
+predad04 <- as.data.frame(predict.lm(lm(reco~factor(TIPO2), data = tpad2), interval = "confidence")) #normal
+predbd04 <- as.data.frame(predict.lm(lm(reco~factor(TIPO2), data = tpbd2), interval = "confidence")) #normal
+predcd04 <- as.data.frame(predict.lm(lm(reco~factor(TIPO2), data = tpcd2), interval = "confidence")) #normal
+
+m01 <-tpad2 %>% select(COR,reco)%>% na.omit() %>% select(-(reco))
+m02 <-tpbd2 %>% select(COR,reco)%>% na.omit() %>% select(-(reco))
+m03 <-tpcd2 %>% select(COR,reco)%>% na.omit() %>% select(-(reco))
+
+f01 <- cbind(m01,predad04)
+f02 <- cbind(m02,predbd04)
+f03 <- cbind(m03,predcd04)
+
+tpad2n <- merge(tpad2,f01, by="COR")
+tpbd2n <- merge(tpbd2,f02, by="COR")
+tpcd2n <- merge(tpcd2,f03, by="COR")
+```
+
+```{r barplot-(gerente/obrero), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
+p1<- ggplot(tpad2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = "Gerente/obrero", limits = c(0,45))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+p2 <- ggplot(tpbd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,45))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+p3 <- ggplot(tpcd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,45))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+barplot3 <- grid.arrange(p1,p2,p3,ncol=3) #Normal
+
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot3.pdf", barplot3,units = "cm", width = 20,height = 15,dpi = "retina")
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot3.png", barplot3,units = "cm", width = 20,height = 15,dpi = "retina")
+```
