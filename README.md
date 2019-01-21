@@ -1,4 +1,4 @@
-# k-stella-trump
+# Kriss-Stella Trump (2018)
 Code-Experiment
 
 ## Iturra J., Rufs C., Castillo JC.
