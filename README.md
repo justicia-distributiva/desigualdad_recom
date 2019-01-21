@@ -10,7 +10,7 @@ Código Experimento @Trump2017
 ## Iturra J., Rufs C., Castillo JC.
 * Replicación Experimento Kriss-Stella Trump
 * Código de Modelos
-* Código de Plots
+* Código de Plots (1)
 
 
 $$D_1 = \ln\Bigg(\frac{\text{Máximo salario recomendado}}{\text{Mínimo salario recomendado}} \Bigg)$$
