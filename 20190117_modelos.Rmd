@@ -22,7 +22,7 @@ library(knitr)
 library(kableExtra)
 library(RItools) #xBalance
 library(texreg)
-library(lavaan) 
+library(lavaan)
 library(sjPlot)
 
 ```
