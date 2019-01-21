@@ -22,7 +22,7 @@ library(knitr)
 library(kableExtra)
 library(RItools) #xBalance
 library(texreg)
-library(lavaan)
+library(lavaan) 
 library(sjPlot)
 
 ```
@@ -60,7 +60,7 @@ tpad2$TIPO2 <- recode(tpad2$TIPO2,"4=0;1=1") #Recode tratamiento y control: Cond
 tpbd2$TIPO2 <- recode(tpbd2$TIPO2,"4=0;2=1") #Recode tratamiento y control: Condción B y Control D| para testear tratamiento
 tpcd2$TIPO2 <- recode(tpcd2$TIPO2,"4=0;3=1") #Recode tratamiento y control: Condción C y Control D| para testear tratamiento
 
-table(tpad2$TIPO2) #table 
+table(tpad2$TIPO2) #table
 table(tpbd2$TIPO2)
 table(tpcd2$TIPO2)
 
