@@ -14,15 +14,15 @@ header-includes:
 options(scipen=999)
 library(haven)
 library(dplyr)
-library(car) 
+library(car)
 library(stargazer)
 library(ggplot2)
 library(gridExtra)
 library(knitr)
 library(kableExtra)
-library(RItools) #xBalance1
+library(RItools) #xBalance
 library(texreg)
-library(lavaan)
+library(lavaan) 
 library(sjPlot)
 
 ```
