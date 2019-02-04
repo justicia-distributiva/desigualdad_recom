@@ -24,14 +24,17 @@ library(RItools) #xBalance
 library(texreg)
 library(lavaan)
 library(sjPlot)
-
+library(psych)
+library(semPlot)
+library(corrplot)
 ```
 
 ```{r datos, message=FALSE, warning=FALSE, include=FALSE}
 rm(list=ls())
 load("trump2019.Rdata")
 # st <- st %>% na.omit
-st$jus2 <- (st$JW2+st$JW3+st$JW4+st$JW4)/4 #BJW scale 
+st$jus2 <- (st$JW2+st$JW3+st$JW4+st$JW4)/4 #BJW scale
+st$zlog <- as.numeric(scale(st$log_reco_OG))
 ```
 
 <!-- P40,# Sexo del entrevistado 1= hombre 2 = mujer -->
@@ -60,10 +63,6 @@ tpad2$TIPO2 <- recode(tpad2$TIPO2,"4=0;1=1") #Recode tratamiento y control: Cond
 tpbd2$TIPO2 <- recode(tpbd2$TIPO2,"4=0;2=1") #Recode tratamiento y control: Condción B y Control D| para testear tratamiento
 tpcd2$TIPO2 <- recode(tpcd2$TIPO2,"4=0;3=1") #Recode tratamiento y control: Condción C y Control D| para testear tratamiento
 
-table(tpad2$TIPO2) #table
-table(tpbd2$TIPO2)
-table(tpcd2$TIPO2)
-
 st$treat <- relevel(factor(st$TIPO2), ref = 4)
 ```
 
@@ -84,6 +83,10 @@ e2bc03 <- lm(log_reco~factor(TIPO2), data = tpbc2) #Grupo B vs C | Log(máximo/m
 e1ad04 <- lm(log_reco_OG~factor(TIPO2), data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
 e1bd04 <- lm(log_reco_OG~factor(TIPO2), data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
 e2cd04 <- lm(log_reco_OG~factor(TIPO2), data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
+
+ab1 <- lm(log(reco_OG)~factor(TIPO2), data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
+ab2 <- lm(log(reco_OG)~factor(TIPO2), data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
+ab3 <- lm(log(reco_OG)~factor(TIPO2), data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
 
 pdesi1 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpad2) #Grupo A vs D | Dif ingreso son demasiado grandes + cov
 pdesi2 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpbd2) #Grupo B vs D | Dif ingreso son demasiado grandes + cov
@@ -107,12 +110,50 @@ logOGhc2b <- coeftest(logOGcov2, vcov.= vcovHC(logOGcov2, "HC2"))#Grupo B vs D |
 logOGhc2c <- coeftest(logOGcov3, vcov.= vcovHC(logOGcov3, "HC2"))#Grupo C vs D | Log(Gerente/obrero) + cov (HC2)
 
 #---Test simultáneo Log(Gerente/obrero) con HC2--------------------
-logOGhc2 <- coeftest(logOGcov4, vcov.= vcovHC(logOGcov4, "HC2"))
+logOGhc2 <- coeftest(logOGcov1, vcov.= vcovHC(logOGcov1, "HC2"))
 logOGhc2[,1] #coef
 logOGhc2[,2] #SE
+logOGhc2[,3] #tvalue
+logOGhc2[,4] #pvalue
 nobs(logOGcov2)
 # EL SE HC2 es consistente en muestras finitas e infinitas. Además, no asume ni homoscedasticidad ni linealidad.
 ```
+
+```{r HC2-tablas}
+
+extract.lmHC2 <- function(model) {
+  s <- summary(model)
+  hc2 <- coeftest(model, vcov.= vcovHC(model, "HC2"))
+  names <- rownames(s$coef)
+  co <- s$coef[, 1]
+  se <- hc2[,2] #SE
+  pval <- hc2[, 4]
+  rs <- s$r.squared
+  adj <- s$adj.r.squared
+  n <- nobs(model)
+  gof <- c(rs, adj, n)
+  
+gof.names <- c("R$^2$", "Adj.\\ R$^2$", "Num.\\ obs.")
+
+   tr <- createTexreg(
+       coef.names = names,
+       coef = co,
+       se = se,
+       pvalues = pval,
+       gof.names = gof.names,
+       gof = gof)
+   return(tr)
+}
+test <- createTexreg
+ac <- extract.lmHC2(logOGcov1) #condición A con robust SE 
+bc <- extract.lmHC2(logOGcov2) #condición B con robust SE 
+cc <- extract.lmHC2(logOGcov3) #condición C con robust SE 
+texreg::screenreg(l = c(ac,bc,cc))
+
+
+```
+
+
 
 ```{r Test-treat-Log(gerente/obrero)+controles, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 library(texreg)
@@ -138,8 +179,9 @@ texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
        include.rmse = FALSE)
        file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/log_min_max_controls.tex")
 
-screenreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3))
+screenreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3), digits = 3)
 ```
+
 
 ```{r , echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 
@@ -170,26 +212,28 @@ texreg(list(e1ab03,e1ac03,e2bc03,e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGc
 ```
 
 
-```{r Creencia mundo justo}
-st$JW1 <-  recode(st$P30_1,"1=5;2=4;3=3;4=2;5=1;9=NA")
-st$JW2 <-  recode(st$P30_2,"1=5;2=4;3=3;4=2;5=1;9=NA")
-st$JW3 <-  recode(st$P30_3,"1=5;2=4;3=3;4=2;5=1;9=NA")
-st$JW4 <-  recode(st$P30_4,"1=5;2=4;3=3;4=2;5=1;9=NA")
-st$JW5 <-  recode(st$P30_5,"1=5;2=4;3=3;4=2;5=1;9=NA")
+```{r Escala Creencia mundo justo}
 #----correlacion----
 just <- st %>% select(JW1,JW2,JW3,JW4,JW5)
+corrplot(cor(just,use = "pairwise.complete.obs"),type = "lower")
 
 #---EFA----
 sjt.itemanalysis(just)
-sjt.fa(data = just)
+
+KMO(just) # Overall MSA =  0.68
+cortest.bartlett(just) #Chi2= 489.6131 , p =0.00
+plot(scree(just)) #Criterio codo= 1 factor
+
+efa <- fa(just, nfactors = 1, fm = "ml", rotate = "varimax")
+fa.diagram(efa)
+
+# ML1 = Factor 1 extraído con método de máxima verosimilitud
+# h2 = comunalidad
+# u2 = unicidad
+# com = complejidad de las cargas factoriales para la variable
+
 #---CFA----
-
-bjw <- 'just=~JW1+JW2+JW3+JW4+JW5'
 bjw <- 'just=~JW2+JW3+JW4+JW5'
-
-# fit <- cfa(model = bjw,data = st,ordered = c("JW1","JW2","JW3","JW4","JW5"))
-fit <- cfa(model = bjw,data = st,ordered = c("JW1","JW2","JW3","JW4","JW5"))
-
 fit <- cfa(model = bjw,data = st,ordered = c("JW2","JW3","JW4","JW5"))
 
 summary(fit, standardized=TRUE)
@@ -202,3 +246,21 @@ cor2 <- cor(cor1,use = "pairwise.complete.obs")
 sjt.corr(cor1)
 psych::cor2latex(cor1,stars = TRUE)
 ```
+
+```{r zscore-log}
+e1ad05 <- lm(zlog~factor(TIPO2), data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
+e1bd05 <- lm(zlog~factor(TIPO2), data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
+e2cd05 <- lm(zlog~factor(TIPO2), data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
+
+logOGcov1a <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpad2) #Grupo A vs D | Log(Gerente/obrero) + cov
+logOGcov2b <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + cov
+logOGcov3c <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero) + cov
+
+screenreg(list(logOGcov1a,logOGcov2b,logOGcov3c), digits = 2,
+          omit.coef = c("educ"),
+          custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
+                                      "Centro", "Derecha", "Ninguno", "No sabe",
+                                      "Desigualdad percibida (Log)"))
+```
+
+

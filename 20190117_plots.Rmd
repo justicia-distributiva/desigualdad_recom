@@ -103,9 +103,9 @@ library(gridExtra)
 barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3)
            #Logaritmizado
 
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot1.pdf", barplot2,units = "cm", width = 25,height = 10)
-
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot1.png", barplot2,units = "cm", width = 25,height = 15)
+# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot1.pdf", barplot2,units = "cm", width = 25,height = 10)
+# 
+# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot1.png", barplot2,units = "cm", width = 25,height = 15)
 ```
 
 
@@ -160,7 +160,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   scale_y_continuous(name = " ", limits = c(0,3))+
   scale_fill_grey(""," ")+
   theme_classic() +
-  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
   guides(color=FALSE) +
   scale_colour_manual(values=c("white", "black"))
 
