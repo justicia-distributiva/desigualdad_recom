@@ -148,7 +148,7 @@ test <- createTexreg
 ac <- extract.lmHC2(logOGcov1) #condición A con robust SE 
 bc <- extract.lmHC2(logOGcov2) #condición B con robust SE 
 cc <- extract.lmHC2(logOGcov3) #condición C con robust SE 
-texreg::screenreg(l = c(ac,bc,cc))
+texreg::screenreg(l = c(ac,bc,cc)) #TEST
 
 
 ```
