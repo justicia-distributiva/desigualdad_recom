@@ -27,6 +27,7 @@ library(sjPlot)
 library(psych)
 library(semPlot)
 library(corrplot)
+
 ```
 
 ```{r datos, message=FALSE, warning=FALSE, include=FALSE}
