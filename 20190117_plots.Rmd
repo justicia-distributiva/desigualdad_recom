@@ -3,6 +3,8 @@ title: "Plots"
 author: "Julio Iturra - jciturra@uc.cl"
 date: "17 de enero de 2019"
 output: pdf_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r library, message=FALSE, warning=FALSE}
@@ -12,7 +14,8 @@ library(dplyr)
 library(car)
 library(stargazer)
 library(ggplot2)
-library(gridExtra) 
+library(gridExtra)
+library(grid)
 library(knitr)
 library(kableExtra)
 library(RItools) #xBalance
@@ -25,6 +28,10 @@ load("trump2019.Rdata")
 ```
 
 ```{r subset-treatment-groups, message=FALSE, warning=FALSE, include=FALSE, results='asis'}
+
+
+st$TIPO2 <- factor(st$TIPO2)
+
 st$jus2 <- (st$JW2+st$JW3+st$JW4+st$JW4)/4 #en base al EFA y al CFA decidí dejar estos ítems
 #Subset según variable TIPO2 full muestra
 # st <- st %>% filter(reco < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
@@ -43,6 +50,11 @@ tpad2$TIPO2 <- recode(tpad2$TIPO2,"4=0;1=1")#Recode tratamiento y control: Condc
 tpbd2$TIPO2 <- recode(tpbd2$TIPO2,"4=0;2=1")#Recode tratamiento y control: Condción B y Control D| para testear tratamiento
 tpcd2$TIPO2 <- recode(tpcd2$TIPO2,"4=0;3=1")#Recode tratamiento y control: Condción C y Control D| para testear tratamiento
 st$treat <- relevel(factor(st$TIPO2), ref = 4)
+
+tpad2$TIPO2 <- factor(tpad2$TIPO2, levels = c(0,1), labels = c("Control", "Tratamiento"))
+tpbd2$TIPO2 <- factor(tpbd2$TIPO2, levels = c(0,1), labels = c("Control", "Tratamiento"))
+tpcd2$TIPO2 <- factor(tpcd2$TIPO2, levels = c(0,1), labels = c("Control", "Tratamiento"))
+
 ```
 
 
@@ -66,38 +78,42 @@ tpcd2lg <- merge(tpcd2,f06, by="COR")#para hacer los barplot
 ```
 
 ```{r barplot-log(max/min), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
-p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
-  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
-  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+bar_col <- c("gray35", "gray87")
+p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2), colour=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
   scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[1]*')'), limits = c(0,3))+
-  scale_fill_grey(""," ")+
-  theme_classic() +
-  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(fill=FALSE)+
   guides(color=FALSE) +
-  scale_colour_manual(values=c("white", "black")) 
+  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))+
+  theme_classic()
 
-p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
-  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
-  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2),colour=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
   scale_y_continuous(name = " ", limits = c(0,3))+
-  scale_fill_grey(""," ")+
-  theme_classic() +
-  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(fill=FALSE)+
   guides(color=FALSE) +
-  scale_colour_manual(values=c("white", "black"))
+  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))+
+  theme_classic()
 
-p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
-  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
-  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2),colour=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
   scale_y_continuous(name = " ", limits = c(0,3))+
-  scale_fill_grey(""," ")+
-  theme_classic() +
-  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(fill=FALSE)+
   guides(color=FALSE) +
-  scale_colour_manual(values=c("white", "black"))
+  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))+
+  theme_classic()
 
 library(gridExtra)
 barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3)
@@ -105,7 +121,7 @@ barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3)
 
 # ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot1.pdf", barplot2,units = "cm", width = 25,height = 10)
 # 
-# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot1.png", barplot2,units = "cm", width = 25,height = 15)
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/presentacion-alas/barplot1.png", barplot2,units = "cm", width = 25,height = 15)
 ```
 
 
@@ -129,47 +145,53 @@ tpcd2lg <- merge(tpcd2,f03, by="COR")#para hacer los barplot
 ```
 
 ```{r barplot-log(gerente/obrero), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
-p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
-  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
-  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
-  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[2]*')'), limits = c(0,3))+
-  scale_fill_grey(""," ")+
-  theme_classic() +
-  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
-  guides(color=FALSE) +
-  scale_colour_manual(values=c("white", "black"))
 
-p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
-  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
-  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+bar_col <- c("gray35", "gray87")
+
+p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2), colour=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8, colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[2]*')'), limits = c(0,3))+
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  guides(fill=FALSE)+
+  guides(color=FALSE) +
+  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))+
+  theme_classic()
+ 
+
+p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2),colour=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
   scale_y_continuous(name = " ", limits = c(0,3))+
-  scale_fill_grey(""," ")+
-  theme_classic() +
-  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(fill=FALSE)+
   guides(color=FALSE) +
-  scale_colour_manual(values=c("white", "black"))
+  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))+
+  theme_classic()
 
-
-
-p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
-  stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
-  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2),colour=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
   scale_y_continuous(name = " ", limits = c(0,3))+
-  scale_fill_grey(""," ")+
-  theme_classic() +
-  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(fill=FALSE)+
   guides(color=FALSE) +
-  scale_colour_manual(values=c("white", "black"))
+  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))+
+  theme_classic()
+
 
 library(gridExtra)
 barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3) #Logaritmizado
 
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot2.pdf", barplot2,units = "cm", width = 25,height = 10)
+# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot2.pdf", barplot2,units = "cm", width = 25,height = 10)
 
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot2.png", barplot2,units = "cm", width = 25,height = 15)
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/presentacion-alas/barplot2.png", barplot2,units = "cm", width = 25,height = 15)
 ```
 
 
@@ -193,6 +215,9 @@ tpcd2n <- merge(tpcd2,f03, by="COR")
 ```
 
 ```{r barplot-(gerente/obrero), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
+
+bar_col <- c("gray35", "gray87")
+
 p1<- ggplot(tpad2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
@@ -202,7 +227,7 @@ p1<- ggplot(tpad2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   theme_bw() +
   geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
   guides(color=FALSE) +
-  scale_colour_manual(values=c("white", "black"))
+  scale_colour_manual(values=bar_col)
 
 p2 <- ggplot(tpbd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
@@ -213,7 +238,7 @@ p2 <- ggplot(tpbd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   theme_bw() +
   geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
   guides(color=FALSE) +
-  scale_colour_manual(values=c("white", "black"))
+  scale_colour_manual(values=bar_col)
 
 p3 <- ggplot(tpcd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   stat_summary(geom= 'bar',fun.y = mean, width =0.8) + 
@@ -228,6 +253,188 @@ p3 <- ggplot(tpcd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
 
 barplot3 <- grid.arrange(p1,p2,p3,ncol=3) #Normal
 
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot3.pdf", barplot3,units = "cm", width = 20,height = 15,dpi = "retina")
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot3.png", barplot3,units = "cm", width = 20,height = 15,dpi = "retina")
+# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot3.pdf", barplot3,units = "cm", width = 20,height = 15,dpi = "retina")
+# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot3.png", barplot3,units = "cm", width = 20,height = 15,dpi = "retina")
 ```
+
+
+```{r boxplot}
+
+#----Tratamientos-----
+# ---- tpad2 ----- #Recode tratamiento y control: Condción A y Control D| parrafo + lista de salarios  
+# ---- tpbd2 ----- #Recode tratamiento y control: Condción B y Control D| parrafo
+# ---- tpcd2 ----- #Recode tratamiento y control: Condción C y Control D| lista de salarios
+# ---- P32_2 #GERENTE
+# ---- P32_4 #OBREro
+
+sjlabelled::get_label(st$P32_4) #Un obrero no calificado de una fábrica"
+sjlabelled::get_label(st$P32_2) #Un gerente de una gran empresa"
+
+st$treat <- factor(x = st$treat,levels = c(4,1,2,3),labels = c("Control", "Condición A", "Condición B", "Condición C") )
+
+st %>% group_by(Obrero=treat) %>% summarise(
+  n=n(),
+  M = mean(P32_4, na.rm = TRUE),
+  Mtr = mean(P32_4, na.rm = TRUE, trim = 0.1),
+  ME = median(P32_4, na.rm = TRUE),
+  Min=min(P32_4,na.rm = TRUE),
+  Max=max(P32_4,na.rm = TRUE)
+)
+st %>% group_by(Gerente=treat) %>% summarise(
+  n=n(),
+  M = mean(P32_2, na.rm = TRUE),
+  Mtr = mean(P32_2, na.rm = TRUE, trim = 0.1),
+  ME = median(P32_2, na.rm = TRUE),
+  Min=min(P32_2,na.rm = TRUE),
+  Max=max(P32_2,na.rm = TRUE)
+)
+
+#----Todas las condiciones  -----
+
+ggplot(data = st,aes(x=treat, y=P32_4,fill=factor(treat))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  theme_classic() +
+  coord_flip() +
+  scale_y_continuous(limits = c(350000, 1000000)) +
+  scale_fill_brewer(palette = 6) +
+  guides(fill=FALSE) +
+  xlab("")+ylab("(...) Un obrero no calificado de una fábrica")
+
+
+ggplot(data = st,aes(x=treat, y=P32_2,fill=factor(treat))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  theme_classic() +
+  coord_flip() +
+  scale_y_continuous(limits = c(0,12000000), breaks = seq(0,12000000,2000000)) +
+  scale_fill_brewer(palette = 6) +
+  guides(fill=FALSE) +
+  xlab("")+ylab("(...) Un gerente de una gran empresa")
+
+#----parrafo + lista de salarios -----
+
+ob1b <- ggplot(data = tpad2,aes(x=TIPO2, y=P32_4,fill=factor(TIPO2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  theme_classic() + 
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label ="Parrafo reforma educacional y lista de salarios por ocupación")+ 
+  scale_y_continuous(limits = c(350000, 1000000)) +
+  coord_flip() +
+  xlab("")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+ger1b <- ggplot(data = tpad2,aes(x=TIPO2, y=P32_2,fill=factor(TIPO2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3) +
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  theme_classic() + 
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Parrafo reforma educacional y lista de salarios por ocupación") + 
+  scale_y_continuous(limits = c(0,12000000), breaks = seq(0,12000000,2000000)) +
+  coord_flip() +
+  xlab("")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+
+
+psych::describeBy(x =tpad2$P32_4 ,group = tpad2$TIPO2,mat = TRUE,digits = 2, trim=.1) #Obrero
+psych::describeBy(x =tpad2$P32_2 ,group = tpad2$TIPO2,mat = TRUE,digits = 2, trim=.1) #Gerente
+
+
+table(tpad2$P32_4,tpad2$TIPO2)
+table(tpad2$P32_2,tpad2$TIPO2)
+
+round(prop.table(table(tpad2$P32_4,tpad2$TIPO2)),3)
+round(prop.table(table(tpad2$P32_2,tpad2$TIPO2)),3)
+
+
+#----PARRAFO  -----------------------
+
+
+ob2b <- ggplot(data = tpbd2,aes(x=TIPO2, y=P32_4,fill=factor(TIPO2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  theme_classic() + 
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Párrafo sobre reforma educacional") + 
+  scale_y_continuous(limits = c(350000, 1000000)) +
+  coord_flip() +
+  xlab("")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+
+ger2b <- ggplot(data = tpbd2,aes(x=TIPO2, y=P32_2,fill=factor(TIPO2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  theme_classic() + 
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Párrafo sobre reforma educacional")+ 
+  scale_y_continuous(limits = c(0,12000000), breaks = seq(0,12000000,2000000)) +
+  xlab("")+
+  coord_flip()+
+  xlab("")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+
+psych::describeBy(x =tpbd2$P32_4 ,group = tpbd2$TIPO2,mat = TRUE,digits = 2, trim=.1,fast=FALSE) #Obrero
+psych::describeBy(x =tpbd2$P32_2 ,group = tpbd2$TIPO2,mat = TRUE,digits = 2, trim=.1,fast=FALSE) #Gerente
+
+round(prop.table(table(tpbd2$P32_4,tpbd2$TIPO2)),3)
+round(prop.table(table(tpbd2$P32_2,tpbd2$TIPO2)),3)
+ 
+
+#----lista de salarios-------------
+
+
+ob3b <- ggplot(data = tpcd2,aes(x=TIPO2, y=P32_4,fill=TIPO2)) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  theme_classic() +
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Lista de salarios por ocupación")+ 
+  scale_y_continuous(limits = c(350000, 1000000)) +
+  coord_flip()+
+  xlab("")+ ylab("Salario en pesos Chilenos (CLP)") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+
+ger3b <- ggplot(data = tpcd2,aes(x=TIPO2, y=P32_2,fill=factor(TIPO2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  theme_classic() +
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Lista de salarios por ocupación")+ 
+  scale_y_continuous(limits = c(0,12000000), breaks = seq(0,12000000,2000000)) +
+  coord_flip()+
+  xlab("")+ ylab("Salario en pesos Chilenos (CLP)") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+
+psych::describeBy(x =tpcd2$P32_4 ,group = tpcd2$TIPO2,mat = TRUE,digits = 2, trim=.1,fast=TRUE) #Obrero
+psych::describeBy(x =tpcd2$P32_2 ,group = tpcd2$TIPO2,mat = TRUE,digits = 2, trim=.1,fast=TRUE) #Gerente
+
+round(prop.table(table(tpcd2$P32_4,tpcd2$TIPO2)),3)
+round(prop.table(table(tpcd2$P32_2,tpcd2$TIPO2)),3)
+
+
+obgapb <- grid.arrange(ob1b, ob2b, ob3b, nrow = 3,
+                        top = textGrob("Un obrero no calificado de una fábrica",
+                                       gp=gpar(fontsize=15,font=2))) #Normal
+
+gergapb <- grid.arrange(ger1b, ger2b, ger3b, nrow = 3,
+                        top = textGrob("Un gerente de una gran empresa",
+                                       gp=gpar(fontsize=15,font=2))) #Normal
+
+
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/obgapb.pdf", obgapb,units = "cm", width = 25,height = 17)
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/gergapb.pdf", gergapb,units = "cm", width = 25,height = 17)
+
+```
+

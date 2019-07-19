@@ -8,6 +8,8 @@ header-includes:
   - \usepackage{booktabs}
   - \usepackage{dcolumn}
   - \usepackage{float} #fijar tabla
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r library, message=FALSE, warning=FALSE}
@@ -68,11 +70,49 @@ st$treat <- relevel(factor(st$TIPO2), ref = 4)
 ```
 
 ```{r balance}
-bal1 <- lm(TIPO2~factor(P40)+P41+factor(educ)+jus2+ppol+log_perc_OG,data =tpad2 )# balance asignación aleatoria Grupo A vs D
-bal2 <- lm(TIPO2~factor(P40)+P41+factor(educ)+jus2+ppol+log_perc_OG,data =tpbd2 )# balance asignación aleatoria Grupo B vs D
-bal3 <- lm(TIPO2~factor(P40)+P41+factor(educ)+jus2+ppol+log_perc_OG,data =tpcd2 )# balance asignación aleatoria Grupo C vs D
+bal1 <- lm(TIPO2~factor(P40)+P41+educ+jus2+ppol+log_perc_OG,data =tpad2 )# balance asignación aleatoria Grupo A vs D
+bal2 <- lm(TIPO2~factor(P40)+P41+educ+jus2+ppol+log_perc_OG,data =tpbd2 )# balance asignación aleatoria Grupo B vs D
+bal3 <- lm(TIPO2~factor(P40)+P41+educ+jus2+ppol+log_perc_OG,data =tpcd2 )# balance asignación aleatoria Grupo C vs D
 
-screenreg(list(bal1,bal2,bal3))
+screenreg(l = list(bal1,bal2,bal3))
+notabal <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre paréntesis \\\\ 
+          $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. \\\\
+          \\textbf{\\textit{Nota}}: }")
+
+coef <- c("(Intercepto)",
+  "Sexo (ref: Mujer)",
+  "Edad",
+  "Educación",
+  "Creencia Mundo Justo",
+  "Centro",
+  "Derecha",
+  "Ninguno",
+  "No sabe",
+  "Desigualdad percibida (Log)"
+  )
+# texreg(list(bal1,bal2,bal3),
+#        custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
+#        custom.coef.names = coef,
+#           groups = list("\\textbf{Posición Política (ref: Izquierda)}" = 6:9),
+#        caption = "Balance de la asignación aleatoria al grupo tratamiento",
+#   caption.above = TRUE,
+#   label = "tab:balance",
+#   no.margin = T,
+#   booktabs = TRUE,
+#   dcolumn = TRUE,
+#   single.row = FALSE,
+#   bold = FALSE,
+#   digits = 2,
+#   leading.zero = TRUE,
+#   use.packages = FALSE,
+#   float.pos = "H",
+#   scalebox = 0.75,
+#   include.rs = FALSE,
+#   include.rmse = FALSE,
+#   custom.note = notabal,
+#   file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/anexo_balance.tex")
+
+
 ```
 
 
@@ -97,7 +137,31 @@ logOGcov1 <- lm(log_reco_OG~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpa
 logOGcov2 <- lm(log_reco_OG~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + cov
 logOGcov3 <- lm(log_reco_OG~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero) + cov
 
-logOGcov4 <- lm(log_reco_OG~treat+jus2+ppol+log_perc_OG, data = st) #Grupo simultáneo | Log(Gerente/obrero) + cov
+tpad2$TIPO2 <- factor(tpad2$TIPO2)
+tpbd2$TIPO2 <- factor(tpbd2$TIPO2)
+tpcd2$TIPO2 <- factor(tpcd2$TIPO2)
+
+tpad2$educ <- factor(tpad2$educ)
+tpbd2$educ <- factor(tpbd2$educ)
+tpcd2$educ <- factor(tpcd2$educ)
+
+tpad2$educ <- as.numeric(tpad2$educ)
+tpbd2$educ <- as.numeric(tpbd2$educ)
+tpcd2$educ <- as.numeric(tpcd2$educ)
+
+
+logOGcov1 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpad2) #Grupo A vs D |interac
+logOGcov2 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D |interac
+logOGcov3 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D |interac
+
+screenreg(l = list(logOGcov1,logOGcov2,logOGcov3))
+plot_model(logOGcov1, type = "pred", terms = c("log_perc_OG","educ [1,10]"))
+
+
+logOGcov4 <- lm(log_reco_OG~treat*jus2+ppol+log_perc_OG+educ, data = st) #Grupo simultáneo | Log(Gerente/obrero) + cov
+summary(logOGcov4)
+plot_model(logOGcov4, type = "pred", terms = c("jus2","treat"))
+
 logOGcov2a <- lm(log_reco_OG~jus2, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + BJW scale
 ```
 
@@ -163,9 +227,9 @@ texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
                 caption = "Log(Gerente/Obrero)",
                 custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
                                       "Centro", "Derecha", "Ninguno", "No sabe",
-                                      "Desigualdad percibida (Log)"),
+                                      "Desigualdad percibida (Log)","Educación"),
                 caption.above = TRUE,
-                reorder.coef = c(2:8,1),
+                reorder.coef = c(2:9,1),
        label = "tab:logcov",no.margin = T,
        booktabs = TRUE,
        dcolumn = TRUE,
@@ -177,7 +241,7 @@ texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
        float.pos = "H",
        scalebox = 0.75,
        include.rs = FALSE,
-       include.rmse = FALSE)
+       include.rmse = FALSE,
        file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/log_min_max_controls.tex")
 
 screenreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3), digits = 3)
@@ -192,7 +256,7 @@ texreg(list(e1ab03,e1ac03,e2bc03,e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGc
        custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
                                       "Centro", "Derecha", "Ninguno", "No sabe",
                                       "Desigualdad percibida (Log)"),
-       caption = "Modelos de regresi\\'on",
+       caption = "Modelos de regresi\\'on para desigualdad recomendada",
        caption.above = TRUE,
        reorder.coef = c(2:8,1),
        label = "tab:logcov",
@@ -207,16 +271,26 @@ texreg(list(e1ab03,e1ac03,e2bc03,e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGc
        float.pos = "H",
        scalebox = 0.75,
        include.rs = FALSE,
-       include.rmse = FALSE,
-       file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/log_min_max_controls2.tex")
+       include.rmse = FALSE),
+       file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/log_min_max_controls2.tex") 
 
 ```
 
 
 ```{r Escala Creencia mundo justo}
 #----correlacion----
+
+
+
 just <- st %>% select(JW1,JW2,JW3,JW4,JW5)
 corrplot(cor(just,use = "pairwise.complete.obs"),type = "lower")
+?cor2latex()
+
+cor2latex(just,use = "pairwise", method="pearson", adjust="holm",stars=TRUE,
+       digits=2,rowlabels=TRUE,lower=TRUE,apa=TRUE,short.names=TRUE,
+     font.size ="scriptsize", heading="A correlation table from the psych package in R.",
+      caption="cor2latex",label="default",silent=FALSE,file=NULL,append=FALSE,cut=0,big=0)
+
 
 #---EFA----
 sjt.itemanalysis(just)
@@ -225,8 +299,16 @@ KMO(just) # Overall MSA =  0.68
 cortest.bartlett(just) #Chi2= 489.6131 , p =0.00
 plot(scree(just)) #Criterio codo= 1 factor
 
-efa <- fa(just, nfactors = 1, fm = "ml", rotate = "varimax")
+efa <- fa(just, nfactors = 1, fm = "ml", rotate = "oblimin")
 fa.diagram(efa)
+fa2latex(f = efa,
+         rowlabels = TRUE,
+         heading = NULL,
+         caption = "Análisis Factorial Exploratorio para escala Creencia en un Mundo Justo",
+         label = "efa_bwj",digits = 3, 
+         font.size = "normalsize",
+         apa = TRUE,
+         file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/efa_bjw.tex")
 
 # ML1 = Factor 1 extraído con método de máxima verosimilitud
 # h2 = comunalidad
@@ -235,7 +317,9 @@ fa.diagram(efa)
 
 #---CFA----
 bjw <- 'just=~JW2+JW3+JW4+JW5'
-fit <- cfa(model = bjw,data = st,ordered = c("JW2","JW3","JW4","JW5"))
+fit <- cfa(model = bjw,
+           data = st,
+           ordered = c("JW2","JW3","JW4","JW5"))
 
 summary(fit, standardized=TRUE)
 fitmeasures(fit, fit.measures = c("chisq","pvalue","df","cfi","rmsea"))
@@ -248,7 +332,7 @@ sjt.corr(cor1)
 psych::cor2latex(cor1,stars = TRUE)
 ```
 
-```{r zscore-log}
+```{r zscore-log_anexos}
 e1ad05 <- lm(zlog~factor(TIPO2), data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
 e1bd05 <- lm(zlog~factor(TIPO2), data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
 e2cd05 <- lm(zlog~factor(TIPO2), data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
@@ -257,11 +341,92 @@ logOGcov1a <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpad2) #G
 logOGcov2b <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + cov
 logOGcov3c <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero) + cov
 
-screenreg(list(logOGcov1a,logOGcov2b,logOGcov3c), digits = 2,
-          omit.coef = c("educ"),
-          custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
-                                      "Centro", "Derecha", "Ninguno", "No sabe",
-                                      "Desigualdad percibida (Log)"))
+nota <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre paréntesis \\\\ 
+          $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. \\\\
+          \\textbf{\\textit{Nota}}: La variable dependiente  Desigualdad recomendada fue estandarizada a puntajes $z$ ($\\mu$=0, $\\sigma$=1) }")
+
+
+texreg(
+  list(logOGcov1a, logOGcov2b, logOGcov3c),
+  custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
+  custom.coef.names = c(
+    "Intercepto",
+    "Tratamiento",
+    "Creencia Mundo Justo",
+    "Centro",
+    "Derecha",
+    "Ninguno",
+    "No sabe",
+    "Desigualdad percibida (Log)",
+    "Educación"
+  ), 
+  caption = "Modelos de regresi\\'on para Desigualdad recomendada en unidades de desviación estándar $z$",
+  caption.above = TRUE,
+  reorder.coef = c(2:9, 1),
+  label = "tab:logcov_z",
+  no.margin = T,
+  booktabs = TRUE,
+  dcolumn = TRUE,
+  single.row = FALSE,
+  bold = FALSE,
+  digits = 2,
+  leading.zero = TRUE,
+  use.packages = FALSE,
+  float.pos = "H",
+  scalebox = 0.75,
+  include.rs = FALSE,
+  include.rmse = FALSE,
+  custom.note = nota,
+  file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/anexo_zscore_models.tex")
+
 ```
 
+```{r}
+gap<- 10171496/228640 #Basado en CASEN 2011************ #44.48695 
+
+mean(st$perc_OG,na.rm = TRUE) #37.97615
+
+st %>% group_by(treat) %>% summarise(mean(perc_OG, na.rm = TRUE))
+st %>% group_by(treat) %>% summarise(mean(reco_OG, na.rm = TRUE))
+
+
+prop.table(table(tpad2$perc_OG>=gap)) # % que dice que la brecha es mayor a lo que realmente es
+prop.table(table(tpbd2$perc_OG>=gap))
+prop.table(table(tpcd2$perc_OG>=gap))
+prop.table(table(st$perc_OG>=gap)) # 0.8189533 == es menor | 93 en Trump
+                                   # 0.1810467 == es mayor
+```
+
+```{r ENACOES}
+enacoes <- read_dta("C:/Users/JC/Google Drive/Bases de Datos/COES/ENACOES_2014/ENACOES_2014_V4.dta") 
+
+data1 <- enacoes %>% select(B7_A, B7_B, B6_A, B6_B)
+
+data1$B6_A <-  recode(data1$B6_A,recodes = "99=NA") #Gerente de una gran empresa
+data1$B6_B <-  recode(data1$B6_B,recodes = "99=NA") #Obrero no calificado de una fábrica
+
+data1$per_gerente <- data1$B6_A
+data1$per_obrero  <- data1$B6_B
+data1$per_OG <- (data1$per_gerente/data1$per_obrero)
+
+mean(data1$per_gerente, na.rm = TRUE,trim = 0.1)
+freq <- data1 %>% group_by(per_OG) %>% summarise(n=n())
+
+mean(data1$per_OG,na.rm = TRUE) #percepción de salario Gerente/obrero
+mean(data1$per_OG,na.rm = TRUE, trim = 0.1) # media recortada (10% extremos)
+
+
+data1$B7_A <-  recode(data1$B7_A,recodes = "99=NA") #Gerente de una gran empresa
+data1$B7_B <-  recode(data1$B7_B,recodes = "99=NA") #Obrero no calificado de una fábrica
+
+data1$rec_gerente <- data1$B7_A
+data1$rec_obrero  <- data1$B7_B
+
+data1$rec_OG <- (data1$rec_gerente/data1$rec_obrero)
+
+mean(data1$rec_OG,na.rm = TRUE) #23.58908
+
+sjp.frq(data1$per_OG, type = "h", show.mean = TRUE, show.mean.val = TRUE,
+        normal.curve = TRUE, show.sd = TRUE, normal.curve.color = "blue")
+```
 
