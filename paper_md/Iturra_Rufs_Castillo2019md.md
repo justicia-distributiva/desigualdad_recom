@@ -22,10 +22,10 @@ La desigualdad económica es una característica común de gran parte de
 las sociedades modernas y ha ido en aumento desde la segunda mitad del
 siglo XX [@Esping_Andersen2007]. Aun cuando esta tendencia está siendo
 impulsada principalmente por el estrato superior de ingresos y sería,
-por ende, de interés para la mayor parte de la población que haya más
+por ende, de interés para la mayor parte de la población que exista mayor
 redistribución de recursos desde una perspectiva económica de elección
 racional, la presión social y preocupación pública por esta temática no
-ha aumentado en conjunto con el alza mencionado [@Trump2017]. Este
+ha aumentado en conjunto con el alza mencionada [@Trump2017]. Este
 contra-intuitivo escenario es el que explora Kris-Stella @Trump2017 de
 manera experimental en dos contextos distintos, Estados Unidos -país
 sumamente desigual a nivel mundial- y Suecia -país con menor nivel de
@@ -279,7 +279,7 @@ primer grupo (*n*=104) recibió información sobre las consecuencias de la
 reforma educacional en producir mayor equidad, además una lista de
 salarios para las seis ocupaciones mencionadas en la pregunta cuánto
 gana cada ocupación. El segundo grupo (*n*=148) solo recibió la
-información del párrafo; y finalmente, al tercer grupo (*n*=254) solo se
+información del párrafo sobre la reforma educacional (ver Anexo); y finalmente, al tercer grupo (*n*=254) solo se
 les mostró la información de la lista de salarios. Luego de recibir esta
 información, se le preguntó a los encuestados cuánto *cree que deberían
 ganar* mensualmente cada una de las seis ocupaciones. En la Información
@@ -294,16 +294,8 @@ de los resultados, se incluyeron como controles la escala de Creencia en
 un Mundo Justo (CMJ), posición política, nivel educacional y Desigualdad
 percibida.
 
-  **Ocupación**                            **Sueldo mensual**
-  ---------------------------------------- --------------------
-  Un gerente de una gran empresa           \$ 10.171.496
-  Un ministro de Gobierno chileno          \$ 7.417.865
-  Un doctor o médico de medicina general   \$ 2.912.983
-  Un dueño de una pequeña empresa          \$ 958.173
-  Un profesor de educación básica          \$ 597.646
-  Un obrero no calificado de una fábrica   \$ 228.640
 
-  Table: Tabla 1: Lista de salarios por ocupación
+
 
 # Resultados y discusión
 
@@ -319,7 +311,7 @@ Los resultados generales del experimento son presentados en la Figura 1
 para la desigualdad recomendada en base al máximo y mínimo salario
 mencionado. Así también, los resultados para la desigualdad recomendada
 en base al salario de las ocupaciones de alto y bajo esta tus son
-presentados en la Figura **2**
+presentados en la Figura 2.
 
 A partir de la Figura 1, se tiene que luego de
 recibir el tratamiento de información sobre desigualdad, es posible
@@ -378,8 +370,9 @@ personas de validar el sistema injusto en el que viven.
 
 ![**Fig. 2**: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada según ocupaciones de alto y bajo estatus](Resultados\images\barplot2.png){height=20em}
 
--------------------------------------------- ------------ ------------ ------------ ------------ ------------ ------------
+
                                              Modelo 1     Modelo 2     Modelo 3     Modelo 4     Modelo 5     Modelo 6
+-------------------------------------------- ------------ ------------ ------------ ------------ ------------ ------------ 
 Tratamiento                                  0.55\*\*\*   0.56\*\*\*   0.26         0.25         0.29\*\*     0.30\*\*
                                              (0.13)       (0.13)       (0.14)       (0.14)       (0.11)       (0.11)
 Creencia Mundo Justo                                      -0.03                     -0.05                     -0.04
@@ -402,11 +395,11 @@ R2                                           0.04         0.11         0.01     
 Adj. R2                                      0.04         0.09         0.01         0.03         0.01         0.04
 Num. obs.                                    310.00       310.00       338.00       338.00       445.00       445.00
 Errores estándar robustos entre paréntesis                                                                    
-\*\*\*p\<0.001 \*\*p\<0.01 \*p\<0.05                                                                          
+\*\*\*p\<0.001 \*\*p\<0.01 \*p\<0.05  
 -------------------------------------------- ------------ ------------ ------------ ------------ ------------ ------------
-Table: Tabla 2
+Table: Tabla 1: Modelos de regresión para desigualdad recomendada [^2]
 
-La Tabla 2 muestra que el efecto de la exposición a la
+La Tabla 1 muestra que el efecto de la exposición a la
 condición de desigualdad se mantiene cuando se controla por la creencia
 en un mundo justo, la posición política, percepción de desigualdad y
 educación. Estos resultados ofrecen evidencia a favor de la hipótesis de
@@ -534,16 +527,19 @@ y socioeconómica similares a encuestas tradicionales [@Zhang2018].
     escala para la Creencia en un Mundo Justo ($\chi^2(5)$=8.40,
     $p$=0.015, CFI=0.99, RMSEA=0.06). En base a esta evidencia, se
     procedió a crear un índice promedio con los ítems.
+[^2]:Condición A, corresponde al tratamiento con el párrafo sobre la reforma educacional y la lista de salarios. Condición B, es el párrafo unicamente; y Condición C es la lista de salarios por ocupación.
+
 
 
 # Anexos
 
-![**Fig. 3**: Comparación de la distribución de salario recomendado para un obrero no caliﬁcado de una fábrica según asignación del tratamiento](Resultados\images\obgapb.png){height=25em}
+![**Fig. 3**: Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento](Resultados\images\obgapb.png){height=25em}
 
-![**Fig. 4**: Comparación de la distribución de salario recomendado para un obrero no caliﬁcado de una fábrica según asignación del tratamiento](Resultados\images\gergapb.png){height=25em}
+![**Fig. 4**: Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento](Resultados\images\gergapb.png){height=25em}
 
--------------------------------------------------------------- ------------ ---------- -----------
+
                                                                 Modelo 1     Modelo 2   Modelo 3
+-------------------------------------------------------------- ------------ ---------- -----------
 Tratamiento                                                    0.49\*\*\*   0.22       0.26\*\*
                                                                 (0.12)       (0.12)     (0.10)
 Creencia Mundo Justo                                           -0.02        -0.04      -0.04
@@ -566,7 +562,24 @@ Adj. R2                                                        0.09         0.03
 Num. obs.                                                      310          338        445
 Errores estándar entre paréntesis                                                      
 \*\*\*p\<0.001 \*\*p\<0.01 \*p\<0.05                                                   
-_**Nota**_: La variable dependiente Desigualdad recomendada fue estandarizada a puntajes $z$ ($\mu\$=0, $\sigma$=1)}      
+_**Nota**_: La variable dependiente estandarizada     
 -------------------------------------------------------------- ------------ ---------- -----------
+Table: Tabla 2: Modelos de regresión para Desigualdad recomendada en unidades de desviación estándar $z$
+
+![**Fig. 5**: Condición de Tratamiento B "Consecuencias a largo palzo de la reforma educacional"](Resultados\images\treat2.png)
+
+**Ocupación**                            **Sueldo mensual**
+---------------------------------------- --------------------
+Un gerente de una gran empresa           \$ 10.171.496
+Un ministro de Gobierno chileno          \$ 7.417.865
+Un doctor o médico de medicina general   \$ 2.912.983
+Un dueño de una pequeña empresa          \$ 958.173
+Un profesor de educación básica          \$ 597.646
+Un obrero no calificado de una fábrica   \$ 228.640
+---------------------------------------- --------------------
+
+Table: Tabla 3: Condición de Tratamiento C "Lista de salarios por ocupación"
+
+
 
 # Referencias
