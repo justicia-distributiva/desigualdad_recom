@@ -1,18 +1,12 @@
----
-bibliography: C:/Users/JC/Dropbox/Bibtex/library.bib
-csl: C:/Users/JC/Dropbox/Bibtex/apa6.csl
----
-
-# Kriss-Stella @Trump2017
-
-Código Experimento @Trump2017
 
 ## Iturra J., Rufs C., Castillo JC.
-* Replicación Experimento Kriss-Stella Trump
-* Código de Modelos
-* Código de Plots (1)
+
+1. 20190117_modelos.rmd: código de modelos y creación de tablas
+2. 20190117_plots.rmd: código de gráficos
+3. `trump2019.RData`: la base de de datos.
+4. paper_md: texto del paper en Markdown
 
 
-$$D_1 = \ln\Bigg(\frac{\text{Máximo salario recomendado}}{\text{Mínimo salario recomendado}} \Bigg)$$
+### Referencias
 
-###Referencias
+Trump, K. S. (2017). Income Inequality Influences Perceptions of Legitimate Income Differences. British Journal of Political Science, (February), 1–24. https://doi.org/10.1017/S0007123416000326

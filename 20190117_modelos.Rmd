@@ -2,12 +2,6 @@
 title: "Modelos"
 author: "Julio Iturra - jciturra@uc.cl"
 date: "17 de enero de 2019"
-output:
-  pdf_document: default
-header-includes:
-  - \usepackage{booktabs}
-  - \usepackage{dcolumn}
-  - \usepackage{float} #fijar tabla
 editor_options: 
   chunk_output_type: console
 ---
@@ -27,7 +21,6 @@ library(psych)
 library(corrplot) 
 library(here)
 library(estimatr)
-
 ```
 
 ```{r datos, message=FALSE, warning=FALSE, include=FALSE}
@@ -44,7 +37,6 @@ st$zlog <- as.numeric(scale(st$log_reco_OG))
 <!-- P44,# Nivel educacional -->
 <!-- P49,# Rango de ingreso total mensual del hogar -->
 <!-- P3,#Posición política -->
-
 
 ```{r subset-treatment-groups, message=FALSE, warning=FALSE, include=FALSE, results='asis'}
 #Subset según variable TIPO2 full muestra
@@ -120,14 +112,12 @@ e2bc03 <- lm(log_reco~factor(TIPO2), data = tpbc2) #Grupo B vs C | Log(máximo/m
 
 ```
 
-
 ```{r percepcion desigualdad ~ treatment}
 pdesi1 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpad2) #Grupo A vs D | Dif ingreso son demasiado grandes + cov
 pdesi2 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpbd2) #Grupo B vs D | Dif ingreso son demasiado grandes + cov
 pdesi3 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpcd2) #Grupo C vs D | Dif ingreso son demasiado grandes + cov
 
 ```
-
 
 ```{r Modelos Desigualdad~Tratamientos+Covariables}
 tpad2$TIPO2 <- factor(tpad2$TIPO2)
@@ -153,7 +143,7 @@ screenreg(l = list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3))
 logOGcov4 <- lm(log_reco_OG~treat+jus2+ppol+log_perc_OG+educ, data = st) #Grupo simultáneo | Log(Gerente/obrero) + cov
 ```
 
-```{r HC2}
+```{r calculo con HC2}
 library(sandwich) #HC2
 library(lmtest) #coeftest
 
@@ -268,11 +258,11 @@ htmlreg(l = c(m0a,ac,m0b,bc,m0c,cc),
        file = here("tables","tabla1.xls")) 
 ```
 
-```{terminal}
-set PATH=%PATH%;C:\Program Files\stencila
-cd C:\Users\JC\Dropbox\papers\Investigacion-Trump\Codigo-variables\Code-Stella-Trump\tables
-stencila convert tabla1.ods tabla1.md
-
+```{r}
+# Con este código se puede usar la cmd de Windows para convertir el .ods a .md utilizando stencila.exe
+# set PATH=%PATH%;C:\Program Files\stencila
+# cd C:\Users\JC\Dropbox\papers\Investigacion-Trump\Codigo-variables\Code-Stella-Trump\tables
+# stencila convert tabla1.ods tabla1.md
 ```
 
 
@@ -358,8 +348,7 @@ texreg(
     "Ninguno",
     "No sabe",
     "Desigualdad percibida (Log)",
-    "Educación"
-  ), 
+    "Educación"), 
   caption = "Modelos de regresi\\'on para Desigualdad recomendada en unidades de desviación estándar $z$",
   caption.above = TRUE,
   reorder.coef = c(2:9, 1),
@@ -391,8 +380,7 @@ htmlreg(
     "Ninguno",
     "No sabe",
     "Desigualdad percibida (Log)",
-    "Educación"
-  ), 
+    "Educación"), 
   caption = "",
   caption.above = TRUE,
   reorder.coef = c(2:9, 1),
@@ -411,56 +399,6 @@ htmlreg(
   include.rmse = FALSE,
   custom.note = notab,
   file = here("tables","tabla_zval.xls"))
-
-
 ```
 
-```{r}
-gap<- 10171496/228640 #Basado en CASEN 2011************ #44.48695 
-
-mean(st$perc_OG,na.rm = TRUE) #37.97615
-
-st %>% group_by(treat) %>% summarise(mean(perc_OG, na.rm = TRUE))
-st %>% group_by(treat) %>% summarise(mean(reco_OG, na.rm = TRUE))
-
-
-prop.table(table(tpad2$perc_OG>=gap)) # % que dice que la brecha es mayor a lo que realmente es
-prop.table(table(tpbd2$perc_OG>=gap))
-prop.table(table(tpcd2$perc_OG>=gap))
-prop.table(table(st$perc_OG>=gap)) # 0.8189533 == es menor | 93 en Trump
-                                   # 0.1810467 == es mayor
-```
-
-```{r ENACOES}
-enacoes <- read_dta("C:/Users/JC/Google Drive/Bases de Datos/COES/ENACOES_2014/ENACOES_2014_V4.dta") 
-
-data1 <- enacoes %>% select(B7_A, B7_B, B6_A, B6_B)
-
-data1$B6_A <-  recode(data1$B6_A,recodes = "99=NA") #Gerente de una gran empresa
-data1$B6_B <-  recode(data1$B6_B,recodes = "99=NA") #Obrero no calificado de una fábrica
-
-data1$per_gerente <- data1$B6_A
-data1$per_obrero  <- data1$B6_B
-data1$per_OG <- (data1$per_gerente/data1$per_obrero)
-
-mean(data1$per_gerente, na.rm = TRUE,trim = 0.1)
-freq <- data1 %>% group_by(per_OG) %>% summarise(n=n())
-
-mean(data1$per_OG,na.rm = TRUE) #percepción de salario Gerente/obrero
-mean(data1$per_OG,na.rm = TRUE, trim = 0.1) # media recortada (10% extremos)
-
-
-data1$B7_A <-  recode(data1$B7_A,recodes = "99=NA") #Gerente de una gran empresa
-data1$B7_B <-  recode(data1$B7_B,recodes = "99=NA") #Obrero no calificado de una fábrica
-
-data1$rec_gerente <- data1$B7_A
-data1$rec_obrero  <- data1$B7_B
-
-data1$rec_OG <- (data1$rec_gerente/data1$rec_obrero)
-
-mean(data1$rec_OG,na.rm = TRUE) #23.58908
-
-sjp.frq(data1$per_OG, type = "h", show.mean = TRUE, show.mean.val = TRUE,
-        normal.curve = TRUE, show.sd = TRUE, normal.curve.color = "blue")
-```
 
