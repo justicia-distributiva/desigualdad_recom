@@ -26,7 +26,7 @@ por ende, de interés para la mayor parte de la población que haya más
 redistribución de recursos desde una perspectiva económica de elección
 racional, la presión social y preocupación pública por esta temática no
 ha aumentado en conjunto con el alza mencionado [@Trump2017]. Este
-contra-intuitivo escenario es el que explora Kris-Stella [@Trump2017] de
+contra-intuitivo escenario es el que explora Kris-Stella @Trump2017 de
 manera experimental en dos contextos distintos, Estados Unidos -país
 sumamente desigual a nivel mundial- y Suecia -país con menor nivel de
 desigualdad-, argumentando a través de la hipótesis de ajuste que la
@@ -34,18 +34,18 @@ percepción del nivel de desigualdad de ingresos a nivel contextual
 afectará el nivel de desigualdad que los individuos de esa sociedad
 consideren legítimo.
 
-Este argumento fue explorado con antelación por [@Castillo2011] en
+Este argumento fue explorado con antelación por @Castillo2011 en
 Chile, país que, aun cuando ha presentado una disminución moderada en su
 desigualdad durante la última década, sigue estando dentro de los más
 desiguales del mundo [@PNUD2015; @WDI2018]. Los resultados de esa
 investigación van en la línea de los experimentos realizados por
-[@Trump2017], donde se ha evidenciado que existe una mayor justificación
+@Trump2017, donde se ha evidenciado que existe una mayor justificación
 de desigualdad de ingresos cuando se percibe mayores brechas en estos.
 En relación a la evidencia señalada, este artículo tiene por objetivo
 profundizar los hallazgos para Chile respecto de cómo afecta la
 percepción de la desigualdad de ingresos en la legitimación de mayores
 diferencias entre los ingresos más altos y más bajos, inspirándose en el
-experimento diseñado por [@Trump2017].
+experimento diseñado por @Trump2017.
 
 ## Marco Teórico
 
@@ -85,13 +85,13 @@ central en estudio es la justificación de la desigualdad
 operacionalizada desde la diferencia recomendada o \"justa\"
 -establecida por un individuo- entre los salarios de dos ocupaciones de
 estatus extremos , para comprobar legitimidad como propuso
-[@Castillo2011] en su investigación, habrá que evaluar si existen o no
+@Castillo2011 en su investigación, habrá que evaluar si existen o no
 diferencias entre grupos de distintos niveles de estatus.
 
 Con esa precisión conceptual establecida, a continuación, se
 profundizará en los mecanismos que pueden mediar el cómo la percepción
 de mayor desigualdad de ingresos puede significar una mayor legitimidad
-de esta en un contexto dado. [@Shepelak1986] examinaron el efecto que
+de esta en un contexto dado. @Shepelak1986 examinaron el efecto que
 tenía la realidad en la que vivían las personas en su percepción sobre
 cómo debería ser esa realidad en torno al tema de justicias
 distributivas. Esta teoría plantea que las personas responden ante
@@ -102,7 +102,7 @@ existan en el contexto en el que se encuentre. En términos simples esto
 significa que la distribución actual de los recursos en un contexto va a
 influir en el consenso sobre cuánta desigualdad es justificable
 [@Castilloetal2019]. Esto se produce, en parte, por la hipótesis de
-ajuste propuesta por [@Trump2017] . Ante la pregunta de por qué frente a
+ajuste propuesta por @Trump2017. Ante la pregunta de por qué frente a
 mayor desigualdad de ingresos no se produce un incremento en la demanda
 por mayor redistribución, esta hipótesis sugiere que los individuos
 tienden a justificar la desigualdad a partir de procesos cognitivos, lo
@@ -117,7 +117,7 @@ desigualdad legítima en este caso - por justificaciones racionales, y
 también, por anclaje. El ajuste racional se produce cuando, a partir de
 datos fácticos del contexto, las personas cambian su opinión respecto de
 cómo debiesen ser las cosas [@Trump2017]. Un ejemplo de ello lo entrega
-esta misma autora, Kriss-Stella [@Trump2017]; supongamos que una persona
+esta misma autora, Kriss-Stella @Trump2017; supongamos que una persona
 recibe información respecto de cuánto es el sueldo de un oficio o
 profesión en particular. A través del ajuste racional, la persona
 intentará justificar ese monto con razones como el esfuerzo, la
@@ -133,11 +133,11 @@ alternativo de comportamiento económico racional, basado en la
 racionalidad limitada [@Simon1955]. Entonces, el efecto de anclaje es la
 gran influencia que tiene un valor presentado inicialmente en los
 tomadores de decisiones, la cual sesga su juicio [@Tversky1974]. Desde
-el ámbito de la justicia distributiva, [@Markovsky1988] plantea que la
+el ámbito de la justicia distributiva, @Markovsky1988 sostiene que la
 opinión sobre una recompensa justa puede estar sesgada por una
 recompensa ancla de conocimiento previo, si es que esa ancla está en la
 misma escala que la respuesta sobre la recompensa justa. Por lo tanto,
-siguiendo el mismo ejemplo utilizado por [@Trump2017], si a una persona
+siguiendo el mismo ejemplo utilizado por @Trump2017, si a una persona
 se le dice cuánto gana una profesión u oficio en particular, este monto
 puede funcionar como un ancla que luego sesga la respuesta respecto de
 cuánto cree que debería o sería justo ganar.
@@ -146,7 +146,7 @@ Si el ejemplo anteriormente utilizado se amplía al concepto de
 desigualdad, el conocimiento de cuánto es la diferencia salarial entre
 dos ocupaciones, la de más y la de menos prestigio, producirá sesgos
 racionales y de anclaje en cuanto a la desigualdad que una persona
-considera justa o recomienda. [@Wegener1987] sostiene que las personas
+considera justa o recomienda. @Wegener1987 sostiene que las personas
 creen que la distribución de recursos o asignación de sueldos actual es
 justa porque no tienen conocimiento de cómo se distribuyen en realidad.
 Esto las vuelve propensas a sesgarse por la información de la que
@@ -160,12 +160,12 @@ se debe esperar que todos recomienden los mismos niveles de desigualdad,
 pero sí que las diferencias entre cuanto perciben y recomiendan sean
 proporcionalmente iguales entre los distintos grupos sociales.
 
-El segundo mecanismo sicológico de ajuste afecta cómo la percepción de
+El segundo mecanismo cognitivo de ajuste afecta cómo la percepción de
 mayor desigualdad puede significar una mayor legitimidad de esta en un
 contexto dado, proviene de la teoría de justificación de sistema
 [@Trump2017]. Melvin Lerner se preguntó cómo es que aquellos sistemas
 que generan sufrimiento son capaces de mantener el apoyo popular
-[@Lerner1966] . Esta teoría postula que el ser humano tiende a apoyar y
+[@Lerner1966]. Esta teoría postula que el ser humano tiende a apoyar y
 defender el status quo social [@Blasi2006], de modo tal que el sistema
 en el que vive es considerado justo y legítimo con el objetivo de
 reducir el malestar y estrés sicológico que produce la idea contraria.
@@ -182,12 +182,12 @@ injusticias. No obstante, frente a las distintas interpretaciones
 factibles, los individuos poseen sesgos con respecto a preferir
 situaciones que generen menores grados de disonancia cognitiva
 [@Trump2017]. Para medir de manera más directa esta última teoría
-descrita, acudiremos a la escala creada por [@Rubin1975], Creencia en un
+descrita, acudiremos a la escala creada por @Rubin1975, Creencia en un
 mundo justo . A través de ella recabaron evidencia de que muchas
 personas creen que el mundo es un lugar donde las buenas personas son
 recompensadas y las malas castigadas, admirando a personas afortunadas y
 mirando en menos a aquellas que no lo son. Su versión más actual
-Creencia global en un mundo justo de [@Lipkus1991] está correlacionada
+Creencia global en un mundo justo de @Lipkus1991 está correlacionada
 con la motivación de justificación del sistema, ya que mide la creencia
 por parte de las personas de que el mundo donde viven es justo.
 Entonces, mediante esta escala se podrá operacionalizar el sesgo
@@ -207,7 +207,6 @@ explorar si la teoría de elección racional juega un papel relevante o
 bien, el contexto brinda un nivel de desigualdad legítimo.
 
 # Datos, variables y método
-
 
 *Midiendo las actitudes hacia las Diferencias de Ingreso Legítimas*
 
@@ -243,7 +242,6 @@ utiliza el salario máximo y mínimo mencionado por el entrevistado. Esto
 se debe a que el interés principal es conocer la desigualdad, tanto
 percibida como recomendada, desde un punto de vista global.
 
-
 $$ D_1 = \ln\Bigg(\frac{\text{Máximo salario recomendado}}{\text{Mínimo salario recomendado}}\Bigg) (1)$$
 
 Adicionalmente, calculamos el mismo índice en base al salario de la
@@ -258,9 +256,7 @@ la ocupación de menor estatus.
 
 $$D_2= \ln\Bigg(\frac{\text{Salario Gerente}}{\text{Salario Obrero}}\Bigg) (2)$$
 
-
-
-## Experimento {#experimento .unnumbered}
+## Experimento
 
 
 Entre noviembre y diciembre de 2014 se realizó una encuesta de corte
@@ -338,10 +334,9 @@ globales.
 ![**Fig. 1**: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general](Resultados\images\barplot1.png){height=20em}
 
 
-
 Conforme a lo anterior, se realizó el análisis para determinar el efecto
 del tratamiento sobre la desigualdad recomendada en base al índice
-propuesto por [@Jasso1999], considerando el salario recomendado para las
+propuesto por @Jasso1999, considerando el salario recomendado para las
 ocupaciones de alto y bajo estatus. Se evidenció que luego de recibir el
 tratamiento de información de la condición A -lista de salarios reales y
 párrafo sobre consecuencias de la reforma educacional-, la desigualdad
@@ -359,7 +354,7 @@ cambio de 0,32 en la desigualdad recomendada, equivalente a un
 incremento de 18% respecto al grupo control. En ambos tratamientos
 significativos, el alza se dio porque las personas tendieron a
 recomendar mayor salario para el gerente y dejar igual a los obreros
-(Ver en Anexos Figura 3 y 4}).
+(Ver en Anexos Figura 3 y 4).
 
 
 Lo anterior confirma la hipótesis respecto de que, al modificar la
@@ -380,8 +375,6 @@ particularmente porque desde esta se esperaría que el párrafo que
 inducía percepción de desigualdad hubiese producido un ajuste
 significativo en la recomendación de desigualdad, por el esfuerzo de las
 personas de validar el sistema injusto en el que viven.
-
-
 
 ![**Fig. 2**: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada según ocupaciones de alto y bajo estatus](Resultados\images\barplot2.png){height=20em}
 
@@ -408,7 +401,7 @@ Intercepto                                   1.78\*\*\*   1.19\*\*\*   1.78\*\*\
 R2                                           0.04         0.11         0.01         0.05         0.02         0.06
 Adj. R2                                      0.04         0.09         0.01         0.03         0.01         0.04
 Num. obs.                                    310.00       310.00       338.00       338.00       445.00       445.00
-Errores estándar robustos entre parentesis                                                                    
+Errores estándar robustos entre paréntesis                                                                    
 \*\*\*p\<0.001 \*\*p\<0.01 \*p\<0.05                                                                          
 -------------------------------------------- ------------ ------------ ------------ ------------ ------------ ------------
 Table: Tabla 2
@@ -461,8 +454,7 @@ estatus social de los individuos, así como también por los niveles de
 desigualdad percibida, lo cual va en consonancia con los hallazgos
 reportados por [@Trump2017] para el contexto estadounidense y sueco.
 
-# Conclusiones {#conclusiones .unnumbered}
-
+# Conclusiones
 
 El presente trabajo ha evidenciado que la desigualdad recomendada se ve
 afectada por la percepción de desigualdad, específicamente cuando los
@@ -481,7 +473,7 @@ promedio más alto que cada condición de manera individual.
 
 En un principio, se postuló la interrogante con respecto a si la
 hipótesis de ajuste cognitivo de expectativas se cumpliría para el
-contexto de Chile. [@Trump2017] evidenció que en contextos con diversos
+contexto de Chile. @Trump2017 evidenció que en contextos con diversos
 grados desigualdad económica y diferencias sustantivas en términos de
 políticas de bienestar, poseer mayor información con respecto a la
 desigualdad económica sí afecta la desigualdad que recomiendan los
@@ -490,7 +482,7 @@ abordar el análisis de la desigualdad recomendada, por un lado empleamos
 la medida que utilizó Trump para analizar la desigualdad general, donde
 no se evidenciaron diferencias significativas ente los distintos grupos
 de estudio. Por otro lado, decidimos emplear la medida propuesta por
-[@Jasso1999] como alternativa a lo realizado por Trump, evidenciando que
+@Jasso1999 como alternativa a lo realizado por Trump, evidenciando que
 la información sobre desigualdad salarial tiene un efecto sustantivo en
 la desigualdad recomendada según ocupaciones de alto y bajo estatus.
 
@@ -537,7 +529,7 @@ ventaja de ser altamente eficiente en el uso de recursos, además de que
 permite obtener muestras con niveles de heterogeneidad socioedemográfica
 y socioeconómica similares a encuestas tradicionales [@Zhang2018].
 
-[^1]: En base a los criterios señalados por [@Brown2008], se realizó un
+[^1]: En base a los criterios señalados por @Brown2008, se realizó un
     Análisis Factorial Confirmatorio que evidenció un buen ajuste de la
     escala para la Creencia en un Mundo Justo ($\chi^2(5)$=8.40,
     $p$=0.015, CFI=0.99, RMSEA=0.06). En base a esta evidencia, se
