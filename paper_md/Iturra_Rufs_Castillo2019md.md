@@ -276,36 +276,29 @@ y justa. Adicionalmente, se emplearon 2 tratamientos en tres
 combinaciones distintas. Posteriormente a responder a la pregunta sobre
 cuánto *cree que gana* mensualmente cada una de las seis ocupaciones, el
 primer grupo (*n*=104) recibió información sobre las consecuencias de la
-reforma educacional en producir mayor equidad, además una lista de
-salarios para las seis ocupaciones mencionadas en la pregunta cuánto
-gana cada ocupación. El segundo grupo (*n*=148) solo recibió la
-información del párrafo sobre la reforma educacional (ver Anexo); y finalmente, al tercer grupo (*n*=254) solo se
-les mostró la información de la lista de salarios. Luego de recibir esta
+reforma educacional en producir mayor equidad (Anexo Figura 5), además una lista de
+salarios para las seis ocupaciones mencionadas en la pregunta relacionada a cuánto cree que
+gana cada ocupación (anexo Tabla 3). El segundo grupo (*n*=148) solo recibió la
+información del párrafo sobre la reforma educacional ; y finalmente, al tercer grupo (*n*=254) solo se
 información, se le preguntó a los encuestados cuánto *cree que deberían
-ganar* mensualmente cada una de las seis ocupaciones. En la Información
-Sumplementaria se provee de una tabla de balance de la asignación
-aleatoria.
+ganar* mensualmente cada una de las seis ocupaciones. En la sección de anexo se provee de una tabla de balance de la asignación
+aleatoria según cada covariable.
 
-El sección siguiente se presentarán los resultados del análisis. Se
-estimaron una serie de modelos de regresión para determinar si la
+En la siguiente sección se presentarán los resultados del análisis, donde se
+estimaron una serie de modelos de regresión lineal para determinar si la
 exposición a información sobre desigualdad tiene un efecto sobre la
 desigualdad recomendada. Con el objetivo de poner a prueba la robustez
 de los resultados, se incluyeron como controles la escala de Creencia en
 un Mundo Justo (CMJ), posición política, nivel educacional y Desigualdad
 percibida.
 
-
-
-
 # Resultados y discusión
 
 En primer lugar, es relevante destacar que un 82% de los participantes
 percibe que la brecha entre el salario de las ocupaciones de mayor y de
-menor estatus es menor a la que realmente es según los datos CASEN 2011.
-Esta información nos hace estar seguros de que, al aplicar los
-tratamientos, efectivamente estamos ajustando su percepción de
-desigualdad hacia arriba al informarles de que existe más de la que
-ellos pensaban.
+menor estatus es menor a la que realmente se puede determinar según los datos CASEN 2011.
+Esta información permite confirmar que al ser expuestos a la condición de información, se está generando
+un ajuste efectivo en términos de la percepción de desigualdad.
 
 Los resultados generales del experimento son presentados en la Figura 1
 para la desigualdad recomendada en base al máximo y mínimo salario
@@ -313,46 +306,43 @@ mencionado. Así también, los resultados para la desigualdad recomendada
 en base al salario de las ocupaciones de alto y bajo esta tus son
 presentados en la Figura 2.
 
-A partir de la Figura 1, se tiene que luego de
-recibir el tratamiento de información sobre desigualdad, es posible
-evidenciar que no existe una diferencia significativa en términos de la
-desigualdad recomendada -en base al máximo y mínimo salario mencionado-
-para cada una de las condiciones. Estos resultados sugieren que,
-contrario a lo que se esperaba, mayor información respecto a la
-desigualdad no impacta en cuánta desigualdad se prefiere en términos
-globales.
+A partir de la Figura 1, los resultados sugieren que al
+recibir el tratamiento de información sobre desigualdad, no existen diferencias estadísticamente
+significativas en términos de la
+desigualdad recomendada general ($D_1$) para el grupo tratamiento respecto al grupo control.
+Estos resultados sugieren que, contrario a las expectativas, individuos que son más conscientes
+de la desigualdad a nivel estructural no cambian sus preferencias de salario justo en términos globales.
 
 
 ![**Fig. 1**: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general](Resultados\images\barplot1.png){height=20em}
 
-
-Conforme a lo anterior, se realizó el análisis para determinar el efecto
+Conforme a lo anterior, se realizó el análisis posterior para determinar el efecto
 del tratamiento sobre la desigualdad recomendada en base al índice
 propuesto por @Jasso1999, considerando el salario recomendado para las
 ocupaciones de alto y bajo estatus. Se evidenció que luego de recibir el
-tratamiento de información de la condición A -lista de salarios reales y
-párrafo sobre consecuencias de la reforma educacional-, la desigualdad
-recomendada incrementó en 0,55. Esto ya que el grupo tratado recomienda
-2,32 en contraste con 1.77 del grupo control (p\<0.001), lo cual
-representa un cambio aproximado de un 31%. Por otro lado, se evidenció
+tratamiento de información de la condición A  - lista de salarios reales y
+párrafo sobre consecuencias de la reforma educacional - , la desigualdad
+recomendada incrementó en 0,55 puntos. Esto en base a que el grupo que expuesto a ambas condiciones
+simultáneas recomienda2,32 en contraste con 1.77 del grupo control (p\<0.001), lo cual
+representa un incremento aproximado de un 31%. Por otro lado, se evidenció
 que el tratamiento de información de la condición B, basado en el
 párrafo sobre la reforma educacional, no afecta el nivel de desigualdad
 que prefieren los individuos. Si bien existe un incremento de 0,23 en la
-desigualdad recomendada, el tratamiento no produce una diferencia
+desigualdad recomendada, el tratamiento no genera una diferencia
 estadísticamente significativa respecto al grupo control. Finalmente, se
 evidenció que obtener información sobre la desigualdad salarial según
 ocupación -tratamiento de información bajo la condición C-, produce un
 cambio de 0,32 en la desigualdad recomendada, equivalente a un
-incremento de 18% respecto al grupo control. En ambos tratamientos
-significativos, el alza se dio porque las personas tendieron a
-recomendar mayor salario para el gerente y dejar igual a los obreros
+incremento de 18% respecto al grupo control. En ambos casos las diferencias son estadísticamente
+significativas, lo cual se explica fundamentalmente por el incremento del salario recomendado para
+la ocupación de gerente, mientras que el salario del obrero se mantuvo en un promedio similar.
 (Ver en Anexos Figura 3 y 4).
 
 
-Lo anterior confirma la hipótesis respecto de que, al modificar la
-percepción de desigualdad de las personas mediante información sobre las
-altas diferencias entre los salarios distintas ocupaciones, ellas
-tienden a recomendar mayores niveles de desigualdad. Esto podría estar
+Los resultados del punto anterior confirma la hipótesis respecto de que al manipular la
+percepción de desigualdad de las personas a través de información sobre la magnitud de la desigualdad
+salarial entre distintas ocupaciones, existe una tendencia que se traduce en
+que se justifique mayor desigualdad en estos términos. Esto podría estar
 ocurriendo por la hipótesis de ajuste discutida en el marco teórico
 [@Trump2017], a partir del sesgo de ancla y de la justificación
 racional. Es interesante el que el ajuste cognitivo ocurra a partir de
@@ -372,7 +362,7 @@ personas de validar el sistema injusto en el que viven.
 
 
                                              Modelo 1     Modelo 2     Modelo 3     Modelo 4     Modelo 5     Modelo 6
--------------------------------------------- ------------ ------------ ------------ ------------ ------------ ------------ 
+-------------------------------------------- ------------ ------------ ------------ ------------ ------------ ------------
 Tratamiento                                  0.55\*\*\*   0.56\*\*\*   0.26         0.25         0.29\*\*     0.30\*\*
                                              (0.13)       (0.13)       (0.14)       (0.14)       (0.11)       (0.11)
 Creencia Mundo Justo                                      -0.03                     -0.05                     -0.04
@@ -419,7 +409,8 @@ dirección, ya que presenta coeficientes negativos en dos de los
 tratamientos, ni en magnitud, dado que en la tercera condición tiene
 valor cero y no es estadísticamente significativa en ningún modelo. Este
 resultado va en línea con lo antes mencionado respecto del efecto no
-significativo del tratamiento del párrafo y difiere de lo obtenido por @Trump2017 para el contexto estadounidense y Sueco, donde sí se cumple
+significativo del tratamiento del párrafo y difiere de lo obtenido por @Trump2017
+para el contexto estadounidense y Sueco, donde sí se cumple
 la hipótesis. Por esto, sería interesante analizar en futuras
 investigaciones qué ocurre particularmente en la sociedad chilena con la
 teoría de justificación de sistemas. @Trump2017 propone un diseño
@@ -577,7 +568,6 @@ Un dueño de una pequeña empresa          \$ 958.173
 Un profesor de educación básica          \$ 597.646
 Un obrero no calificado de una fábrica   \$ 228.640
 ---------------------------------------- --------------------
-
 Table: Tabla 3: Condición de Tratamiento C "Lista de salarios por ocupación"
 
 
