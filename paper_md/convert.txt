@@ -1,0 +1,19 @@
+cd C:\Users\JC\Dropbox\papers\Investigacion-Trump\paper\versionMarkdown
+
+pandoc -s Iturra_Rufs_Castillo2019md.tex -o Iturra_Rufs_Castillo2019md.md
+
+
+pandoc -s Iturra_Rufs_Castillo2019md.md -o Iturra_Rufs_Castillo2019md.docx
+pandoc -s Iturra_Rufs_Castillo2019md.md --bibliography=zlibrary.bib --csl=apa6.csl -o Iturra_Rufs_Castillo2019md.docx
+
+
+set PATH=%PATH%;C:\Program Files\stencila
+
+cd C:\Users\JC\Dropbox\papers\Investigacion-Trump\Codigo-variables\Code-Stella-Trump\tables
+
+stencila convert tabla1.xlsx tabla1.md
+stencila convert tabla_zval.ods tabla_zval.md
+stencila convert tabla1.html tabla1.md
+
+
+tabla1.xlsx

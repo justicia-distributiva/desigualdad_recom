@@ -1,0 +1,41 @@
+\begin{table}[H]
+\caption{Log(Gerente/Obrero)}
+\begin{center}
+\scalebox{0.75}{
+\begin{tabular}{l@{} D{.}{.}{3.5}@{} D{.}{.}{3.5}@{} D{.}{.}{3.5}@{} D{.}{.}{3.5}@{} D{.}{.}{3.5}@{} D{.}{.}{3.5}@{} }
+\toprule
+& \multicolumn{2}{c}{Condición A}  & \multicolumn{2}{c}{Condición B}  & \multicolumn{2}{c}{Condición C}\\
+\cmidrule(l{1pt}r{2pt}){2-3} \cmidrule(l{2pt}r{2pt}){4-5} \cmidrule(l{2pt}r{2pt}){6-7}
+& \multicolumn{1}{c}{Modelo 1} & \multicolumn{1}{c}{Modelo 2} & \multicolumn{1}{c}{Modelo 3} & \multicolumn{1}{c}{Modelo 4} & \multicolumn{1}{c}{Modelo 5} & \multicolumn{1}{c}{Modelo 6} \\
+\midrule
+Tratamiento                 & 0.55^{***} & 0.56^{***} & 0.23       & 0.24       & 0.32^{**}  & 0.30^{**}  \\
+                            & (0.14)     & (0.14)     & (0.13)     & (0.14)     & (0.11)     & (0.11)     \\
+Creencia Mundo Justo        &            & -0.03      &            & -0.05      &            & -0.04      \\
+                            &            & (0.06)     &            & (0.06)     &            & (0.04)     \\
+Centro                      &            & 0.36       &            & 0.25       &            & 0.39       \\
+                            &            & (0.24)     &            & (0.24)     &            & (0.21)     \\
+Derecha                     &            & 0.52^{*}   &            & 0.05       &            & 0.20       \\
+                            &            & (0.25)     &            & (0.25)     &            & (0.20)     \\
+Ninguno                     &            & -0.05      &            & -0.16      &            & 0.07       \\
+                            &            & (0.17)     &            & (0.17)     &            & (0.14)     \\
+No sabe                     &            & 0.64       &            & 0.36       &            & 0.38       \\
+                            &            & (0.43)     &            & (0.43)     &            & (0.37)     \\
+Desigualdad percibida (Log) &            & 0.16^{**}  &            & 0.12^{*}   &            & 0.10^{*}   \\
+                            &            & (0.06)     &            & (0.06)     &            & (0.05)     \\
+Educación                   &            & 0.03       &            & 0.04       &            & 0.06^{*}   \\
+                            &            & (0.03)     &            & (0.03)     &            & (0.03)     \\
+Intercepto                  & 1.77^{***} & 1.19^{***} & 1.77^{***} & 1.39^{***} & 1.77^{***} & 1.18^{***} \\
+                            & (0.08)     & (0.33)     & (0.08)     & (0.33)     & (0.08)     & (0.27)     \\
+\midrule
+Adj. R$^2$                  & 0.04       & 0.09       & 0.01       & 0.03       & 0.02       & 0.04       \\
+%Num. obs.                   & 325        & 311        & 366        & 340        & 471        & 446        \\
+\textit{N}   & \multicolumn{1}{c}{325} & \multicolumn{1}{c}{311} & \multicolumn{1}{c}{366} & \multicolumn{1}{c}{340} & \multicolumn{1}{c}{471} & \multicolumn{1}{c}{446} \\
+\bottomrule
+\multicolumn{7}{m{17cm}}{\footnotesize{\parbox{1.0\linewidth}{\vspace{2pt} Errores estándar entre paréntesis.  \\ 
+			$^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. \\
+			\textbf{\textit{Nota}}: Condición A, corresponde al tratamiento con el párrafo sobre la reforma educacional y la lista de salarios. Condición B, es el párrafo unicamente; y Condición C es la lista de salarios por ocupación.}}} 
+\end{tabular}
+}
+\label{tab:logcov}
+\end{center}
+\end{table}
