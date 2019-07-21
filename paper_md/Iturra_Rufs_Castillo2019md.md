@@ -15,8 +15,8 @@ export_on_save:
 
 <link href="style.css" rel="stylesheet"></link>
 
-Introducción {#introducción .unnumbered}
-============
+# Introducción
+
 
 La desigualdad económica es una característica común de gran parte de
 las sociedades modernas y ha ido en aumento desde la segunda mitad del
@@ -47,8 +47,7 @@ percepción de la desigualdad de ingresos en la legitimación de mayores
 diferencias entre los ingresos más altos y más bajos, inspirándose en el
 experimento diseñado por [@Trump2017].
 
-Marco Teórico {#marco-teórico .unnumbered}
--------------
+## Marco Teórico
 
 La presencia sostenida de desigualdad en las sociedades modernas se ha
 desarrollado en el contexto que los estratos de mayores ingresos, han
@@ -207,8 +206,8 @@ recomendadas -controlando por percepción de desigualdad-, a modo de
 explorar si la teoría de elección racional juega un papel relevante o
 bien, el contexto brinda un nivel de desigualdad legítimo.
 
-Datos, variables y método {#datos-variables-y-método .unnumbered}
-=========================
+# Datos, variables y método
+
 
 *Midiendo las actitudes hacia las Diferencias de Ingreso Legítimas*
 
@@ -261,8 +260,8 @@ $$D_2= \ln\Bigg(\frac{\text{Salario Gerente}}{\text{Salario Obrero}}\Bigg) (2)$$
 
 
 
-Experimento {#experimento .unnumbered}
------------
+## Experimento {#experimento .unnumbered}
+
 
 Entre noviembre y diciembre de 2014 se realizó una encuesta de corte
 transversal titulada "Creencias políticas y sociales". El estudio se
@@ -310,8 +309,7 @@ percibida.
 
   Table: Tabla 1: Lista de salarios por ocupación
 
-Resultados y discusión {#resultados-y-discusión .unnumbered}
-======================
+# Resultados y discusión
 
 En primer lugar, es relevante destacar que un 82% de los participantes
 percibe que la brecha entre el salario de las ocupaciones de mayor y de
@@ -463,8 +461,8 @@ estatus social de los individuos, así como también por los niveles de
 desigualdad percibida, lo cual va en consonancia con los hallazgos
 reportados por [@Trump2017] para el contexto estadounidense y sueco.
 
-Conclusiones {#conclusiones .unnumbered}
-============
+# Conclusiones {#conclusiones .unnumbered}
+
 
 El presente trabajo ha evidenciado que la desigualdad recomendada se ve
 afectada por la percepción de desigualdad, específicamente cuando los
