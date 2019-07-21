@@ -31,16 +31,18 @@ load("trump2019.Rdata")
 
 
 st$TIPO2 <- factor(st$TIPO2)
-
+P32_4
+P32_2
 st$jus2 <- (st$JW2+st$JW3+st$JW4+st$JW4)/4 #en base al EFA y al CFA decidí dejar estos ítems
 #Subset según variable TIPO2 full muestra
 # st <- st %>% filter(reco < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
-tpab2 <- st %>% filter(TIPO2==1 | TIPO2==2) #Subset según TIPO==1 & 2 | A vs B
-tpac2 <- st %>% filter(TIPO2==1 | TIPO2==3) #Subset según TIPO==1 & 3 | A vs C
-tpad2 <- st %>% filter(TIPO2==1 | TIPO2==4) #Subset según TIPO==1 & 3 | A vs D
-tpbc2 <- st %>% filter(TIPO2==2 | TIPO2==3) #Subset según TIPO==1 & 3 | B vs C
-tpbd2 <- st %>% filter(TIPO2==2 | TIPO2==4) #Subset según TIPO==1 & 3 | B vs D
-tpcd2 <- st %>% filter(TIPO2==3 | TIPO2==4) #Subset según TIPO==3 & 4 | C vs D
+tpab2 <- st %>% filter(TIPO2==1 | TIPO2==2) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,COR,P32_4,P32_2) %>% na.omit()  #Subset según TIPO==1 & 2 | A vs B
+tpac2 <- st %>% filter(TIPO2==1 | TIPO2==3) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,COR,P32_4,P32_2) %>% na.omit()  #Subset según TIPO==1 & 3 | A vs C
+tpad2 <- st %>% filter(TIPO2==1 | TIPO2==4) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,COR,P32_4,P32_2) %>% na.omit()  #Subset según TIPO==1 & 3 | A vs D
+tpbc2 <- st %>% filter(TIPO2==2 | TIPO2==3) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,COR,P32_4,P32_2) %>% na.omit()  #Subset según TIPO==1 & 3 | B vs C
+tpbd2 <- st %>% filter(TIPO2==2 | TIPO2==4) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,COR,P32_4,P32_2) %>% na.omit()  #Subset según TIPO==1 & 3 | B vs D
+tpcd2 <- st %>% filter(TIPO2==3 | TIPO2==4) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,COR,P32_4,P32_2) %>% na.omit()  #Subset según TIPO==3 & 4 | C vs D
+
 
 tpab2$TIPO2 <- recode(tpab2$TIPO2,"2=0;1=1")#Recode tratamiento y control: Condción A y Control B| para comparar tratamientos
 tpac2$TIPO2 <- recode(tpac2$TIPO2,"3=0;1=1")#Recode tratamiento y control: Condción A y Control C| para comparar tratamientos
@@ -57,6 +59,7 @@ tpcd2$TIPO2 <- factor(tpcd2$TIPO2, levels = c(0,1), labels = c("Control", "Trata
 
 ```
 
+# Valores predichos Desigualdad Global 
 
 ```{r predicted-log(max/min), include=FALSE}
 #Predited logaritmizado Max/min
@@ -86,7 +89,7 @@ p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2), colour=fact
   scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[1]*')'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
-  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
   scale_colour_manual(values=c("white","black"))+
   theme_classic()
@@ -98,7 +101,7 @@ p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2),colour=facto
   scale_y_continuous(name = " ", limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
-  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
   scale_colour_manual(values=c("white","black"))+
   theme_classic()
@@ -110,7 +113,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2),colour=facto
   scale_y_continuous(name = " ", limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
-  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
   scale_colour_manual(values=c("white","black"))+
   theme_classic()
@@ -120,9 +123,12 @@ barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3)
            #Logaritmizado
 
 # ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot1.pdf", barplot2,units = "cm", width = 25,height = 10)
-# 
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/presentacion-alas/barplot1.png", barplot2,units = "cm", width = 25,height = 15)
+# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/presentacion-alas/barplot1.png", barplot2,units = "cm", width = 25,height = 15)
+ggsave(here("images","barplot1.png"), barplot2,units = "cm", width = 25,height = 10)
+
 ```
+
+# Valores predichos Desigualdad justa por ocupación 
 
 
 ```{r predicted-log(gerente/obrero), include=FALSE}
@@ -155,7 +161,7 @@ p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2), colour=fact
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
-  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
   scale_colour_manual(values=c("white","black"))+
   theme_classic()
@@ -168,7 +174,7 @@ p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2),colour=facto
   scale_y_continuous(name = " ", limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
-  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
   scale_colour_manual(values=c("white","black"))+
   theme_classic()
@@ -180,7 +186,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2),colour=facto
   scale_y_continuous(name = " ", limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
-  geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
+  # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
   scale_colour_manual(values=c("white","black"))+
   theme_classic()
@@ -190,8 +196,9 @@ library(gridExtra)
 barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3) #Logaritmizado
 
 # ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot2.pdf", barplot2,units = "cm", width = 25,height = 10)
+# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/presentacion-alas/barplot2.png", barplot2,units = "cm", width = 25,height = 15)
+ggsave(here("images","barplot2.png"), barplot2,units = "cm", width = 25,height = 10)
 
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/presentacion-alas/barplot2.png", barplot2,units = "cm", width = 25,height = 15)
 ```
 
 
@@ -214,7 +221,7 @@ tpbd2n <- merge(tpbd2,f02, by="COR")
 tpcd2n <- merge(tpcd2,f03, by="COR")
 ```
 
-```{r barplot-(gerente/obrero), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
+```{r barplot- (gerente/obrero), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
 
 bar_col <- c("gray35", "gray87")
 
@@ -225,7 +232,7 @@ p1<- ggplot(tpad2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   scale_y_continuous(name = "Gerente/obrero", limits = c(0,45))+
   scale_fill_grey(""," ")+
   theme_bw() +
-  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
+  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
   guides(color=FALSE) +
   scale_colour_manual(values=bar_col)
 
@@ -236,7 +243,7 @@ p2 <- ggplot(tpbd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   scale_y_continuous(name = " ", limits = c(0,45))+
   scale_fill_grey(""," ")+
   theme_bw() +
-  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
+  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
   guides(color=FALSE) +
   scale_colour_manual(values=bar_col)
 
@@ -247,7 +254,7 @@ p3 <- ggplot(tpcd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
   scale_y_continuous(name = " ", limits = c(0,45))+
   scale_fill_grey(""," ")+
   theme_bw() +
-  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
+  # geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
   guides(color=FALSE) +
   scale_colour_manual(values=c("white", "black"))
 
@@ -257,6 +264,7 @@ barplot3 <- grid.arrange(p1,p2,p3,ncol=3) #Normal
 # ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/barplot3.png", barplot3,units = "cm", width = 20,height = 15,dpi = "retina")
 ```
 
+# Boxplot
 
 ```{r boxplot}
 
@@ -433,8 +441,11 @@ gergapb <- grid.arrange(ger1b, ger2b, ger3b, nrow = 3,
                                        gp=gpar(fontsize=15,font=2))) #Normal
 
 
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/obgapb.pdf", obgapb,units = "cm", width = 25,height = 17)
-ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/gergapb.pdf", gergapb,units = "cm", width = 25,height = 17)
+# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/obgapb.pdf", obgapb,units = "cm", width = 25,height = 17)
+# ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/images/gergapb.pdf", gergapb,units = "cm", width = 25,height = 17)
+
+ggsave(here("images","obgapb.png"), obgapb,units = "cm", width = 25,height = 17)
+ggsave(here("images","gergapb.png"), gergapb,units = "cm", width = 25,height = 17)
 
 ```
 

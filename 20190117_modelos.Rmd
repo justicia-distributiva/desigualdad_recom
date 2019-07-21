@@ -14,21 +14,19 @@ editor_options:
 
 ```{r library, message=FALSE, warning=FALSE}
 options(scipen=999)
-library(haven)
 library(dplyr)
 library(car)
-library(stargazer)
 library(ggplot2)
 library(gridExtra)
 library(knitr)
-library(kableExtra)
 library(RItools) #xBalance
 library(texreg)
 library(lavaan)
 library(sjPlot)
 library(psych)
-library(semPlot)
 library(corrplot) 
+library(here)
+library(estimatr)
 
 ```
 
@@ -51,12 +49,12 @@ st$zlog <- as.numeric(scale(st$log_reco_OG))
 ```{r subset-treatment-groups, message=FALSE, warning=FALSE, include=FALSE, results='asis'}
 #Subset según variable TIPO2 full muestra
 # st <- st %>% filter(reco < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
-tpab2 <- st %>% filter(TIPO2==1 | TIPO2==2) #Subset según TIPO==1 & 2 | A vs B
-tpac2 <- st %>% filter(TIPO2==1 | TIPO2==3) #Subset según TIPO==1 & 3 | A vs C
-tpad2 <- st %>% filter(TIPO2==1 | TIPO2==4) #Subset según TIPO==1 & 3 | A vs D
-tpbc2 <- st %>% filter(TIPO2==2 | TIPO2==3) #Subset según TIPO==1 & 3 | B vs C
-tpbd2 <- st %>% filter(TIPO2==2 | TIPO2==4) #Subset según TIPO==1 & 3 | B vs D
-tpcd2 <- st %>% filter(TIPO2==3 | TIPO2==4) #Subset según TIPO==3 & 4 | C vs D
+tpab2 <- st %>% filter(TIPO2==1 | TIPO2==2) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,zlog) %>% na.omit()  #Subset según TIPO==1 & 2 | A vs B
+tpac2 <- st %>% filter(TIPO2==1 | TIPO2==3) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,zlog) %>% na.omit()  #Subset según TIPO==1 & 3 | A vs C
+tpad2 <- st %>% filter(TIPO2==1 | TIPO2==4) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,zlog) %>% na.omit()  #Subset según TIPO==1 & 3 | A vs D
+tpbc2 <- st %>% filter(TIPO2==2 | TIPO2==3) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,zlog) %>% na.omit()  #Subset según TIPO==1 & 3 | B vs C
+tpbd2 <- st %>% filter(TIPO2==2 | TIPO2==4) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,zlog) %>% na.omit()  #Subset según TIPO==1 & 3 | B vs D
+tpcd2 <- st %>% filter(TIPO2==3 | TIPO2==4) %>% select(TIPO2,P40,P41,educ,jus2,ppol,log_perc_OG,log_reco,pdesi,log_reco_OG,reco_OG,zlog) %>% na.omit()  #Subset según TIPO==3 & 4 | C vs D
 
 # tpab2$TIPO2 <- recode(tpab2$TIPO2,"2=0;1=1")  #Recode tratamiento y control: Condción A y Control B| para comparar tratamientos
 # tpac2$TIPO2 <- recode(tpac2$TIPO2,"3=0;1=1")  #Recode tratamiento y control: Condción A y Control C| para comparar tratamientos
@@ -115,54 +113,44 @@ coef <- c("(Intercepto)",
 
 ```
 
-
-```{r Modelos}
+```{r Comparacion de grupos}
 e1ab03 <- lm(log_reco~factor(TIPO2), data = tpab2) #Grupo A vs B | Log(máximo/mínimo)
 e1ac03 <- lm(log_reco~factor(TIPO2), data = tpac2) #Grupo A vs C | Log(máximo/mínimo)
 e2bc03 <- lm(log_reco~factor(TIPO2), data = tpbc2) #Grupo B vs C | Log(máximo/mínimo)
 
-e1ad04 <- lm(log_reco_OG~factor(TIPO2), data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
-e1bd04 <- lm(log_reco_OG~factor(TIPO2), data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
-e2cd04 <- lm(log_reco_OG~factor(TIPO2), data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
+```
 
-ab1 <- lm(log(reco_OG)~factor(TIPO2), data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
-ab2 <- lm(log(reco_OG)~factor(TIPO2), data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
-ab3 <- lm(log(reco_OG)~factor(TIPO2), data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
 
+```{r percepcion desigualdad ~ treatment}
 pdesi1 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpad2) #Grupo A vs D | Dif ingreso son demasiado grandes + cov
 pdesi2 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpbd2) #Grupo B vs D | Dif ingreso son demasiado grandes + cov
 pdesi3 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpcd2) #Grupo C vs D | Dif ingreso son demasiado grandes + cov
 
-logOGcov1 <- lm(log_reco_OG~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpad2) #Grupo A vs D | Log(Gerente/obrero) + cov
-logOGcov2 <- lm(log_reco_OG~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + cov
-logOGcov3 <- lm(log_reco_OG~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero) + cov
+```
 
+
+```{r Modelos Desigualdad~Tratamientos+Covariables}
 tpad2$TIPO2 <- factor(tpad2$TIPO2)
 tpbd2$TIPO2 <- factor(tpbd2$TIPO2)
 tpcd2$TIPO2 <- factor(tpcd2$TIPO2)
+tpad2$educ  <- factor(tpad2$educ)
+tpbd2$educ  <- factor(tpbd2$educ)
+tpcd2$educ  <- factor(tpcd2$educ)
+tpad2$educ  <- as.numeric(tpad2$educ)
+tpbd2$educ  <- as.numeric(tpbd2$educ)
+tpcd2$educ  <- as.numeric(tpcd2$educ)
 
-tpad2$educ <- factor(tpad2$educ)
-tpbd2$educ <- factor(tpbd2$educ)
-tpcd2$educ <- factor(tpcd2$educ)
+e1ad04 <- lm(log_reco_OG~TIPO2, data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
+e1bd04 <- lm(log_reco_OG~TIPO2, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
+e2cd04 <- lm(log_reco_OG~TIPO2, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
 
-tpad2$educ <- as.numeric(tpad2$educ)
-tpbd2$educ <- as.numeric(tpbd2$educ)
-tpcd2$educ <- as.numeric(tpcd2$educ)
+logOGcov1 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpad2) #Grupo A vs D 
+logOGcov2 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D 
+logOGcov3 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D 
 
+screenreg(l = list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3))
 
-logOGcov1 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpad2) #Grupo A vs D |interac
-logOGcov2 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D |interac
-logOGcov3 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D |interac
-
-screenreg(l = list(logOGcov1,logOGcov2,logOGcov3))
-plot_model(logOGcov1, type = "pred", terms = c("log_perc_OG","educ [1,10]"))
-
-
-logOGcov4 <- lm(log_reco_OG~treat*jus2+ppol+log_perc_OG+educ, data = st) #Grupo simultáneo | Log(Gerente/obrero) + cov
-summary(logOGcov4)
-plot_model(logOGcov4, type = "pred", terms = c("jus2","treat"))
-
-logOGcov2a <- lm(log_reco_OG~jus2, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + BJW scale
+logOGcov4 <- lm(log_reco_OG~treat+jus2+ppol+log_perc_OG+educ, data = st) #Grupo simultáneo | Log(Gerente/obrero) + cov
 ```
 
 ```{r HC2}
@@ -170,6 +158,9 @@ library(sandwich) #HC2
 library(lmtest) #coeftest
 
 #---Test según cada Tratamiento Log(Gerente/obrero) con HC2--------------------
+e1ad04HC2 <- coeftest(e1ad04   , vcov.= vcovHC(logOGcov1, "HC2"))#Grupo A vs D | Log(Gerente/obrero) sin cov(HC2)
+e1bd04HC2 <- coeftest(e1bd04   , vcov.= vcovHC(logOGcov2, "HC2"))#Grupo B vs D | Log(Gerente/obrero) sin cov(HC2)
+e2cd04HC2 <- coeftest(e2cd04   , vcov.= vcovHC(logOGcov3, "HC2"))#Grupo C vs D | Log(Gerente/obrero) sin cov(HC2)
 logOGhc2a <- coeftest(logOGcov1, vcov.= vcovHC(logOGcov1, "HC2"))#Grupo A vs D | Log(Gerente/obrero) + cov (HC2)
 logOGhc2b <- coeftest(logOGcov2, vcov.= vcovHC(logOGcov2, "HC2"))#Grupo B vs D | Log(Gerente/obrero) + cov (HC2)
 logOGhc2c <- coeftest(logOGcov3, vcov.= vcovHC(logOGcov3, "HC2"))#Grupo C vs D | Log(Gerente/obrero) + cov (HC2)
@@ -184,7 +175,7 @@ nobs(logOGcov2)
 # EL SE HC2 es consistente en muestras finitas e infinitas. Además, no asume ni homoscedasticidad ni linealidad.
 ```
 
-```{r HC2-tablas}
+```{r HC2-objetos-texreg}
 
 extract.lmHC2 <- function(model) {
   s <- summary(model)
@@ -210,17 +201,18 @@ gof.names <- c("R$^2$", "Adj.\\ R$^2$", "Num.\\ obs.")
    return(tr)
 }
 test <- createTexreg
-ac <- extract.lmHC2(logOGcov1) #condición A con robust SE 
-bc <- extract.lmHC2(logOGcov2) #condición B con robust SE 
-cc <- extract.lmHC2(logOGcov3) #condición C con robust SE 
-texreg::screenreg(l = c(ac,bc,cc)) #TEST
-
+m0a <- extract.lmHC2(e1ad04   ) #condición A con robust SE sin covariables
+m0b <- extract.lmHC2(e1bd04   ) #condición B con robust SE sin covariables
+m0c <- extract.lmHC2(e2cd04   ) #condición C con robust SE sin covariables
+ac  <- extract.lmHC2(logOGcov1) #condición A con robust SE con covariables
+bc  <- extract.lmHC2(logOGcov2) #condición B con robust SE con covariables
+cc  <- extract.lmHC2(logOGcov3) #condición C con robust SE con covariables
+htmlreg(l = c(m0a,ac,m0b,bc,m0c,cc)) #Modelos con robust SE
+screenreg(l = list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3))
 
 ```
 
-
-
-```{r Test-treat-Log(gerente/obrero)+controles, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+```{r TABLA: Modelos Log(gerente/obrero)+controles, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 library(texreg)
 texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
                 custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3","Modelo 4", "Modelo 5", "Modelo 6"),
@@ -241,24 +233,24 @@ texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
        float.pos = "H",
        scalebox = 0.75,
        include.rs = FALSE,
-       include.rmse = FALSE,
-       file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/log_min_max_controls.tex")
-
-screenreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3), digits = 3)
+       include.rmse = FALSE)
 ```
 
+```{r TABLA: Modelos HC2, message=FALSE, warning=FALSE, , echo=FALSE, results='asis'}
+notaA <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar robustos entre paréntesis \\\\ 
+          $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. \\\\
+          \\textbf{\\textit{Nota}}: La variable dependiente  Desigualdad recomendada fue estandarizada a puntajes $z$ ($\\mu$=0, $\\sigma$=1) }")
 
-```{r , echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+notaB <- c("Errores estándar robustos entre parentesis <br>
+           ***p&lt;0.001  **p&lt;0.01  *p&lt;0.05")
 
-texreg(list(e1ab03,e1ac03,e2bc03,e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
-       custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3","Modelo 4", "Modelo 5", "Modelo 6",
-                                       "Modelo 7","Modelo 8","Modelo 9"),
+htmlreg(l = c(m0a,ac,m0b,bc,m0c,cc),
+       custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3","Modelo 4", "Modelo 5", "Modelo 6"),
        custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
                                       "Centro", "Derecha", "Ninguno", "No sabe",
-                                      "Desigualdad percibida (Log)"),
-       caption = "Modelos de regresi\\'on para desigualdad recomendada",
-       caption.above = TRUE,
-       reorder.coef = c(2:8,1),
+                                      "Desigualdad percibida (Log)", "Educación"),
+       reorder.coef = c(2:9,1),
+       caption = "",
        label = "tab:logcov",
        no.margin = T,
        booktabs = TRUE,
@@ -271,17 +263,23 @@ texreg(list(e1ab03,e1ac03,e2bc03,e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGc
        float.pos = "H",
        scalebox = 0.75,
        include.rs = FALSE,
-       include.rmse = FALSE),
-       file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/log_min_max_controls2.tex") 
+       include.rmse = FALSE,
+       custom.note = notaB,
+       file = here("tables","tabla1.xls")) 
+```
+
+```{terminal}
+set PATH=%PATH%;C:\Program Files\stencila
+cd C:\Users\JC\Dropbox\papers\Investigacion-Trump\Codigo-variables\Code-Stella-Trump\tables
+stencila convert tabla1.ods tabla1.md
 
 ```
 
 
+# Anexos
+
 ```{r Escala Creencia mundo justo}
 #----correlacion----
-
-
-
 just <- st %>% select(JW1,JW2,JW3,JW4,JW5)
 corrplot(cor(just,use = "pairwise.complete.obs"),type = "lower")
 ?cor2latex()
@@ -325,7 +323,7 @@ summary(fit, standardized=TRUE)
 fitmeasures(fit, fit.measures = c("chisq","pvalue","df","cfi","rmsea"))
 ```
 
-```{r}
+```{r analisis factorial}
 cor1 <-st %>%  select(log_perc_OG,log_reco_OG, just)
 cor2 <- cor(cor1,use = "pairwise.complete.obs")
 sjt.corr(cor1)
@@ -336,7 +334,6 @@ psych::cor2latex(cor1,stars = TRUE)
 e1ad05 <- lm(zlog~factor(TIPO2), data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
 e1bd05 <- lm(zlog~factor(TIPO2), data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
 e2cd05 <- lm(zlog~factor(TIPO2), data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
-
 logOGcov1a <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpad2) #Grupo A vs D | Log(Gerente/obrero) + cov
 logOGcov2b <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + cov
 logOGcov3c <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero) + cov
@@ -344,8 +341,11 @@ logOGcov3c <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpcd2) #G
 nota <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre paréntesis \\\\ 
           $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. \\\\
           \\textbf{\\textit{Nota}}: La variable dependiente  Desigualdad recomendada fue estandarizada a puntajes $z$ ($\\mu$=0, $\\sigma$=1) }")
+notab <- c("Errores estándar entre paréntesis <br>
+          ***p&lt;0.001  **p&lt;0.01  *p&lt;0.05 <br>
+          _**Nota**_ La variable dependienteDesigualdad recomendada fue estandarizada a puntajes $z$ ($\\mu$=0, $\\sigma$=1)}")
 
-
+#--- EN LATEX-------------------------------------------------#
 texreg(
   list(logOGcov1a, logOGcov2b, logOGcov3c),
   custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
@@ -376,8 +376,42 @@ texreg(
   scalebox = 0.75,
   include.rs = FALSE,
   include.rmse = FALSE,
-  custom.note = nota,
-  file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/anexo_zscore_models.tex")
+  custom.note = nota)
+
+#--- EN HTML-------------------------------------------------#
+htmlreg(
+  list(logOGcov1a, logOGcov2b, logOGcov3c),
+  custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
+  custom.coef.names = c(
+    "Intercepto",
+    "Tratamiento",
+    "Creencia Mundo Justo",
+    "Centro",
+    "Derecha",
+    "Ninguno",
+    "No sabe",
+    "Desigualdad percibida (Log)",
+    "Educación"
+  ), 
+  caption = "",
+  caption.above = TRUE,
+  reorder.coef = c(2:9, 1),
+  label = "tab:logcov_z",
+  no.margin = FALSE,
+  booktabs = TRUE,
+  dcolumn = TRUE,
+  single.row = FALSE,
+  bold = FALSE,
+  digits = 2,
+  leading.zero = TRUE,
+  use.packages = FALSE,
+  float.pos = "H",
+  scalebox = 0.75,
+  include.rs = FALSE,
+  include.rmse = FALSE,
+  custom.note = notab,
+  file = here("tables","tabla_zval.xls"))
+
 
 ```
 
