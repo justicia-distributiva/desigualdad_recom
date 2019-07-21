@@ -273,32 +273,40 @@ control: estos no recibieron tratamiento de información, respondieron
 preguntas sociodemográficas, la escala de Creencia en un Mundo Justo
 (CMJ),[^1] seguido de las preguntas sobre desigualdad salarial percibida
 y justa. Adicionalmente, se emplearon 2 tratamientos en tres
-combinaciones distintas. Posteriormente a responder a la pregunta sobre
+combinaciones distintas lo cual se resume en la Tabla 1. Posteriormente a responder a la pregunta sobre
 cuánto *cree que gana* mensualmente cada una de las seis ocupaciones, el
 primer grupo (*n*=104) recibió información sobre las consecuencias de la
 reforma educacional en producir mayor equidad (Anexo Figura 5), además una lista de
 salarios para las seis ocupaciones mencionadas en la pregunta relacionada a cuánto cree que
 gana cada ocupación (anexo Tabla 3). El segundo grupo (*n*=148) solo recibió la
-información del párrafo sobre la reforma educacional ; y finalmente, al tercer grupo (*n*=254) solo se
-información, se le preguntó a los encuestados cuánto *cree que deberían
-ganar* mensualmente cada una de las seis ocupaciones. En la sección de anexo se provee de una tabla de balance de la asignación
-aleatoria según cada covariable.
+información a través del párrafo sobre las consecuencias de la reforma educacional
+; y finalmente, el tercer grupo (*n*=254) recibió el tratamiento con información
+de los salarios según ocupaciones de distinto estatus. Luego de recibir el tratamiento
+respectivo, a los entrevistados se les preguntó *cuánto cree que debería ganar...*
+ cada una de las ocupaciones.
 
-En la siguiente sección se presentarán los resultados del análisis, donde se
+|                                | Condición A | Condición B | Condición C |
+|--------------------------------|:-----------:|:-----------:|:-----------:|
+| Párrafo Reforma Educacional    |      Sí     |      Sí     |     No      |
+| Lista Salarios según Ocupación |      Sí     |      No     |     Sí      |
+Table: Tabla 1: Resumen Condiciones de Tratamiento
+
+En sección siguiente se presentan los principales resultados del análisis, donde se
 estimaron una serie de modelos de regresión lineal para determinar si la
 exposición a información sobre desigualdad tiene un efecto sobre la
-desigualdad recomendada. Con el objetivo de poner a prueba la robustez
+desigualdad recomendada. Adicionalmente, se realizaron una serie de análisis para
+determinar el balance de la asignación aleatoria (ver Anexo Tabla). Con el objetivo de poner a prueba la robustez
 de los resultados, se incluyeron como controles la escala de Creencia en
-un Mundo Justo (CMJ), posición política, nivel educacional y Desigualdad
-percibida.
+un Mundo Justo (CMJ), la posición política, nivel educacional y Desigualdad
+percibida en base a las ocupaciones de alto y bajo estatus.
 
 # Resultados y discusión
 
 En primer lugar, es relevante destacar que un 82% de los participantes
 percibe que la brecha entre el salario de las ocupaciones de mayor y de
 menor estatus es menor a la que realmente se puede determinar según los datos CASEN 2011.
-Esta información permite confirmar que al ser expuestos a la condición de información, se está generando
-un ajuste efectivo en términos de la percepción de desigualdad.
+Esta información permite confirmar que al ser expuestos a la condición de información,
+se está generando un ajuste efectivo en términos de la percepción de desigualdad.
 
 Los resultados generales del experimento son presentados en la Figura 1
 para la desigualdad recomendada en base al máximo y mínimo salario
@@ -306,13 +314,13 @@ mencionado. Así también, los resultados para la desigualdad recomendada
 en base al salario de las ocupaciones de alto y bajo esta tus son
 presentados en la Figura 2.
 
-A partir de la Figura 1, los resultados sugieren que al
-recibir el tratamiento de información sobre desigualdad, no existen diferencias estadísticamente
-significativas en términos de la
-desigualdad recomendada general ($D_1$) para el grupo tratamiento respecto al grupo control.
-Estos resultados sugieren que, contrario a las expectativas, individuos que son más conscientes
-de la desigualdad a nivel estructural no cambian sus preferencias de salario justo en términos globales.
-
+A partir de la Figura 1, los resultados sugieren que al recibir el tratamiento
+de información sobre desigualdad, no existen diferencias estadísticamente
+significativas en términos de la desigualdad recomendada general ($D_1$)
+para el grupo tratamiento respecto al grupo control.
+Estos resultados sugieren que, contrario a las expectativas iniciales, individuos que son más conscientes
+de la desigualdad a nivel estructural no cambian sus preferencias en términos de
+el salario que consideran justo.
 
 ![**Fig. 1**: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general](Resultados\images\barplot1.png){height=20em}
 
@@ -387,9 +395,9 @@ Num. obs.                                    310.00       310.00       338.00   
 Errores estándar robustos entre paréntesis                                                                    
 \*\*\*p\<0.001 \*\*p\<0.01 \*p\<0.05  
 -------------------------------------------- ------------ ------------ ------------ ------------ ------------ ------------
-Table: Tabla 1: Modelos de regresión para desigualdad recomendada [^2]
+Table: Tabla 2 : Modelos de regresión para desigualdad recomendada [^2]
 
-La Tabla 1 muestra que el efecto de la exposición a la
+La Tabla 2 muestra que el efecto de la exposición a la
 condición de desigualdad se mantiene cuando se controla por la creencia
 en un mundo justo, la posición política, percepción de desigualdad y
 educación. Estos resultados ofrecen evidencia a favor de la hipótesis de
@@ -436,7 +444,7 @@ brecha salarial recomendada. Esta evidencia permite sostener que la
 justificación de brecha salariales se explica, por un lado, por el
 estatus social de los individuos, así como también por los niveles de
 desigualdad percibida, lo cual va en consonancia con los hallazgos
-reportados por [@Trump2017] para el contexto estadounidense y sueco.
+reportados por @Trump2017 para el contexto estadounidense y sueco.
 
 # Conclusiones
 
