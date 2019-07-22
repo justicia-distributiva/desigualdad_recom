@@ -4,7 +4,7 @@ author:
 - Catalina Rufs
 - Juan Carlos Castillo
 bibliography:
-- 'zlibrary.bib'
+- 'C:\Users\JC\Dropbox\Bibtex\zlibrary.bib'
 csl:
 - 'apa6.csl'
 title: Desigualdad económica y su influencia sobre la percepción de las
@@ -210,7 +210,7 @@ bien, el contexto brinda un nivel de desigualdad legítimo.
 
 *Midiendo las actitudes hacia las Diferencias de Ingreso Legítimas*
 
-Al que igual [@Trump2017], nuestra variable dependiente es la actitud
+Al que igual @Trump2017, nuestra variable dependiente es la actitud
 hacia las diferencias de ingreso. Lo que se busca conocer es la opinión
 con respecto a qué tan grandes deberían estas diferencias entre
 ocupaciones de distinto estatus. Para realizar la medición de esta
@@ -236,7 +236,7 @@ mayor brecha entre el salario de la ocupación de alto estatus con la de
 estatus bajo.
 
 Dicho lo anterior, empleamos dos medidas basadas en el índice de
-justicia. La ecuación 1  representa la medida empelada por [@Trump2017], donde
+justicia. La ecuación 1  representa la medida empelada por @Trump2017, donde
 no se consideran las ocupaciones específicas, razón por la cual se
 utiliza el salario máximo y mínimo mencionado por el entrevistado. Esto
 se debe a que el interés principal es conocer la desigualdad, tanto
@@ -257,7 +257,6 @@ la ocupación de menor estatus.
 $$D_2= \ln\Bigg(\frac{\text{Salario Gerente}}{\text{Salario Obrero}}\Bigg) (2)$$
 
 ## Experimento
-
 
 Entre noviembre y diciembre de 2014 se realizó una encuesta de corte
 transversal titulada "Creencias políticas y sociales". El estudio se
@@ -282,7 +281,7 @@ gana cada ocupación (anexo Tabla 3). El segundo grupo (*n*=148) solo recibió l
 información a través del párrafo sobre las consecuencias de la reforma educacional
 ; y finalmente, el tercer grupo (*n*=254) recibió el tratamiento con información
 de los salarios según ocupaciones de distinto estatus. Luego de recibir el tratamiento
-respectivo, a los entrevistados se les preguntó *cuánto cree que debería ganar...*
+respectivo, a los entrevistados se les preguntó *"cuánto cree que debería ganar"*
  cada una de las ocupaciones.
 
 |                                | Condición A | Condición B | Condición C |
@@ -295,9 +294,8 @@ En sección siguiente se presentan los principales resultados del análisis, don
 estimaron una serie de modelos de regresión lineal para determinar si la
 exposición a información sobre desigualdad tiene un efecto sobre la
 desigualdad recomendada. Adicionalmente, se realizaron una serie de análisis para
-determinar el balance de la asignación aleatoria (ver Anexo Tabla). Con el objetivo de poner a prueba la robustez
-de los resultados, se incluyeron como controles la escala de Creencia en
-un Mundo Justo (CMJ), la posición política, nivel educacional y Desigualdad
+determinar el balance de la asignación aleatoria (ver Anexo Tabla). Con el objetivo de poner a prueba la robustez de los resultados, se incluyeron como controles la escala
+de Creencia en Mundo Justo (CMJ), la posición política, nivel educacional y Desigualdad
 percibida en base a las ocupaciones de alto y bajo estatus.
 
 # Resultados y discusión
