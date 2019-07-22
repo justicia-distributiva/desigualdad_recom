@@ -4,7 +4,7 @@ author:
 - Catalina Rufs
 - Juan Carlos Castillo
 bibliography:
-- 'C:\Users\JC\Dropbox\Bibtex\zlibrary.bib'
+- 'zlibrary.bib'
 csl:
 - 'apa6.csl'
 title: Desigualdad económica y su influencia sobre la percepción de las
