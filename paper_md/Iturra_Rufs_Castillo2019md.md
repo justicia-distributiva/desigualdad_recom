@@ -10,13 +10,14 @@ csl:
 title: Desigualdad económica y su influencia sobre la percepción de las
         diferencias de ingreso legítimas
 export_on_save:
-      html: true
+      html: false
+output:
+    word_document
 ---
 
 <link href="style.css" rel="stylesheet"></link>
 
-# Introducción 
-
+# Introducción
 
 La desigualdad económica es una característica común de gran parte de
 las sociedades modernas y ha ido en aumento desde la segunda mitad del

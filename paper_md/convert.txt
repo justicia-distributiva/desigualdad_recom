@@ -19,6 +19,4 @@ cd C:\Users\JC\Dropbox\papers\Investigacion-Trump\Codigo-variables\Code-Stella-T
 stencila convert tabla1.xlsx tabla1.md
 stencila convert tabla_zval.ods tabla_zval.md
 stencila convert tabla1.html tabla1.md
-
-
 tabla1.xlsx
