@@ -21,32 +21,15 @@ output:
 
 La desigualdad económica es una característica común de gran parte de
 las sociedades modernas y ha ido en aumento desde la segunda mitad del
-siglo XX [@Esping_Andersen2007]. Aun cuando esta tendencia está siendo
-impulsada principalmente por el estrato superior de ingresos y sería,
-por ende, de interés para la mayor parte de la población que exista mayor
-redistribución de recursos desde una perspectiva económica de elección
-racional, la presión social y preocupación pública por esta temática no
-ha aumentado en conjunto con el alza mencionada [@Trump2017]. Este
-contra-intuitivo escenario es el que explora Kris-Stella @Trump2017 de
-manera experimental en dos contextos distintos, Estados Unidos -país
-sumamente desigual a nivel mundial- y Suecia -país con menor nivel de
-desigualdad-, argumentando a través de la hipótesis de ajuste que la
-percepción del nivel de desigualdad de ingresos a nivel contextual
-afectará el nivel de desigualdad que los individuos de esa sociedad
-consideren legítimo.
+siglo XX [@Esping_Andersen2007]. Aun cuando esta tendencia se explica principalmente por cambios estrato superior de ingresos, esto ha hecho que recientes investigaciones han puesto  mayor atención a las consecuencias que la concentración de ingresos tiene sobre las percepciones y actitudes de los individuos hacia la desigualdad económica. Desde un punto de vista de elección racional, la demanda por mayor redistribución ha tenido un rol fundamental en entender cómo contextos más desiguales se traduce en cambios de las actitudes individuales [@Meltzer1981], no obstante, evidencia reciente sugiere que contextos más desiguales no se traducen necesariamente en mayor demanda por redistribución, sino que las percepciones en torno a la desigualdad juegan un rol fundamental en explicar de qué manera se justifica la desigualdad [@Trump2017].
+
+Conforme a lo anterior, la configuración de un escenario de alta desigualdad y baja demanda por redistribución sugiere el cuestionamiento respecto a cómo se explica dicho fenómeno. En este sentido, Kriss-Stella @Trump2017 abordó el rol que la percepción de desigualdad tiene sobre el grado de justificación de la desigualdad. Su trabajo pesquisó cómo la información sobre la desigualdad social afecta lo que los individuos consideran justo en términos salariales para ocupaciones de distinto estatus. La evidencia sugiere que en distintos contextos institucionales, tales como son las sociedades estadounidense y sueca, los individuos que poseen mayor información con respecto a la desigualdad tienden a justificar mayores brechas salariales. Así, el hecho que un mayor conocimiento de la desigualdad estructural se traduzca en una mayor justificación de la desigualdad sugiere que un enfoque de interés racional queda corto para explicar por qué en contextos de alta desigualdad no se refleja en una mayor demanda por redistribución.     
 
 Este argumento fue explorado con antelación por @Castillo2011 en
 Chile, país que, aun cuando ha presentado una disminución moderada en su
 desigualdad durante la última década, sigue estando dentro de los más
-desiguales del mundo [@PNUD2015; @WDI2018]. Los resultados de esa
-investigación van en la línea de los experimentos realizados por
-@Trump2017, donde se ha evidenciado que existe una mayor justificación
-de desigualdad de ingresos cuando se percibe mayores brechas en estos.
-En relación a la evidencia señalada, este artículo tiene por objetivo
-profundizar los hallazgos para Chile respecto de cómo afecta la
-percepción de la desigualdad de ingresos en la legitimación de mayores
-diferencias entre los ingresos más altos y más bajos, inspirándose en el
-experimento diseñado por @Trump2017.
+desiguales del mundo [@PNUD2015; @WDI2018]. Esta evidencia va en la línea de los hallazgos de los estudios realizados por
+@Trump2017. En relación a la evidencia señalada, el presente trabajo tiene por objetivo profundizar los hallazgos para el caso de Chile, un país que por un lado ha experimentado una progresiva disminución de la pobreza en las últimas décadas, pero que por otro lado ha mantenido una alta desigualdad de ingresos [@OECD2018].
 
 ## Marco Teórico
 
@@ -54,34 +37,28 @@ La presencia sostenida de desigualdad en las sociedades modernas se ha
 desarrollado en el contexto que los estratos de mayores ingresos, han
 sido quienes han tenido mayor influencia producto del aumento de sus
 riquezas [@Atkinson2011; @Volscho2012]. Ante este escenario, desde una
-perspectiva de interés-propio [@Meltzer1981] se esperaría que la mayor
-parte de la población estuviera en desacuerdo con la desigualdad
-existente. Esto, dado que sería beneficioso para ellos que existiera un
-aumento en la redistribución de recursos que les permitiera acceso a
-mayores niveles de estos. Entonces, ¿por qué el aumento de la
-desigualdad no viene acompañado de un incremento sistemático de la
-disconformidad y consecuente demanda por redistribución? La respuesta
-que se ha formulado es que esto ocurre dado que la percepción de
-desigualdad de ingresos existente en un contexto, afecta el nivel de
-justificación y/o legitimación de la desigualdad entre sus individuos
-[@Trump2017; @Castilloetal2019]. Los mecanismos a través de los cuales
-esto ocurre serán explorados a continuación, en conjunto con precisiones
-conceptuales relevantes para el estudio.
+perspectiva de interés-propio [@Meltzer1981] la predicción basada en este marco
+sugiere que una parte importante de la sociedad tenderían a demostrar altos grados de
+descontento con la distribución de los recursos existente. Sobre la base de este supuesto,
+medidas redistributivas serían favorables para quienes poseen menor riqueza, por tanto, la consecuencia esperada es un cambio en las preferencias de los individuos hacia medidas que favorezcan su situación de deprivacion [@Merton1968]
 
-En primer lugar, es necesario definir conceptualmente qué significa
-*justificar* o *legitimar* cierto nivel de desigualdad. Muchas veces
-estos dos conceptos se han utilizado de manera poco precisa como
-sinónimos [@Castillo2011], cuando en realidad la justificación
-individual de un nivel de desigualdad en particular, no implica
+En consonancia con el apartado anterior, cabe cuestionarnos: ¿por qué el aumento de la
+desigualdad no viene acompañado de un incremento sistemático de la
+disconformidad y consecuente demanda por mayor redistribución? La respuesta
+hipótesis que se ha desarrollado es que dicho fenómeno se produce porque la percepción de
+desigualdad de ingresos afecta el nivel de
+justificación y/o legitimación de la desigualdad entre sus individuos
+[@Trump2017; @Castilloetal2019].
+
+En primer lugar, la literatura ha señalado una distinción clave entre
+*justificación* y *Legitimación* al momento de abordar el estudio de la desigualdad.
+En ocasiones estos conceptos se han utilizado de manera análoga y poco precisa  [@Castillo2011]. Por un lado, la justificación
+individual de un nivel de desigualdad, no implica
 necesariamente que exista legitimidad de esta. La diferencia yace en que
-la legitimación de algo (autoridad, desigualdad, justicia, etc.) no
-proviene de un consentimiento privado, sino que de uno colectivo
-[@Walker1993]; es decir, requiere de la aceptación de grupos sociales de
-estatus variados, lo cual implica que exista validez a pesar del
-beneficio personal asociado a esta [@Weber1947]. Esto último es
-sumamente relevante en la justificación de la desigualdad de ingresos,
-ya que necesitaría de un consenso entre grupos sociales que fuera por
-sobre el interés propio al respecto. Entonces, dado que nuestra variable
+la legitimación de una idea o situación (autoridad, desigualdad, justicia, etc.) no
+proviene del consentimiento privado, sino que de un consenso de carácter social o colectivo
+[@Walker1993]; es decir, requiere del consenso de una idea entre grupos de
+distinto estatus social, lo cual implica validez social, independiente del beneficio personal que devenga de esta [@Weber1947]. Conceptualmente, fenómenos como la desigualdad económica pueden adquirir cierta legitimidad en la medida de que existe consenso entre distintos grupos de estatus, independiente de las consecuencias individuales que puedan originarse por ésta. Entonces, dado que nuestra variable
 central en estudio es la justificación de la desigualdad
 operacionalizada desde la diferencia recomendada o \"justa\"
 -establecida por un individuo- entre los salarios de dos ocupaciones de
@@ -197,15 +174,11 @@ aquellos que mayores puntajes alcancen, también validen mayores niveles
 de desigualdad como justos.
 
 La variable central de esta investigación es la desigualdad recomendada.
-En ella se podrá explorar el efecto de cuánta desigualdad percibían
-anteriormente, para probar la hipótesis de ajuste y también, el efecto
-que tiene en ello los distintos tratamientos que se realicen, los cuales
-serán explicados en detalle en la sección siguiente. Además, a través de
-las variables que se operacionalicen para medir status y grupo social se
-podrá medir si existen diferencias entre estos en las desigualdades
-recomendadas -controlando por percepción de desigualdad-, a modo de
-explorar si la teoría de elección racional juega un papel relevante o
-bien, el contexto brinda un nivel de desigualdad legítimo.
+A través de esta medida se explora el efecto de cuánta desigualdad percibían
+anteriormente, de modo tal que sea factible testear la hipótesis de ajuste y a su vez cómo
+se relaciona la información sobre la desigualdad económica con su justificación. Con el objetivo de determinar que el efecto de a información es robusto, incorporamos medidas de estatus social, percepción de desigualdad y justificación del sistema. Esto último es para determinar que es la información la que genera un ajuste y no las preferencias ideológicas o la percepción que tienen los individuos con respecto a la sociedad en que habitan. Obteniendo estos resultados, es plausible determinar la validez de la hipótesis de ajuste para el contexto chileno, así como también en qué medida teoría de elección racional juega un papel relevante en explicar la justificación de la desigualdad.
+
+A continuación se presentarán el procedimiento de elaboración del trabajo de campo, el diseño del estudio y la operacionalización de las variables del estudio.  
 
 # Datos, variables y método
 
@@ -330,7 +303,7 @@ ocupaciones de alto y bajo estatus. Se evidenció que luego de recibir el
 tratamiento de información de la condición A  - lista de salarios reales y
 párrafo sobre consecuencias de la reforma educacional - , la desigualdad
 recomendada incrementó en 0,55 puntos. Esto en base a que el grupo que expuesto a ambas condiciones
-simultáneas recomienda2,32 en contraste con 1.77 del grupo control (p\<0.001), lo cual
+simultáneas recomienda 2,32 en contraste con 1.77 del grupo control (p\<0.001), lo cual
 representa un incremento aproximado de un 31%. Por otro lado, se evidenció
 que el tratamiento de información de la condición B, basado en el
 párrafo sobre la reforma educacional, no afecta el nivel de desigualdad
@@ -514,7 +487,7 @@ en particular aquellas que se relacionan con temas distributivos.
 Futuras investigaciones deben avanzar hacia un estudio con tamaños
 muestrales que permitan realizar inferencias a nivel poblacional. En
 esta línea, recientes avances en el ámbito de la investigación realizada
-a través de encuestas a través de internet sugieren que la la
+a través de encuestas a través de internet sugieren que la
 realización experimentos usando esta estrategia de muestreo tiene la
 ventaja de ser altamente eficiente en el uso de recursos, además de que
 permite obtener muestras con niveles de heterogeneidad socioedemográfica
