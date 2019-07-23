@@ -15,7 +15,7 @@ export_on_save:
 
 <link href="style.css" rel="stylesheet"></link>
 
-# Introducción
+# Introducción 
 
 
 La desigualdad económica es una característica común de gran parte de
