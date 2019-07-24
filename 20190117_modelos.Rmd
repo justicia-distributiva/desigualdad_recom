@@ -2,7 +2,7 @@
 title: "Modelos"
 author: "Julio Iturra - jciturra@uc.cl"
 date: "17 de enero de 2019"
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -18,7 +18,7 @@ library(texreg)
 library(lavaan)
 library(sjPlot)
 library(psych)
-library(corrplot) 
+library(corrplot)
 library(here)
 library(estimatr)
 ```
@@ -65,7 +65,7 @@ bal2 <- lm(TIPO2~factor(P40)+P41+educ+jus2+ppol+log_perc_OG,data =tpbd2 )# balan
 bal3 <- lm(TIPO2~factor(P40)+P41+educ+jus2+ppol+log_perc_OG,data =tpcd2 )# balance asignación aleatoria Grupo C vs D
 
 screenreg(l = list(bal1,bal2,bal3))
-notabal <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre paréntesis \\\\ 
+notabal <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre paréntesis \\\\
           $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. \\\\
           \\textbf{\\textit{Nota}}: }")
 
@@ -134,9 +134,9 @@ e1ad04 <- lm(log_reco_OG~TIPO2, data = tpad2) #Grupo A vs D | Log(Gerente/obrero
 e1bd04 <- lm(log_reco_OG~TIPO2, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
 e2cd04 <- lm(log_reco_OG~TIPO2, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
 
-logOGcov1 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpad2) #Grupo A vs D 
-logOGcov2 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D 
-logOGcov3 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D 
+logOGcov1 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpad2) #Grupo A vs D
+logOGcov2 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D
+logOGcov3 <- lm(log_reco_OG~TIPO2+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D
 
 screenreg(l = list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3))
 
@@ -178,7 +178,7 @@ extract.lmHC2 <- function(model) {
   adj <- s$adj.r.squared
   n <- nobs(model)
   gof <- c(rs, adj, n)
-  
+
 gof.names <- c("R$^2$", "Adj.\\ R$^2$", "Num.\\ obs.")
 
    tr <- createTexreg(
@@ -227,7 +227,7 @@ texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
 ```
 
 ```{r TABLA: Modelos HC2, message=FALSE, warning=FALSE, , echo=FALSE, results='asis'}
-notaA <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar robustos entre paréntesis \\\\ 
+notaA <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar robustos entre paréntesis \\\\
           $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. \\\\
           \\textbf{\\textit{Nota}}: La variable dependiente  Desigualdad recomendada fue estandarizada a puntajes $z$ ($\\mu$=0, $\\sigma$=1) }")
 
@@ -255,7 +255,7 @@ htmlreg(l = c(m0a,ac,m0b,bc,m0c,cc),
        include.rs = FALSE,
        include.rmse = FALSE,
        custom.note = notaB,
-       file = here("tables","tabla1.xls")) 
+       file = here("tables","tabla1.xls"))
 ```
 
 ```{r}
@@ -293,7 +293,7 @@ fa2latex(f = efa,
          rowlabels = TRUE,
          heading = NULL,
          caption = "Análisis Factorial Exploratorio para escala Creencia en un Mundo Justo",
-         label = "efa_bwj",digits = 3, 
+         label = "efa_bwj",digits = 3,
          font.size = "normalsize",
          apa = TRUE,
          file = "C:/Users/JC/Dropbox/Investigacion-Trump/paper/Resultados/tables/efa_bjw.tex")
@@ -328,7 +328,7 @@ logOGcov1a <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpad2) #G
 logOGcov2b <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + cov
 logOGcov3c <- lm(zlog~factor(TIPO2)+jus2+ppol+log_perc_OG+educ, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero) + cov
 
-nota <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre paréntesis \\\\ 
+nota <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre paréntesis \\\\
           $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. \\\\
           \\textbf{\\textit{Nota}}: La variable dependiente  Desigualdad recomendada fue estandarizada a puntajes $z$ ($\\mu$=0, $\\sigma$=1) }")
 notab <- c("Errores estándar entre paréntesis <br>
@@ -348,7 +348,7 @@ texreg(
     "Ninguno",
     "No sabe",
     "Desigualdad percibida (Log)",
-    "Educación"), 
+    "Educación"),
   caption = "Modelos de regresi\\'on para Desigualdad recomendada en unidades de desviación estándar $z$",
   caption.above = TRUE,
   reorder.coef = c(2:9, 1),
@@ -380,7 +380,7 @@ htmlreg(
     "Ninguno",
     "No sabe",
     "Desigualdad percibida (Log)",
-    "Educación"), 
+    "Educación"),
   caption = "",
   caption.above = TRUE,
   reorder.coef = c(2:9, 1),
@@ -400,5 +400,3 @@ htmlreg(
   custom.note = notab,
   file = here("tables","tabla_zval.xls"))
 ```
-
-
