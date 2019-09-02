@@ -9,8 +9,9 @@
 
 2.data/
   - `trump2019.RData`: la base de datos.
+  
 3. paper_md
-  - Iturra_Rufs_Castillo2019md.rmd: texto del paper 
+  - Iturra_Rufs_Castillo2019md.rmd: texto del paper
 
 ### Referencias
 
