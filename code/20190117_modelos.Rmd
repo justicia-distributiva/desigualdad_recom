@@ -25,7 +25,8 @@ library(estimatr)
 
 ```{r datos, message=FALSE, warning=FALSE, include=FALSE}
 rm(list=ls())
-load("trump2019.Rdata")
+
+load(here("data","trump2019.Rdata"))
 # st <- st %>% na.omit
 st$jus2 <- (st$JW2+st$JW3+st$JW4+st$JW4)/4 #BJW scale
 st$zlog <- as.numeric(scale(st$log_reco_OG))
