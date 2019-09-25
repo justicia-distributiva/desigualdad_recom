@@ -1,0 +1,876 @@
+<!DOCTYPE html><html><head>
+      <title>Desigualdad econ&#xF3;mica y su influencia sobre la percepci&#xF3;n de las diferencias de ingreso leg&#xED;timas</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({"extensions":["tex2jax.js"],"jax":["input/TeX","output/HTML-CSS"],"messageStyle":"none","tex2jax":{"processEnvironments":false,"processEscapes":true,"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"TeX":{"extensions":["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]},"HTML-CSS":{"availableFonts":["TeX"],"imageFont":null},"root":"file:///C:/Users/Usuario/.atom/packages/markdown-preview-enhanced/node_modules/@shd101wyy/mume/dependencies/mathjax"});
+        </script>
+        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+        
+      
+      
+
+      
+      
+      
+      
+      
+      
+
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <p><link href="style.css" rel="stylesheet"></p>
+<h1 id="introducci&#xF3;n">Introducci&#xF3;n</h1>
+<p>La desigualdad econ&#xF3;mica es una caracter&#xED;stica com&#xFA;n de gran parte de las sociedades modernas y ha ido en aumento desde la segunda mitad del siglo XX <span class="citation" data-cites="Esping_Andersen2007">(Esping-Andersen, 2007)</span>. Aun cuando esta tendencia se explica principalmente por cambios estrato superior de ingresos, esto ha hecho que recientes investigaciones hayan puesto mayor atenci&#xF3;n a las consecuencias que la concentraci&#xF3;n de ingresos tiene sobre las percepciones y actitudes de los individuos hacia la desigualdad econ&#xF3;mica. Desde un punto de vista de elecci&#xF3;n racional se espera que contextos m&#xE1;s desiguales lleven a mayores preferencias por la redistribuci&#xF3;n <span class="citation" data-cites="Meltzer1981">(Meltzer &amp; Richard, 1981)</span>, a&#xFA;n cuando evidencia reciente sugiere que este v&#xED;nculo entre desigualdad y redistribuci&#xF3;n es atravesado por la forma en que se percibe y se justifica la desigualdad <span class="citation" data-cites="Trump2017">(Trump, 2017)</span>.</p>
+<p>Diversos estudios han abordado la relaci&#xF3;n existente entre desigualdad y preferencias redistributivas [citas] Una l&#xED;nea relevante de investigaci&#xF3;n en este &#xE1;mbito es la desarrollada por Kriss-Stella <span class="citation" data-cites="Trump2017">Trump (2017)</span>, quien ha abordado el rol que la percepci&#xF3;n de desigualdad tiene sobre el grado de justificaci&#xF3;n de la desigualdad. Su trabajo pesquis&#xF3; c&#xF3;mo la informaci&#xF3;n sobre la desigualdad social afecta lo que los individuos consideran justo en t&#xE9;rminos salariales para ocupaciones de distinto estatus. La evidencia sugiere que en distintos contextos institucionales, tales como son las sociedades estadounidense y sueca, los individuos que poseen mayor informaci&#xF3;n con respecto a la desigualdad tienden a justificar mayores brechas salariales. As&#xED;, el hecho que un mayor conocimiento de la desigualdad estructural se traduzca en una mayor justificaci&#xF3;n de la desigualdad sugiere que un enfoque de inter&#xE9;s racional posee limitaciones para explicar por qu&#xE9; en contextos de alta desigualdad no necesariamente se presenta una mayor demanda por redistribuci&#xF3;n.</p>
+<p>La relaci&#xF3;n entre percepci&#xF3;n de desigualdad y su justificaci&#xF3;n ha sido investigada anteriormente para el caso Chileno <span class="citation" data-cites="Castillo2011">(Castillo, 2011)</span>, pa&#xED;s marcado por una alta desigualdad <span class="citation" data-cites="PNUD2015 WDI2018">(Larraga&#xF1;a &amp; Rodriguez, 2015; World Bank, 2018)</span>. Los resultados de esta investigaci&#xF3;n se&#xF1;alan que existir&#xED;a una asociaci&#xF3;n positiva entre percepci&#xF3;n y justificaci&#xF3;n de la desigualdad, a&#xFA;n cuando la direcci&#xF3;n de esta asociaci&#xF3;n es cuestionable dado que los an&#xE1;lisis se basan en datos de encuestas transversales. El presente trabajo pretende entonces profundizar en la asociaci&#xF3;n entre percepci&#xF3;n y justificaci&#xF3;n de desigualdad para el caso Chileno, mediante el uso de t&#xE9;cnicas experimentales como las utilizadas por <span class="citation" data-cites="Trump2017">Trump (2017)</span>. Para ello, en primer lugar se presentan antecedentes generales &#x2026;</p>
+<h2 id="factores-asociados-a-la-justificaci&#xF3;n-de-la-desigualdad">Factores asociados a la justificaci&#xF3;n de la desigualdad</h2>
+<p>La presencia sostenida de desigualdad en las sociedades modernas se ha desarrollado en el contexto que los estratos de mayores ingresos, han sido quienes han tenido mayor influencia producto del aumento de sus riquezas <span class="citation" data-cites="Atkinson2011 Volscho2012">(Atkinson et al., 2011; Volscho &amp; Kelly, 2012)</span>. Ante este escenario, desde una perspectiva de inter&#xE9;s-propio <span class="citation" data-cites="Meltzer1981">(Meltzer &amp; Richard, 1981)</span> la predicci&#xF3;n basada en este marco sugiere que una parte importante de la sociedad tender&#xED;an a demostrar altos grados de descontento con la distribuci&#xF3;n de los recursos existente. Sobre la base de este supuesto, medidas redistributivas ser&#xED;an favorables para quienes poseen menor riqueza, por tanto, la consecuencia esperada es un cambio en las preferencias de los individuos hacia medidas que favorezcan su situaci&#xF3;n de deprivaci&#xF3;n <span class="citation" data-cites="Merton1968">(Merton, 1968)</span>.</p>
+<p>En consonancia con el apartado anterior, cabe preguntarnos: &#xBF;por qu&#xE9; el aumento de la desigualdad no viene acompa&#xF1;ado de un incremento sistem&#xE1;tico de la disconformidad y mayor demanda por redistribuci&#xF3;n? La evidencia emp&#xED;rica sugiere que, en parte, individuos que perciben mayor desigualdad, son aquellos que consideran justa una mayor brecha salarial <span class="citation" data-cites="Trump2017 Castilloetal2019">(Castillo et al., 2019; Trump, 2017)</span>. En esta l&#xED;nea, una hip&#xF3;tesis basada en un enfoque de inter&#xE9;s racional sostendr&#xED;a que un incremento en la percepci&#xF3;n de desigualdad se traduce en mayor deprivaci&#xF3;n, lo cual a su vez traer&#xED;a consigo una mayor demanda por redistribuci&#xF3;n. Sin embargo, la evidencia sugiere prestar mayor atenci&#xF3;n al proceso de justificaci&#xF3;n de la desigualdad y cu&#xE1;les son los factores asociados a &#xE9;sta.</p>
+<p>En primer lugar, la literatura ha se&#xF1;alado una distinci&#xF3;n clave entre <em>justificaci&#xF3;n</em> y <em>Legitimaci&#xF3;n</em> al momento de abordar el estudio de la desigualdad. En ocasiones estos conceptos se han utilizado de manera an&#xE1;loga y poco precisa <span class="citation" data-cites="Castillo2011">(Castillo, 2011)</span>. Por un lado, la justificaci&#xF3;n individual de un nivel de desigualdad, no implica necesariamente que exista legitimidad de esta. La diferencia yace en que la legitimaci&#xF3;n de una idea o situaci&#xF3;n (autoridad, desigualdad, justicia, etc.) no proviene del consentimiento privado, sino que de un consenso de car&#xE1;cter social o colectivo <span class="citation" data-cites="Walker1993">(Walker &amp; Zelditch, 1993)</span>; es decir, requiere del consenso de una idea entre grupos de distinto estatus social, lo cual implica validez social, independiente del beneficio personal que devenga de esta <span class="citation" data-cites="Weber1947">(Weber et al., 1947)</span>. Conceptualmente, fen&#xF3;menos como la desigualdad econ&#xF3;mica pueden considerarse leg&#xED;timos en la medida de que existe consenso entre distintos grupos de estatus, independiente de las consecuencias individuales que puedan originarse por &#xE9;sta. Entonces, dado que nuestra variable central en estudio es la justificaci&#xF3;n de la desigualdad operacionalizada desde la diferencia recomendada o &#x201C;justa&#x201D; -establecida por un individuo- entre los salarios de ocupaciones de bajo y alto estatus. En este sentido, una manera de evidenciar si la desigualdad es considerada leg&#xED;tima, es a trav&#xE9;s de la evaluaci&#xF3;n de la ausencia de diferencias entre los distintos grupos de estatus <span class="citation" data-cites="Castillo2011 Castillo2012justice">(Castillo, 2011; Juan C. Castillo, 2012)</span></p>
+<p>Con esa precisi&#xF3;n conceptual establecida, a continuaci&#xF3;n, se profundizar&#xE1; en los mecanismos que pueden mediar el c&#xF3;mo la percepci&#xF3;n de mayor desigualdad de ingresos puede significar una mayor legitimidad de esta en un contexto dado. <span class="citation" data-cites="Shepelak1986">Shepelak &amp; Alwin (1986)</span> examinaron el efecto que ten&#xED;a la realidad en la que viv&#xED;an las personas en su percepci&#xF3;n sobre c&#xF3;mo deber&#xED;a ser esa realidad en torno al tema de justicia distributiva. Esta teor&#xED;a plantea que las personas responden ante est&#xE1;ndares existenciales de justicia, lo cual significa que los est&#xE1;ndares de justicia que cada individuo recomiende estar&#xE1;n afectados por los est&#xE1;ndares reales -o mejor dicho, percibidos de la realidad- que existan en el contexto en el que se encuentre. En t&#xE9;rminos simples esto significa que la distribuci&#xF3;n actual de los recursos en un contexto va a influir en el consenso sobre cu&#xE1;nta desigualdad es justificable <span class="citation" data-cites="Castilloetal2019">(Castillo et al., 2019)</span>. Esto se produce, en parte, por el mecanismo de ajuste propuesto por <span class="citation" data-cites="Trump2017">Trump (2017)</span>. Ante la pregunta de por qu&#xE9; frente a mayor desigualdad de ingresos no se produce un incremento en la demanda por mayor redistribuci&#xF3;n, esta hip&#xF3;tesis sugiere que los individuos tienden a justificar la desigualdad a partir de procesos cognitivos, lo que tiene como resultado un aumento de la brecha de ingresos que se considera justa.</p>
+<p>El proceso psicol&#xF3;gico de ajuste planteado por la hip&#xF3;tesis, se dar a partir de dos v&#xED;as: (1) sesgo de status quo y (2) teor&#xED;a de justificaci&#xF3;n del sistema <span class="citation" data-cites="Trump2017">(Trump, 2017)</span>. El sesgo de status quo ocurre cuando las personas adaptan sus expectativas de la realidad - desigualdad leg&#xED;tima en este caso - por justificaciones racionales, y tambi&#xE9;n, por anclaje. El ajuste racional se produce cuando, a partir de datos f&#xE1;cticos del contexto, las personas cambian su opini&#xF3;n respecto de c&#xF3;mo debiesen ser las cosas <span class="citation" data-cites="Trump2017">(Trump, 2017)</span>. Un ejemplo de ello lo entrega esta misma autora, Kriss-Stella <span class="citation" data-cites="Trump2017">Trump (2017)</span>; supongamos que una persona recibe informaci&#xF3;n respecto de cu&#xE1;nto es el sueldo de un oficio o profesi&#xF3;n en particular. A trav&#xE9;s del ajuste racional, la persona intentar&#xE1; justificar ese monto con razones como el esfuerzo, la inversi&#xF3;n o la productividad que implica esa carrera, por ejemplo, y as&#xED; ajustar&#xE1; sus apreciaciones respecto de cu&#xE1;nto deber&#xED;a ganar.</p>
+<p>En conjunto con el sesgo de la racionalidad viene el efecto de anclaje, el cual es una de las heur&#xED;sticas cognitivas m&#xE1;s robustas <span class="citation" data-cites="Furnham2011">(Furnham &amp; Boo, 2011)</span>. La heur&#xED;stica, que se caracteriza por permitir a la cognici&#xF3;n una respuesta intuitiva y r&#xE1;pida a modo de reducir la complejidad para predecir valores, fue acu&#xF1;ada para proponer un modelo alternativo de comportamiento econ&#xF3;mico racional, basado en la racionalidad limitada <span class="citation" data-cites="Simon1955">(Simon, 1955)</span>. Entonces, el efecto de anclaje es la gran influencia que tiene un valor presentado inicialmente en los tomadores de decisiones, la cual sesga su juicio <span class="citation" data-cites="Tversky1974">(Tversky &amp; Kahneman, 1974)</span>. Desde el &#xE1;mbito de la justicia distributiva, <span class="citation" data-cites="Markovsky1988">Markovsky (1988)</span> sostiene que la opini&#xF3;n sobre una recompensa justa puede estar sesgada por una recompensa ancla de conocimiento previo, si es que esa ancla est&#xE1; en la misma escala que la respuesta sobre la recompensa justa. Por lo tanto, siguiendo el mismo ejemplo utilizado por <span class="citation" data-cites="Trump2017">Trump (2017)</span>, si a una persona se le dice cu&#xE1;nto gana una profesi&#xF3;n u oficio en particular, este monto puede funcionar como un ancla que luego sesga la respuesta respecto de cu&#xE1;nto cree que deber&#xED;a o ser&#xED;a justo ganar.</p>
+<p>Si el ejemplo anteriormente utilizado se ampl&#xED;a al concepto de desigualdad, el conocimiento de cu&#xE1;nto es la diferencia salarial entre dos ocupaciones, la de m&#xE1;s y la de menos prestigio, producir&#xE1; sesgos racionales y de anclaje en cuanto a la desigualdad que una persona considera justa o recomienda. <span class="citation" data-cites="Wegener1987">Wegener (1987)</span> sostiene que las personas creen que la distribuci&#xF3;n de recursos o asignaci&#xF3;n de sueldos actual es justa porque no tienen conocimiento de c&#xF3;mo se distribuyen en realidad.</p>
+<p>Esto las vuelve propensas a sesgarse por la informaci&#xF3;n de la que disponen, lo que &#xE9;l denomina la ilusi&#xF3;n de la justicia distributiva. Es relevante destacar esto, ya que el tipo de informaci&#xF3;n respecto de la realidad distributiva al que accede cada persona estar&#xE1; determinado por su posici&#xF3;n en la jerarqu&#xED;a social <span class="citation" data-cites="Castillo2011">(Castillo, 2011)</span>. Por lo tanto, es de esperar que cada grupo social perciba y recomiende distintos niveles de desigualdad. Entonces, para poder evaluar la legitimidad consensuada no se debe esperar que todos recomienden los mismos niveles de desigualdad, pero s&#xED; que las diferencias entre cuanto perciben y recomiendan sean proporcionalmente iguales entre los distintos grupos sociales.</p>
+<p>El segundo mecanismo cognitivo de ajuste afecta c&#xF3;mo la percepci&#xF3;n de mayor desigualdad puede significar una mayor legitimidad de esta en un contexto dado, proviene de la teor&#xED;a de justificaci&#xF3;n de sistema <span class="citation" data-cites="Trump2017">(Trump, 2017)</span>. Melvin Lerner se pregunt&#xF3; c&#xF3;mo es que aquellos sistemas que generan sufrimiento son capaces de mantener el apoyo popular <span class="citation" data-cites="Lerner1966">(Lerner &amp; Simmons, 1966)</span>. Esta teor&#xED;a postula que el ser humano tiende a apoyar y defender el status quo social <span class="citation" data-cites="Blasi2006">(Blasi &amp; Jost, 2006)</span>, de modo tal que el sistema en el que vive es considerado justo y leg&#xED;timo con el objetivo de reducir el malestar y estr&#xE9;s sicol&#xF3;gico que produce la idea contraria. As&#xED;, este ajuste tiene como resultado la legitimaci&#xF3;n de la informaci&#xF3;n que reciben sobre el sistema distributivo <span class="citation" data-cites="Trump2017">(Trump, 2017)</span>. Desde esta teor&#xED;a, es plausible sostener que al recibir informaci&#xF3;n respecto a cuan desigual es la distribuci&#xF3;n de recursos, los individuos tienden a justificarla y validarla acr&#xED;ticamente, a modo de sentirse c&#xF3;modos en el status quo, y luego recomienden como justos niveles superiores de desigualdad.</p>
+<p>Dicho lo anterior, esto no implica que las personas siempre acepten las injusticias. No obstante, frente a las distintas interpretaciones factibles, los individuos poseen sesgos con respecto a preferir situaciones que generen menores grados de disonancia cognitiva <span class="citation" data-cites="Trump2017">(Trump, 2017)</span>. Para medir de manera m&#xE1;s directa esta &#xFA;ltima teor&#xED;a descrita, acudiremos a la escala creada por <span class="citation" data-cites="Rubin1975">Rubin &amp; Peplau (1975)</span>, Creencia en un mundo justo. A trav&#xE9;s de ella recabaron evidencia de que muchas personas creen que el mundo es un lugar donde las buenas personas son recompensadas y las malas castigadas, admirando a personas afortunadas y mirando en menos a aquellas que no lo son. Su versi&#xF3;n m&#xE1;s actual Creencia global en un mundo justo de <span class="citation" data-cites="Lipkus1991">Lipkus (1991)</span> est&#xE1; correlacionada con la motivaci&#xF3;n de justificaci&#xF3;n del sistema, ya que mide la creencia por parte de las personas de que el mundo donde viven es justo. Entonces, mediante esta escala se podr&#xE1; operacionalizar el sesgo sicol&#xF3;gico de justificaci&#xF3;n de sistemas, el cual debiese producir que aquellos que mayores puntajes alcancen, tambi&#xE9;n validen mayores niveles de desigualdad como justos.</p>
+<p>La variable central de esta investigaci&#xF3;n es la desigualdad recomendada. A trav&#xE9;s de esta medida se explora el efecto de cu&#xE1;nta desigualdad percib&#xED;an anteriormente, de modo tal que sea factible testear la hip&#xF3;tesis de ajuste y a su vez c&#xF3;mo se relaciona la informaci&#xF3;n sobre la desigualdad econ&#xF3;mica con su justificaci&#xF3;n. Con el objetivo de determinar que el efecto de a informaci&#xF3;n es robusto, incorporamos medidas de estatus social, percepci&#xF3;n de desigualdad y justificaci&#xF3;n del sistema. Esto &#xFA;ltimo es para determinar que es la informaci&#xF3;n la que genera un ajuste y no las preferencias ideol&#xF3;gicas o la percepci&#xF3;n que tienen los individuos con respecto a la sociedad en que habitan. Obteniendo estos resultados, es plausible determinar la validez de la hip&#xF3;tesis de ajuste para el contexto chileno, as&#xED; como tambi&#xE9;n en qu&#xE9; medida teor&#xED;a de elecci&#xF3;n racional juega un papel relevante en explicar la justificaci&#xF3;n de la desigualdad.</p>
+<p>A continuaci&#xF3;n se presentar&#xE1;n el procedimiento de elaboraci&#xF3;n del trabajo de campo, el dise&#xF1;o del estudio y medici&#xF3;n de las variables m&#xE1;s relevantes.</p>
+<h1 id="datos-variables-y-m&#xE9;todo">Datos, variables y m&#xE9;todo</h1>
+<p><em>Midiendo las actitudes hacia las Diferencias de Ingreso Leg&#xED;timas</em></p>
+<p>Al que igual <span class="citation" data-cites="Trump2017">Trump (2017)</span>, nuestra variable dependiente es la actitud hacia las diferencias de ingreso. Lo que se busca conocer es la opini&#xF3;n con respecto a qu&#xE9; tan grandes deber&#xED;an estas diferencias entre ocupaciones de distinto estatus. Para realizar la medici&#xF3;n de esta actitud, decidimos emplear las preguntas que ha utilizado previamente en Chile el m&#xF3;dulo Social Inequality del <em>International Social Survey Programme</em>. Se les pregunta a los encuestados cu&#xE1;nto dinero creen que <em>gana</em> una lista de ocupaciones en un a&#xF1;o, despu&#xE9;s se les pregunta cu&#xE1;nto creen que estas ocupaciones <em>deber&#xED;an</em> ganar en un a&#xF1;o. Con esto es posible conocer el nivel de desigualdad <em>percibida</em> por los individuos, como tambi&#xE9;n conocer el nivel de desigualdad que <em>recomiendan</em> o que consideran justa.</p>
+<p>Las ocupaciones que se presentaron son &#x201C;Un profesor de educaci&#xF3;n b&#xE1;sica&#x201D;, &#x201C;Un ministro de Gobierno chileno&#x201D;, Un obrero no calificado de una f&#xE1;brica, Un due&#xF1;o de una peque&#xF1;a empresa, &#x201C;Un gerente de una gran empresa&#x201D; y &#x201C;Un doctor o m&#xE9;dico de medicina general&#x201D;. El orden en el que se posicionaron las ocupaciones se realiz&#xF3; de manera aleatoria. La operacionalizaci&#xF3;n de la variable dependiente se realiz&#xF3; a trav&#xE9;s del &#xCD;ndice de justicia <span class="citation" data-cites="Jasso1999">(Jasso, 1999)</span>. Esta medida permite conocer la desigualdad percibida y recomendada a trav&#xE9;s la funci&#xF3;n <em>(ln(Ocupaci&#xF3;n alto estatus / Ocupaci&#xF3;n bajo estatus))</em>. Un n&#xFA;mero m&#xE1;s alto, indica una mayor brecha entre el salario de la ocupaci&#xF3;n de alto estatus con la de estatus bajo.</p>
+<p>Dicho lo anterior, empleamos dos medidas basadas en el &#xED;ndice de justicia. La ecuaci&#xF3;n 1 representa la medida empelada por <span class="citation" data-cites="Trump2017">Trump (2017)</span>, donde no se consideran las ocupaciones espec&#xED;ficas, raz&#xF3;n por la cual se utiliza el salario m&#xE1;ximo y m&#xED;nimo mencionado por el entrevistado. Esto se debe a que el inter&#xE9;s principal es conocer la desigualdad, tanto percibida como recomendada, desde un punto de vista global.</p>
+<p><span class="math display">\[ D_1 = \ln\Bigg(\frac{\text{M&#xE1;ximo salario recomendado}}{\text{M&#xED;nimo salario recomendado}}\Bigg) (1)\]</span></p>
+<p>Adicionalmente, calculamos el mismo &#xED;ndice en base al salario de la ocupaci&#xF3;n de mayor y menor estatus <span class="citation" data-cites="Jasso1999">(Jasso, 1999)</span>, media que ha sido empleadas anteriormente en estudios realizados en Chile <span class="citation" data-cites="Castillo2012justice Castillo2012">(Juan C. Castillo, 2012; Juan C. Castillo et al., 2012)</span> y que permite disponer de una aproximaci&#xF3;n adicional a la desigualdad percibida y al salario justo. Para el c&#xE1;lculo del &#xED;ndice, la ecuaci&#xF3;n 2 muestra que el salario de &#x201C;Un gerente de una gran empresa&#x201D; es la ocupaci&#xF3;n de mayor estatus y que el salario de &#x201C;Un obrero no calificado de una f&#xE1;brica&#x201D; es la ocupaci&#xF3;n de menor estatus.</p>
+<p><span class="math display">\[D_2= \ln\Bigg(\frac{\text{Salario Gerente}}{\text{Salario Obrero}}\Bigg) (2)\]</span></p>
+<h2 id="experimento">Experimento</h2>
+<p>Entre noviembre y diciembre de 2014 se realiz&#xF3; una encuesta de corte transversal titulada &#x201C;Creencias pol&#xED;ticas y sociales&#x201D;. El estudio se realiz&#xF3; en individuos adultos con edad entre 18 y 87 a&#xF1;os de sectores urbanos de la Regi&#xF3;n Metropolitana. El m&#xE9;todo de administraci&#xF3;n del cuestionario fue de manera presencial y asistido por <em>Tablet</em>. La media de edad de los participantes es de 44 a&#xF1;os, 62% son mujeres, 18% tiene educaci&#xF3;n terciaria o superior y un 54% declara no tener posici&#xF3;n pol&#xED;tica.</p>
+<p>Una parte de la muestra (226 participantes) corresponde al grupo control: estos no recibieron tratamiento de informaci&#xF3;n, respondieron preguntas sociodemogr&#xE1;ficas, la escala de Creencia en un Mundo Justo (CMJ),<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> seguido de las preguntas sobre desigualdad salarial percibida y justa. Adicionalmente, se emplearon 2 tratamientos en tres combinaciones distintas lo cual se resume en la Tabla 1. Posteriormente a responder a la pregunta sobre cu&#xE1;nto <em>cree que gana</em> mensualmente cada una de las seis ocupaciones, el primer grupo (<em>n</em>=104) recibi&#xF3; informaci&#xF3;n sobre las consecuencias de la reforma educacional en producir mayor equidad (Anexo Figura 5), adem&#xE1;s una lista de salarios para las seis ocupaciones mencionadas en la pregunta relacionada a cu&#xE1;nto cree que gana cada ocupaci&#xF3;n (anexo Tabla 3). El segundo grupo (<em>n</em>=148) solo recibi&#xF3; la informaci&#xF3;n a trav&#xE9;s del p&#xE1;rrafo sobre las consecuencias de la reforma educacional; y finalmente, el tercer grupo (<em>n</em>=254) recibi&#xF3; el tratamiento con informaci&#xF3;n de los salarios seg&#xFA;n ocupaciones de distinto estatus. Luego de recibir el tratamiento respectivo, a los entrevistados se les pregunt&#xF3; <em>&#x201C;cu&#xE1;nto cree que deber&#xED;a ganar&#x201D;</em> cada una de las ocupaciones.</p>
+<table>
+<caption>Tabla 1: Resumen Condiciones de Tratamiento</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Condici&#xF3;n A</th>
+<th style="text-align: center;">Condici&#xF3;n B</th>
+<th style="text-align: center;">Condici&#xF3;n C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>P&#xE1;rrafo Reforma Educacional</td>
+<td style="text-align: center;">S&#xED;</td>
+<td style="text-align: center;">S&#xED;</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr class="even">
+<td>Lista Salarios seg&#xFA;n Ocupaci&#xF3;n</td>
+<td style="text-align: center;">S&#xED;</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">S&#xED;</td>
+</tr>
+</tbody>
+</table>
+<p>En la siguiente secci&#xF3;n se presentan los principales resultados del an&#xE1;lisis, donde se estimaron una serie de modelos de regresi&#xF3;n lineal para determinar si la exposici&#xF3;n a informaci&#xF3;n sobre desigualdad tiene un efecto sobre la desigualdad recomendada. Adicionalmente, se realizaron una serie de an&#xE1;lisis para determinar el balance de la asignaci&#xF3;n aleatoria (ver Anexo Tabla). Con el objetivo de poner a prueba la robustez de los resultados, se incluyeron como controles la escala de Creencia en Mundo Justo (CMJ), la posici&#xF3;n pol&#xED;tica, nivel educacional y desigualdad percibida en base a las ocupaciones de alto y bajo estatus.</p>
+<h1 id="resultados-y-discusi&#xF3;n">Resultados y discusi&#xF3;n</h1>
+<p>En primer lugar, es relevante destacar que un 82% de los participantes percibe que la brecha entre el salario de las ocupaciones de mayor y de menor estatus es menor a la que realmente se puede determinar seg&#xFA;n los datos CASEN 2011. Esta informaci&#xF3;n permite confirmar que al ser expuestos a la condici&#xF3;n de informaci&#xF3;n, se est&#xE1; generando un ajuste efectivo en t&#xE9;rminos de la percepci&#xF3;n de desigualdad.</p>
+<p>Los resultados generales del experimento son presentados en la Figura 1 para la desigualdad recomendada en base al m&#xE1;ximo y m&#xED;nimo salario mencionado. As&#xED; tambi&#xE9;n, los resultados para la desigualdad recomendada en base al salario de las ocupaciones de alto y bajo esta tus son presentados en la Figura 2.</p>
+<p>A partir de la Figura 1, los resultados sugieren que al recibir el tratamiento de informaci&#xF3;n sobre desigualdad, no existen diferencias estad&#xED;sticamente significativas en t&#xE9;rminos de la desigualdad recomendada general (<span class="math inline">\(D_1\)</span>) para el grupo tratamiento respecto al grupo control. Estos resultados sugieren que, contrario a las expectativas iniciales, individuos que son m&#xE1;s conscientes de la desigualdad a nivel estructural no cambian sus preferencias en t&#xE9;rminos de el salario que consideran justo.</p>
+<figure>
+<img src="Resultados\images\barplot1.png" style="height:20em" alt><figcaption><strong>Fig. 1</strong>: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general</figcaption>
+</figure>
+<p>Conforme a lo anterior, se realiz&#xF3; el an&#xE1;lisis posterior para determinar el efecto del tratamiento sobre la desigualdad recomendada en base al &#xED;ndice propuesto por <span class="citation" data-cites="Jasso1999">Jasso (1999)</span>, considerando el salario recomendado para las ocupaciones de alto y bajo estatus. Se evidenci&#xF3; que luego de recibir el tratamiento de informaci&#xF3;n de la condici&#xF3;n A - lista de salarios reales y p&#xE1;rrafo sobre consecuencias de la reforma educacional -, la desigualdad recomendada increment&#xF3; en 0,55 puntos. Esto en base a que el grupo que expuesto a ambas condiciones simult&#xE1;neas recomienda 2,32 en contraste con 1.77 del grupo control (p&lt;0.001), lo cual representa un incremento aproximado de un 31%. Por otro lado, se evidenci&#xF3; que el tratamiento de informaci&#xF3;n de la condici&#xF3;n B, basado en el p&#xE1;rrafo sobre la reforma educacional, no afecta el nivel de desigualdad que prefieren los individuos. Si bien existe un incremento de 0,23 en la desigualdad recomendada, el tratamiento no genera una diferencia estad&#xED;sticamente significativa respecto al grupo control. Finalmente, se evidenci&#xF3; que obtener informaci&#xF3;n sobre la desigualdad salarial seg&#xFA;n ocupaci&#xF3;n -tratamiento de informaci&#xF3;n bajo la condici&#xF3;n C-, produce un cambio de 0,32 en la desigualdad recomendada, equivalente a un incremento de 18% respecto al grupo control. En ambos casos las diferencias son estad&#xED;sticamente significativas, lo cual se explica fundamentalmente por el incremento del salario recomendado para la ocupaci&#xF3;n de gerente, mientras que el salario del obrero se mantuvo en un promedio similar (Ver en Anexos Figura 3 y 4).</p>
+<p>Los resultados del punto anterior confirma la hip&#xF3;tesis respecto de que al manipular la percepci&#xF3;n de desigualdad de las personas a trav&#xE9;s de informaci&#xF3;n sobre la magnitud de la desigualdad salarial entre distintas ocupaciones, existe una tendencia que se traduce en que se justifique mayor desigualdad en estos t&#xE9;rminos. Esto podr&#xED;a estar ocurriendo por la hip&#xF3;tesis de ajuste discutida en el marco te&#xF3;rico <span class="citation" data-cites="Trump2017">(Trump, 2017)</span>, a partir del sesgo de ancla y de la justificaci&#xF3;n racional. Es interesante el que el ajuste cognitivo ocurra a partir de ver las cifras y no al ver el p&#xE1;rrafo que induce percepci&#xF3;n de mayor desigualdad. Esto da luces respecto de que efectivamente el mecanismo a trav&#xE9;s del cual se produce el ajuste puede ser el sesgo de anclaje, dado que la persona se ancla a la cifra que ya vio, y/o el ajuste racional, en el que la persona justifica racionalmente por qu&#xE9; tal ocupaci&#xF3;n gana lo que gana y por ende, luego recomienda m&#xE1;s desigualdad. Estos resultados no dan luces de la teor&#xED;a de justificaci&#xF3;n de sistemas, particularmente porque desde esta se esperar&#xED;a que el p&#xE1;rrafo que induc&#xED;a percepci&#xF3;n de desigualdad hubiese producido un ajuste significativo en la recomendaci&#xF3;n de desigualdad, por el esfuerzo de las personas de validar el sistema injusto en el que viven.</p>
+<figure>
+<img src="Resultados\images\barplot2.png" style="height:20em" alt><figcaption><strong>Fig. 2</strong>: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada seg&#xFA;n ocupaciones de alto y bajo estatus</figcaption>
+</figure>
+<table>
+<caption>Tabla 2 : Modelos de regresi&#xF3;n para desigualdad recomendada<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></caption>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: left;">Modelo 1</th>
+<th style="text-align: left;">Modelo 2</th>
+<th style="text-align: left;">Modelo 3</th>
+<th style="text-align: left;">Modelo 4</th>
+<th style="text-align: left;">Modelo 5</th>
+<th style="text-align: left;">Modelo 6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tratamiento</td>
+<td style="text-align: left;">0.55***</td>
+<td style="text-align: left;">0.56***</td>
+<td style="text-align: left;">0.26</td>
+<td style="text-align: left;">0.25</td>
+<td style="text-align: left;">0.29**</td>
+<td style="text-align: left;">0.30**</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;">(0.13)</td>
+<td style="text-align: left;">(0.13)</td>
+<td style="text-align: left;">(0.14)</td>
+<td style="text-align: left;">(0.14)</td>
+<td style="text-align: left;">(0.11)</td>
+<td style="text-align: left;">(0.11)</td>
+</tr>
+<tr class="odd">
+<td>Creencia Mundo Justo</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">-0.03</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">-0.05</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">-0.04</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.06)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.06)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.04)</td>
+</tr>
+<tr class="odd">
+<td>Centro</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.36</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.25</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.39*</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.23)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.24)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.20)</td>
+</tr>
+<tr class="odd">
+<td>Derecha</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.52*</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.05</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.20</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.26)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.26)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.21)</td>
+</tr>
+<tr class="odd">
+<td>Ninguno</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">-0.05</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">-0.16</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.07</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.18)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.19)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.15)</td>
+</tr>
+<tr class="odd">
+<td>No sabe</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.64</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.46</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.38</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.62)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.62)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.48)</td>
+</tr>
+<tr class="odd">
+<td>Desigualdad percibida (Log)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.16*</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.12</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.10</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.08)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.07)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.05)</td>
+</tr>
+<tr class="odd">
+<td>Educaci&#xF3;n</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.03</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.04</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.06*</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.03)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.04)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(0.03)</td>
+</tr>
+<tr class="odd">
+<td>Intercepto</td>
+<td style="text-align: left;">1.78***</td>
+<td style="text-align: left;">1.19***</td>
+<td style="text-align: left;">1.78***</td>
+<td style="text-align: left;">1.40***</td>
+<td style="text-align: left;">1.78***</td>
+<td style="text-align: left;">1.18***</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;">(0.09)</td>
+<td style="text-align: left;">(0.31)</td>
+<td style="text-align: left;">(0.09)</td>
+<td style="text-align: left;">(0.32)</td>
+<td style="text-align: left;">(0.09)</td>
+<td style="text-align: left;">(0.25)</td>
+</tr>
+<tr class="odd">
+<td>R2</td>
+<td style="text-align: left;">0.04</td>
+<td style="text-align: left;">0.11</td>
+<td style="text-align: left;">0.01</td>
+<td style="text-align: left;">0.05</td>
+<td style="text-align: left;">0.02</td>
+<td style="text-align: left;">0.06</td>
+</tr>
+<tr class="even">
+<td>Adj. R2</td>
+<td style="text-align: left;">0.04</td>
+<td style="text-align: left;">0.09</td>
+<td style="text-align: left;">0.01</td>
+<td style="text-align: left;">0.03</td>
+<td style="text-align: left;">0.01</td>
+<td style="text-align: left;">0.04</td>
+</tr>
+<tr class="odd">
+<td>Num. obs.</td>
+<td style="text-align: left;">310.00</td>
+<td style="text-align: left;">310.00</td>
+<td style="text-align: left;">338.00</td>
+<td style="text-align: left;">338.00</td>
+<td style="text-align: left;">445.00</td>
+<td style="text-align: left;">445.00</td>
+</tr>
+<tr class="even">
+<td>Errores est&#xE1;ndar robustos entre par&#xE9;ntesis</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td>***p&lt;0.001 **p&lt;0.01 *p&lt;0.05</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>La Tabla 2 muestra que el efecto de la exposici&#xF3;n a la condici&#xF3;n de desigualdad se mantiene cuando se controla por la creencia en un mundo justo, la posici&#xF3;n pol&#xED;tica, percepci&#xF3;n de desigualdad y educaci&#xF3;n. Estos resultados ofrecen evidencia a favor de la hip&#xF3;tesis de ajuste, de modo tal que el grado de informaci&#xF3;n respecto a la desigualdad tiene como consecuencia una mayor desigualdad recomendada en t&#xE9;rminos de la brecha salarial entre ocupaciones de alto y bajo estatus, aun cuando se controle por otras variables relevantes.</p>
+<p>Es llamativo que la creencia en un mundo justo no presente una asociaci&#xF3;n estad&#xED;sticamente significativa si se considera su alta correlaci&#xF3;n con la hip&#xF3;tesis de justificaci&#xF3;n de sistemas. Esto quiere decir que creer m&#xE1;s en un mundo justo, implica un mayor nivel de justificaci&#xF3;n del sistema y por tanto, era de esperar que tuviera una relaci&#xF3;n positiva con recomendar mayores niveles de desigualdad. En la Tabla se observa que esta hip&#xF3;tesis no se cumple en ninguna direcci&#xF3;n, ya que presenta coeficientes negativos en dos de los tratamientos, ni en magnitud, dado que en la tercera condici&#xF3;n tiene valor cero y no es estad&#xED;sticamente significativa en ning&#xFA;n modelo. Este resultado va en l&#xED;nea con lo antes mencionado respecto del efecto no significativo del tratamiento del p&#xE1;rrafo y difiere de lo obtenido por <span class="citation" data-cites="Trump2017">Trump (2017)</span> para el contexto estadounidense y Sueco, donde s&#xED; se cumple la hip&#xF3;tesis. Por esto, ser&#xED;a interesante analizar en futuras investigaciones qu&#xE9; ocurre particularmente en la sociedad chilena con la teor&#xED;a de justificaci&#xF3;n de sistemas. <span class="citation" data-cites="Trump2017">Trump (2017)</span> propone un dise&#xF1;o experimental para estudiarlo.</p>
+<p>Respecto del coeficiente positivo y estad&#xED;sticamente significativo de percepci&#xF3;n de desigualdad, cumple con las expectativas del estudio sobre que a mayores percepciones de desigualdad, las personas tienden a justificar una mayor brecha salarial debido a procesos de ajuste cognitivo. Por otro lado, desde un enfoque de inter&#xE9;s racional, se esperar&#xED;a que aquellas personas que perciban m&#xE1;s ingresos recomienden mayores niveles de desigualdad debido a que es beneficioso para ellos. En la Tabla 2 podemos ver que la variable educaci&#xF3;n -la cual fue utilizada como un proxy de nivel socioecon&#xF3;mico-, aparece como positiva y significativa en el Modelo 3. Es decir, tener mayores niveles de educaci&#xF3;n se asocia con recomendar mayores niveles de desigualdad.</p>
+<p>Esto &#xFA;ltimo va en consonancia con un enfoque de inter&#xE9;s racional <span class="citation" data-cites="Meltzer1981">(Meltzer &amp; Richard, 1981)</span>, lo cual da cuenta de que individuos de mayor estatus tienden a justificar mayor desigualdad. As&#xED; tambi&#xE9;n, es relevante observar que una mayor percepci&#xF3;n de desigualdad se asocia con una mayor brecha salarial recomendada. Esta evidencia permite sostener que la justificaci&#xF3;n de brecha salariales se explica, por un lado, por el estatus social de los individuos, as&#xED; como tambi&#xE9;n por los niveles de desigualdad percibida, lo cual va en consonancia con los hallazgos reportados por <span class="citation" data-cites="Trump2017">Trump (2017)</span> para el contexto estadounidense y sueco.</p>
+<h1 id="conclusiones">Conclusiones</h1>
+<p>El presente trabajo ha evidenciado que la desigualdad recomendada se ve afectada por la percepci&#xF3;n de desigualdad, espec&#xED;ficamente cuando los individuos son consientes de la brecha salarial real. En base a la hip&#xF3;tesis propuesta, se ha evidenciado que tener mayor informaci&#xF3;n con respecto a la desigualdad econ&#xF3;mica tiene como consecuencia que los individuos recomienden una mayor brecha salarial entre ocupaciones de bajo y alto estatus. En este sentido, se emplearon dos tratamientos en tres combinaciones distintas, donde la informaci&#xF3;n respecto a los salarios afecta sustantivamente la magnitud de desigualdad recomendada, mientras que obtener informaci&#xF3;n con respecto a las consecuencias de largo plazo que tendr&#xED;a la reforma educacional no afecta significativamente la brecha salarial recomendada. As&#xED; tambi&#xE9;n, se evidenci&#xF3; que la combinaci&#xF3;n de ambos tratamientos posee un efecto promedio m&#xE1;s alto que cada condici&#xF3;n de manera individual.</p>
+<p>En un principio, se postul&#xF3; la interrogante con respecto a si la hip&#xF3;tesis de ajuste cognitivo de expectativas se cumplir&#xED;a para el contexto de Chile. <span class="citation" data-cites="Trump2017">Trump (2017)</span> evidenci&#xF3; que en contextos con diversos grados desigualdad econ&#xF3;mica y diferencias sustantivas en t&#xE9;rminos de pol&#xED;ticas de bienestar, poseer mayor informaci&#xF3;n con respecto a la desigualdad econ&#xF3;mica s&#xED; afecta la desigualdad que recomiendan los individuos. En nuestro estudio empleamos dos medidas diferentes para abordar el an&#xE1;lisis de la desigualdad recomendada, por un lado empleamos la medida que utiliz&#xF3; Trump para analizar la desigualdad general, donde no se evidenciaron diferencias significativas ente los distintos grupos de estudio. Por otro lado, decidimos emplear la medida propuesta por <span class="citation" data-cites="Jasso1999">Jasso (1999)</span> como alternativa a lo realizado por Trump, evidenciando que la informaci&#xF3;n sobre desigualdad salarial tiene un efecto sustantivo en la desigualdad recomendada seg&#xFA;n ocupaciones de alto y bajo estatus.</p>
+<p>En base a esta evidencia, es factible sostener que las percepciones relacionadas con la desigualdad, y en particular con la desigualdad salarial, posee consecuencias sustantivas en c&#xF3;mo los individuos racionalizan estas diferencias. Desde la literatura sobre preferencias redistributivas, se sostiene que contextos m&#xE1;s desiguales se asocian con mayor demanda por redistribuci&#xF3;n. No obstante, aqu&#xED; sostenemos que el efecto de la informaci&#xF3;n es robusto sobre la brecha salarial recomendada, independiente de la posici&#xF3;n pol&#xED;tica, estatus social y creencias distributivas.</p>
+<p>Dicho lo anterior, nuestros resultados tiene implicancias en el estudio de las preferencias redistributivas en contextos de alta desigualdad y con diversas pol&#xED;ticas de bienestar social, tal como ocurre en los distintos pa&#xED;ses de Am&#xE9;rica Latina. As&#xED;, se abre la interrogante con respecto a c&#xF3;mo se asocia la desigualdad recomendada con la redistribuci&#xF3;n, o sobre qu&#xE9; &#xE1;mbitos de pol&#xED;tica social se encuentra relacionado. Se ha evidenciado que el apoyo a distintas medidas redistributivas var&#xED;a seg&#xFA;n el t&#xF3;pico en evaluaci&#xF3;n teniendo presente que la <em>necesidad</em> es distinta al ser <em>merecedor</em> <span class="citation" data-cites="Jensen2017 Aaroe2014">(Aar&#xF8;e &amp; Petersen, 2014; Jensen &amp; Petersen, 2017)</span>. Esta racionalidad opera como diferenciador en el apoyo a pol&#xED;ticas sociales en salud o pensiones de vejez, donde la magnitud de la desigualdad prefiere es un antecedente relevante cuando se eval&#xFA;a la asignaci&#xF3;n de recursos.</p>
+<p>A diferencia de los experimentos en contextos cerrados y controlados, la realizaci&#xF3;n de experimentos a trav&#xE9;s de encuestas ofrece la posibilidad de acceder a muestras de mayor tama&#xF1;o y representatividad. Sin embargo, los resultados del presente estudio deben ser interpretados con cautela debido a que la muestra responde una parte del &#xE1;rea urbana de la Regi&#xF3;n Metropolitana, lo cual imposibilita extrapolar los resultados a la sociedad en su conjunto. Por otro lado, se requiere mayor investigaci&#xF3;n en t&#xE9;rminos de que no es posible evidenciar la sostenibilidad temporal del efecto del tratamiento, debido a que las actitudes no son est&#xE1;ticas, en particular aquellas que se relacionan con temas distributivos. Futuras investigaciones deben avanzar hacia un estudio con tama&#xF1;os muestrales que permitan realizar inferencias a nivel poblacional. En esta l&#xED;nea, recientes avances en el &#xE1;mbito de la investigaci&#xF3;n realizada a trav&#xE9;s de encuestas a trav&#xE9;s de internet sugieren que la realizaci&#xF3;n experimentos usando esta estrategia de muestreo tiene la ventaja de ser altamente eficiente en el uso de recursos, adem&#xE1;s de que permite obtener muestras con niveles de heterogeneidad socioedemogr&#xE1;fica y socioecon&#xF3;mica similares a encuestas tradicionales <span class="citation" data-cites="Zhang2018">(Zhang et al., 2018)</span>.</p>
+<h1 id="anexos">Anexos</h1>
+<figure>
+<img src="Resultados\images\obgapb.png" style="height:25em" alt><figcaption><strong>Fig. 3</strong>: Comparaci&#xF3;n de la distribuci&#xF3;n de salario recomendado para un obrero no calificado de una f&#xE1;brica seg&#xFA;n asignaci&#xF3;n del tratamiento</figcaption>
+</figure>
+<figure>
+<img src="Resultados\images\gergapb.png" style="height:25em" alt><figcaption><strong>Fig. 4</strong>: Comparaci&#xF3;n de la distribuci&#xF3;n de salario recomendado para un obrero no calificado de una f&#xE1;brica seg&#xFA;n asignaci&#xF3;n del tratamiento</figcaption>
+</figure>
+<table>
+<caption>Tabla 2: Modelos de regresi&#xF3;n para Desigualdad recomendada en unidades de desviaci&#xF3;n est&#xE1;ndar <span class="math inline">\(z\)</span></caption>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Modelo 1</th>
+<th style="text-align: center;">Modelo 2</th>
+<th style="text-align: center;">Modelo 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tratamiento</td>
+<td style="text-align: center;">0.49***</td>
+<td style="text-align: center;">0.22</td>
+<td style="text-align: center;">0.26**</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: center;">(0.12)</td>
+<td style="text-align: center;">(0.12)</td>
+<td style="text-align: center;">(0.10)</td>
+</tr>
+<tr class="odd">
+<td>Creencia Mundo Justo</td>
+<td style="text-align: center;">-0.02</td>
+<td style="text-align: center;">-0.04</td>
+<td style="text-align: center;">-0.04</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: center;">(0.05)</td>
+<td style="text-align: center;">(0.05)</td>
+<td style="text-align: center;">(0.04)</td>
+</tr>
+<tr class="odd">
+<td>Centro</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.22</td>
+<td style="text-align: center;">0.34</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: center;">(0.21)</td>
+<td style="text-align: center;">(0.21)</td>
+<td style="text-align: center;">(0.18)</td>
+</tr>
+<tr class="odd">
+<td>Derecha</td>
+<td style="text-align: center;">0.45*</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.17</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: center;">(0.22)</td>
+<td style="text-align: center;">(0.22)</td>
+<td style="text-align: center;">(0.17)</td>
+</tr>
+<tr class="odd">
+<td>Ninguno</td>
+<td style="text-align: center;">-0.05</td>
+<td style="text-align: center;">-0.14</td>
+<td style="text-align: center;">0.06</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: center;">(0.14)</td>
+<td style="text-align: center;">(0.15)</td>
+<td style="text-align: center;">(0.12)</td>
+</tr>
+<tr class="odd">
+<td>No sabe</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">0.33</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: center;">(0.37)</td>
+<td style="text-align: center;">(0.40)</td>
+<td style="text-align: center;">(0.32)</td>
+</tr>
+<tr class="odd">
+<td>Desigualdad percibida (Log)</td>
+<td style="text-align: center;">0.14**</td>
+<td style="text-align: center;">0.11*</td>
+<td style="text-align: center;">0.09*</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: center;">(0.05)</td>
+<td style="text-align: center;">(0.05)</td>
+<td style="text-align: center;">(0.04)</td>
+</tr>
+<tr class="odd">
+<td>Educaci&#xF3;n</td>
+<td style="text-align: center;">0.02</td>
+<td style="text-align: center;">0.03</td>
+<td style="text-align: center;">0.05*</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: center;">(0.03)</td>
+<td style="text-align: center;">(0.03)</td>
+<td style="text-align: center;">(0.02)</td>
+</tr>
+<tr class="odd">
+<td>Intercepto</td>
+<td style="text-align: center;">-0.71*</td>
+<td style="text-align: center;">-0.52</td>
+<td style="text-align: center;">-0.72**</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: center;">(0.28)</td>
+<td style="text-align: center;">(0.29)</td>
+<td style="text-align: center;">(0.24)</td>
+</tr>
+<tr class="odd">
+<td>Adj. R2</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.03</td>
+<td style="text-align: center;">0.04</td>
+</tr>
+<tr class="even">
+<td>Num. obs.</td>
+<td style="text-align: center;">310</td>
+<td style="text-align: center;">338</td>
+<td style="text-align: center;">445</td>
+</tr>
+<tr class="odd">
+<td>Errores est&#xE1;ndar entre par&#xE9;ntesis</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>***p&lt;0.001 **p&lt;0.01 *p&lt;0.05</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><em><strong>Nota</strong></em>: La variable dependiente estandarizada</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="Resultados\images\treat2.png" alt><figcaption><strong>Fig. 5</strong>: Condici&#xF3;n de Tratamiento B &#x201C;Consecuencias a largo palzo de la reforma educacional&#x201D;</figcaption>
+</figure>
+<table>
+<caption>Tabla 3: Condici&#xF3;n de Tratamiento C &#x201C;Lista de salarios por ocupaci&#xF3;n&#x201D;</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Ocupaci&#xF3;n</strong></th>
+<th style="text-align: left;"><strong>Sueldo mensual</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Un gerente de una gran empresa</td>
+<td style="text-align: left;">$ 10.171.496</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Un ministro de Gobierno chileno</td>
+<td style="text-align: left;">$ 7.417.865</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Un doctor o m&#xE9;dico de medicina general</td>
+<td style="text-align: left;">$ 2.912.983</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Un due&#xF1;o de una peque&#xF1;a empresa</td>
+<td style="text-align: left;">$ 958.173</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Un profesor de educaci&#xF3;n b&#xE1;sica</td>
+<td style="text-align: left;">$ 597.646</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Un obrero no calificado de una f&#xE1;brica</td>
+<td style="text-align: left;">$ 228.640</td>
+</tr>
+</tbody>
+</table>
+<h1 id="referencias" class="unnumbered">Referencias</h1>
+<div id="refs" class="references" role="doc-bibliography">
+<div id="ref-Aaroe2014">
+<p>Aar&#xF8;e, L., &amp; Petersen, M. B. (2014). Crowding out culture: Scandinavians and americans agree on social welfare in the face of deservingness cues. <em>Journal of Politics</em>, <em>76</em>(3), 684&#x2013;697. <a href="https://doi.org/10.1017/S002238161400019X">https://doi.org/10.1017/S002238161400019X</a></p>
+</div>
+<div id="ref-Atkinson2011">
+<p>Atkinson, A. B., Piketty, T., &amp; Saez, E. (2011). Top Incomes in the Long Run of History. <em>Journal of Economic Literature</em>, <em>49</em>(1), 3&#x2013;71. <a href="https://doi.org/10.1257/jel.49.1.3">https://doi.org/10.1257/jel.49.1.3</a></p>
+</div>
+<div id="ref-Blasi2006">
+<p>Blasi, G., &amp; Jost, J. T. (2006). System justification theory and research: Implications for law, legal advocacy, and social justice. <em>California Law Review</em>, <em>94</em>(4), 1119&#x2013;1168.</p>
+</div>
+<div id="ref-Brown2008">
+<p>Brown, T. A. (2008). <em>Confirmatory Factor Analysis for Applied Research</em>. <a href="https://doi.org/10.1198/tas.2008.s98">https://doi.org/10.1198/tas.2008.s98</a></p>
+</div>
+<div id="ref-Castillo2011">
+<p>Castillo, J. C. (2011). Legitimacy of Inequality in a Highly Unequal Context: Evidence from the Chilean Case. <em>Social Justice Research</em>, <em>24</em>(4), 314&#x2013;340. <a href="https://doi.org/10.1007/s11211-011-0144-5">https://doi.org/10.1007/s11211-011-0144-5</a></p>
+</div>
+<div id="ref-Castillo2012justice">
+<p>Castillo, J. C. (2012). Is Inequality Becoming Just? Changes in Public Opinion about Economic Distribution in Chile. <em>Bulletin of Latin American Research</em>, <em>31</em>(1), 1&#x2013;18. <a href="https://doi.org/10.1111/j.1470-9856.2011.00605.x">https://doi.org/10.1111/j.1470-9856.2011.00605.x</a></p>
+</div>
+<div id="ref-Castillo2012">
+<p>Castillo, J. C., Miranda, D., &amp; Carrasco, D. (2012). Percepci&#xF3;n de Desigualdad Econ&#xF3;mica en Chile: Medici&#xF3;n, Diferencias y Determinantes. <em>Psykhe (Santiago)</em>, <em>21</em>(1), 99&#x2013;114. <a href="https://doi.org/10.4067/S0718-22282012000100007">https://doi.org/10.4067/S0718-22282012000100007</a></p>
+</div>
+<div id="ref-Castilloetal2019">
+<p>Castillo, J. C., Torres, A., Atria, J., &amp; Maldonado, L. (2019). Meritocracia y desigualdad econ&#xF3;mica: Percepciones, preferencias e implicancias. <em>Revista Internacional de Sociolog&#xED;a</em>, <em>77</em>(1), 117. <a href="https://doi.org/10.3989/ris.2019.77.1.17.114">https://doi.org/10.3989/ris.2019.77.1.17.114</a></p>
+</div>
+<div id="ref-Esping_Andersen2007">
+<p>Esping-Andersen, G. (2007). Sociological explanations of changing income distributions. <em>American Behavioral Scientist</em>, <em>50</em>(5), 639&#x2013;658.</p>
+</div>
+<div id="ref-Furnham2011">
+<p>Furnham, A., &amp; Boo, H. C. (2011). A literature review of the anchoring effect. <em>The Journal of Socio-Economics</em>, <em>40</em>(1), 35&#x2013;42.</p>
+</div>
+<div id="ref-Jasso1999">
+<p>Jasso, G. (1999). How Much Injustice is There in the World? Two New Justice Indexes. <em>American Sociological Review</em>, <em>64</em>(1), 133&#x2013;168. <a href="https://doi.org/10.2307/2657282">https://doi.org/10.2307/2657282</a></p>
+</div>
+<div id="ref-Jensen2017">
+<p>Jensen, C., &amp; Petersen, M. B. (2017). The Deservingness Heuristic and the Politics of Health Care. <em>American Journal of Political Science</em>, <em>61</em>(1), 68&#x2013;83. <a href="https://doi.org/10.1111/ajps.12251">https://doi.org/10.1111/ajps.12251</a></p>
+</div>
+<div id="ref-PNUD2015">
+<p>Larraga&#xF1;a, O., &amp; Rodriguez, M. E. (2015). <em>Desigualdad de Ingresos y Pobreza en Chile 1990 a 2013</em>. Santiago de Chile: Programa de las Naciones Unidas para el Desarrollo - &#xC1;rea de Reducci&#xF3;n de la Pobreza y la Desigualdad.</p>
+</div>
+<div id="ref-Lerner1966">
+<p>Lerner, M. J., &amp; Simmons, C. H. (1966). Observer&#x2019;s reaction to the&quot; innocent victim&quot;: Compassion or rejection? <em>Journal of Personality and Social Psychology</em>, <em>4</em>(2), 203.</p>
+</div>
+<div id="ref-Lipkus1991">
+<p>Lipkus, I. (1991). The construction and preliminary validation of a global belief in a just world scale and the exploratory analysis of the multidimensional belief in a just world scale. <em>Personality and Individual Differences</em>, <em>12</em>(11), 1171&#x2013;1178.</p>
+</div>
+<div id="ref-Markovsky1988">
+<p>Markovsky, B. (1988). Anchoring justice. <em>Social Psychology Quarterly</em>.</p>
+</div>
+<div id="ref-Meltzer1981">
+<p>Meltzer, A. H., &amp; Richard, S. (1981). A Rational Theory of Government. <em>Journal of Political Economy</em>, <em>89</em>(5), 914&#x2013;927. <a href="https://doi.org/10.1007/BF00141072">https://doi.org/10.1007/BF00141072</a></p>
+</div>
+<div id="ref-Merton1968">
+<p>Merton, R. K. (1968). Contributions to the Theory of Reference Group Behavior. <em>Social Theory and Social Structure</em>, 279&#x2013;334.</p>
+</div>
+<div id="ref-Rubin1975">
+<p>Rubin, Z., &amp; Peplau, L. A. (1975). Who believes in a just world? <em>Journal of Social Issues</em>, <em>31</em>(3), 65&#x2013;89.</p>
+</div>
+<div id="ref-Shepelak1986">
+<p>Shepelak, N. J., &amp; Alwin, D. F. (1986). Beliefs about inequality and perceptions of distributive justice. <em>American Sociological Review</em>, 30&#x2013;46.</p>
+</div>
+<div id="ref-Simon1955">
+<p>Simon, H. A. (1955). A behavioral model of rational choice. <em>The Quarterly Journal of Economics</em>, <em>69</em>(1), 99&#x2013;118.</p>
+</div>
+<div id="ref-Trump2017">
+<p>Trump, K. S. (2017). Income Inequality Influences Perceptions of Legitimate Income Differences. <em>British Journal of Political Science</em>, (February), 1&#x2013;24. <a href="https://doi.org/10.1017/S0007123416000326">https://doi.org/10.1017/S0007123416000326</a></p>
+</div>
+<div id="ref-Tversky1974">
+<p>Tversky, A., &amp; Kahneman, D. (1974). Judgment under Uncertainty: Heuristics and Biases. <em>Science</em>, <em>185</em>(4157), 1124&#x2013;1131. <a href="https://doi.org/10.1126/science.185.4157.1124">https://doi.org/10.1126/science.185.4157.1124</a></p>
+</div>
+<div id="ref-Volscho2012">
+<p>Volscho, T. W., &amp; Kelly, N. J. (2012). The Rise of the Super-Rich. <em>American Sociological Review</em>, <em>77</em>(5), 679&#x2013;699. <a href="https://doi.org/10.1177/0003122412458508">https://doi.org/10.1177/0003122412458508</a></p>
+</div>
+<div id="ref-Walker1993">
+<p>Walker, H., &amp; Zelditch, M. (1993). Power, legitimacy, and the stability of authority: A theoretical research program. In <em>Theoretical research programs: Studies in the growth of theory</em> (pp. 364&#x2013;381).</p>
+</div>
+<div id="ref-Weber1947">
+<p>Weber, M., Henderson, A. M., &amp; Parsons, T. (1947). <em>The theory of social and economic organization,</em> New York: Oxford University Press.</p>
+</div>
+<div id="ref-Wegener1987">
+<p>Wegener, B. (1987). The Illusion of Distributive Justice. <em>European Sociological Review</em>, <em>3</em>(1), 1&#x2013;13.</p>
+</div>
+<div id="ref-WDI2018">
+<p>World Bank. (2018). <em>World Development Report 2018: Learning to Realize Education&#x2019;s Promise</em>. The World Bank. <a href="https://doi.org/10.1596/978-1-4648-1096-1">https://doi.org/10.1596/978-1-4648-1096-1</a></p>
+</div>
+<div id="ref-Zhang2018">
+<p>Zhang, B., Mildenberger, M., Howe, P. D., Marlon, J., Rosenthal, S. A., &amp; Leiserowitz, A. (2018). Quota sampling using Facebook advertisements. <em>Political Science Research and Methods</em>, 1&#x2013;7. <a href="https://doi.org/10.1017/psrm.2018.49">https://doi.org/10.1017/psrm.2018.49</a></p>
+</div>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>En base a los criterios se&#xF1;alados por <span class="citation" data-cites="Brown2008">Brown (2008)</span>, se realiz&#xF3; un An&#xE1;lisis Factorial Confirmatorio que evidenci&#xF3; un buen ajuste de la escala para la Creencia en un Mundo Justo (<span class="math inline">\(\chi^2(5)\)</span>=8.40, <span class="math inline">\(p\)</span>=0.015, CFI=0.99, RMSEA=0.06). En base a esta evidencia, se procedi&#xF3; a crear un &#xED;ndice promedio con los &#xED;tems.<a href="#fnref1" class="footnote-back" role="doc-backlink">&#x21A9;&#xFE0E;</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Condici&#xF3;n A, corresponde al tratamiento con el p&#xE1;rrafo sobre la reforma educacional y la lista de salarios. Condici&#xF3;n B, es el p&#xE1;rrafo unicamente; y Condici&#xF3;n C es la lista de salarios por ocupaci&#xF3;n.<a href="#fnref2" class="footnote-back" role="doc-backlink">&#x21A9;&#xFE0E;</a></p></li>
+</ol>
+</section>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
