@@ -95,13 +95,13 @@ Los resultados generales del experimento son presentados en la Figura 1 para la 
 
 A partir de la Figura 1, los resultados sugieren que al recibir el tratamiento de información sobre desigualdad, no existen diferencias estadísticamente significativas en términos de la desigualdad recomendada general ($D_1$) para el grupo tratamiento respecto al grupo control. Estos resultados sugieren que, contrario a las expectativas iniciales, individuos que son más conscientes de la desigualdad a nivel estructural no cambian sus preferencias en términos de el salario que consideran justo.
 
-![**Fig. 1**: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general](Resultados\images\barplot1.png){height=20em}
+![**Fig. 1**: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general](results\images\barplot1.png){height=20em}
 
 Conforme a lo anterior, se realizó el análisis posterior para determinar el efecto del tratamiento sobre la desigualdad recomendada en base al índice propuesto por @Jasso1999, considerando el salario recomendado para las ocupaciones de alto y bajo estatus. Se evidenció que luego de recibir el tratamiento de información de la condición A  - lista de salarios reales y párrafo sobre consecuencias de la reforma educacional -, la desigualdad recomendada incrementó en 0,55 puntos. Esto en base a que el grupo que expuesto a ambas condiciones simultáneas recomienda 2,32 en contraste con 1.77 del grupo control ($p$<0.001), lo cual representa un incremento aproximado de un 31%. Por otro lado, se evidenció que el tratamiento de información de la condición B, basado en el párrafo sobre la reforma educacional, no afecta el nivel de desigualdad que prefieren los individuos. Si bien existe un incremento de 0,23 en la desigualdad recomendada, el tratamiento no genera una diferencia estadísticamente significativa respecto al grupo control. Finalmente, se evidenció que obtener información sobre la desigualdad salarial según ocupación -tratamiento de información bajo la condición C-, produce un cambio de 0,32 en la desigualdad recomendada, equivalente a un incremento de 18% respecto al grupo control. En ambos casos las diferencias son estadísticamente significativas, lo cual se explica fundamentalmente por el incremento del salario recomendado para la ocupación de gerente, mientras que el salario del obrero se mantuvo en un promedio similar (Ver en Anexos Figura 3 y 4).
 
 Los resultados del punto anterior confirma la hipótesis respecto de que al manipular la percepción de desigualdad de las personas a través de información sobre la magnitud de la desigualdad salarial entre distintas ocupaciones, existe una tendencia que se traduce en que se justifique mayor desigualdad en estos términos. Esto podría estar ocurriendo por la hipótesis de ajuste discutida en el marco teórico [@Trump2017], a partir del sesgo de ancla y de la justificación racional. Es interesante el que el ajuste cognitivo ocurra a partir de ver las cifras y no al ver el párrafo que induce percepción de mayor desigualdad. Esto da luces respecto de que efectivamente el mecanismo a través del cual se produce el ajuste puede ser el sesgo de anclaje, dado que la persona se ancla a la cifra que ya vio, y/o el ajuste racional, en el que la persona justifica racionalmente por qué tal ocupación gana lo que gana y por ende, luego recomienda más desigualdad. Estos resultados no dan luces de la teoría de justificación de sistemas, particularmente porque desde esta se esperaría que el párrafo que inducía percepción de desigualdad hubiese producido un ajuste significativo en la recomendación de desigualdad, por el esfuerzo de las personas de validar el sistema injusto en el que viven.
 
-![**Fig. 2**: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada según ocupaciones de alto y bajo estatus](Resultados\images\barplot2.png){height=20em}
+![**Fig. 2**: Resultados del experimento, en base a los valores predichos para la desigualdad recomendada según ocupaciones de alto y bajo estatus](results\images\barplot2.png){height=20em}
 
 
                                              Modelo 1     Modelo 2     Modelo 3     Modelo 4     Modelo 5     Modelo 6
@@ -162,9 +162,9 @@ en términos de que no es posible evidenciar la sostenibilidad temporal del efec
 
 # Anexos
 
-![**Fig. 3**: Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento](Resultados\images\obgapb.png){height=25em}
+![**Fig. 3**: Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento](results\images\obgapb.png){height=25em}
 
-![**Fig. 4**: Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento](Resultados\images\gergapb.png){height=25em}
+![**Fig. 4**: Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento](results\images\gergapb.png){height=25em}
 
 
                                                                 Modelo 1     Modelo 2   Modelo 3
@@ -195,7 +195,7 @@ _**Nota**_: La variable dependiente estandarizada
 -------------------------------------------------------------- ------------ ---------- -----------
 Table: Tabla 2: Modelos de regresión para Desigualdad recomendada en unidades de desviación estándar $z$
 
-![**Fig. 5**: Condición de Tratamiento B "Consecuencias a largo palzo de la reforma educacional"](Resultados\images\treat2.png)
+![**Fig. 5**: Condición de Tratamiento B "Consecuencias a largo palzo de la reforma educacional"](results\images\treat2.png)
 
 **Ocupación**                            **Sueldo mensual**
 ---------------------------------------- --------------------
