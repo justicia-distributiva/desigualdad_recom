@@ -7,8 +7,7 @@ bibliography:
 - 'bib/zlibrary.bib'
 csl:
 - 'bib/apa6.csl'
-title: Desigualdad económica y su influencia sobre la percepción de las
-        diferencias de ingreso legítimas
+title: "Desigualdad económica y su influencia sobre la percepción de las diferencias de ingreso legítimas"
 output:
     word_document:
        reference_docx: "bib/my-styles.docx"
