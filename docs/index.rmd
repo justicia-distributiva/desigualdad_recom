@@ -7,7 +7,9 @@ csl:
 title: " "
 output:
     html_document:
-      number_sections: false
+        smart: false
+        includes:
+          in_header: head_github-activity.html
 ---
 
 <br>
