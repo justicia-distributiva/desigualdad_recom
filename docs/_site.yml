@@ -1,0 +1,18 @@
+name: "desirecom2019"
+output_dir: "." # Esto es para que se compile en el rootdir
+navbar:
+  title: "Desigualdad económica y su influencia sobre la percepción de las diferencias de ingreso legítimas."
+  right:
+    - text: "Data preparation"
+      href: prod_prep-data.html
+    - text: "Analysis"
+      href: prod_analysis.html
+    - text: "Paper"
+      href: paper.html
+    - text: ""
+      icon: fa-github fa-lg
+      href: https://github.com/jciturras/desigualdad_recom
+output:
+  html_document:
+    css: "custom.css"
+    theme: cosmo

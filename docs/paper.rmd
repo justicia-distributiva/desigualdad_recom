@@ -1,0 +1,313 @@
+---
+author:
+- Julio Iturra Sanhueza
+- Juan Carlos Castillo
+- Catalina Rufs
+bibliography:
+- '../input/bib/zlibrary.bib'
+csl:  
+- '../input/bib/apa6.csl'
+title: "Desigualdad económica y su influencia sobre la jusitificación de las diferencias de ingreso legítimas"
+output:
+    html_document:
+        number_sections: true
+    pdf_document: default
+header-includes:
+   - \usepackage{float}
+   - \usepackage{booktabs}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+library(texreg)
+library(captioner)
+library(knitr)
+library(estimatr)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE)
+knitr::opts_knit$set(root.dir = "../")
+options(scipen=999)
+rm(list=ls())
+options(knitr.kable.NA = '')
+```
+
+```{r eval=FALSE, echo=FALSE}
+rmarkdown::render('docs/paper.rmd', output_format = 'html_document',output_dir = "docs")
+rmarkdown::render('docs/paper.rmd', output_format = 'pdf_document',output_dir = "docs")
+```
+
+```{r include=FALSE}
+# Determine the output format of the document
+outputFormat   = knitr::opts_knit$get("rmarkdown.pandoc.to")
+
+#Function to add "Table" in captioner
+capTab = function(x){
+  if(outputFormat == 'html'){
+    x = paste0("Tabla")
+  }; x
+}
+
+#Function to add "Figure" in captioner
+capFig = function(x){
+  if(outputFormat == 'html'){
+    x = paste0("Figura")
+  }; x
+}
+```
+
+```{r include=FALSE}
+table_nums <- captioner(prefix = capTab(""),type = NULL)
+fig_nums   <- captioner(prefix = capFig(""),type = NULL)
+```
+
+# Introducción
+
+La desigualdad económica es una característica común de gran parte de las sociedades modernas y ha ido en aumento desde la segunda mitad del siglo XX [@Esping_Andersen2007]. Aun cuando esta tendencia se explica principalmente por cambios estrato superior de ingresos, esto ha hecho que recientes investigaciones hayan puesto  mayor atención a las consecuencias que la concentración de ingresos tiene sobre las percepciones y actitudes de los individuos hacia la desigualdad económica. Desde un punto de vista de elección racional se espera que contextos más desiguales lleven a mayores preferencias por la redistribución [@Meltzer1981], aún cuando evidencia reciente sugiere que este vínculo entre desigualdad y redistribución es atravesado por la forma en que se percibe y se justifica la desigualdad [@Trump2017].
+
+Diversos estudios han abordado la relación existente entre desigualdad y preferencias redistributivas [@Garcia-Sanchez19; @Finseraas2009] Una línea relevante de investigación en este ámbito es la desarrollada por Kriss-Stella @Trump2017, quien ha abordado el rol que la percepción de desigualdad tiene sobre el grado de justificación de la desigualdad. Su trabajo pesquisó cómo la información sobre la desigualdad social afecta lo que los individuos consideran justo en términos salariales para ocupaciones de distinto estatus. La evidencia sugiere que en distintos contextos institucionales, tales como son las sociedades estadounidense y sueca, los individuos que poseen mayor información con respecto a la desigualdad tienden a justificar mayores brechas salariales. Así, el hecho que un mayor conocimiento de la desigualdad estructural se traduzca en una mayor justificación de la desigualdad sugiere que un enfoque de interés racional posee limitaciones para explicar por qué en contextos de alta desigualdad no necesariamente se presenta una mayor demanda por redistribución.
+
+La relación entre percepción de desigualdad y su justificación ha sido investigada anteriormente para el caso Chileno [@Castillo2011], país marcado por una alta desigualdad de ingresos [@PNUD2015; @WDI2018]. Los resultados de esta investigación señalan que existiría una asociación positiva entre percepción y justificación de la desigualdad, aún cuando la dirección de esta asociación es cuestionable dado que los análisis se basan en datos de encuestas transversales. El presente trabajo pretende entonces profundizar en la asociación entre percepción y justificación de desigualdad para el caso Chileno, mediante el uso de un diseño experimental a través de encuestas inspirado en el trabajo de @Trump2017. Para ello, en primer lugar se presentan antecedentes generales con respecto a la relación entre percepción de desigualdad, estatus social y justificación de desigualdad económica.
+
+## Factores asociados a la justificación de la desigualdad
+
+La presencia sostenida de desigualdad en las sociedades modernas se ha desarrollado en el contexto en que los estratos de mayores ingresos, han sido quienes han tenido mayor influencia producto del aumento de sus riquezas [@Atkinson2011; @Volscho2012]. Ante este escenario, desde una perspectiva de interés-propio [@Meltzer1981] la predicción basada en este marco sugiere que una parte importante de la sociedad tendería a demostrar altos grados de descontento con la distribución de los recursos existente. Sobre la base de este supuesto, medidas redistributivas serían favorables para quienes poseen menor riqueza, por tanto, la consecuencia esperada sería un cambio en las preferencias de los individuos hacia políticas que favorezcan su situación de deprivación [@Merton1968].
+
+En consonancia con el apartado anterior, cabe preguntarnos: ¿por qué el aumento de la desigualdad no viene acompañado de un incremento sistemático de la disconformidad y mayor demanda por redistribución? La evidencia empírica sugiere que, en parte, individuos que perciben mayor desigualdad, son aquellos que consideran justa una mayor brecha salarial [@Trump2017; @Castilloetal2019]. Esta evidencia sugiere que una hipótesis fundamentada exclusivamente en interés racional, desde donde se sostiene que un incremento en la percepción de desigualdad traería consigo una mayor demanda por redistribución, sería insifuciente para explicar las actitudes hacia la redistribución. En esta línea, la evidencia sugiere prestar mayor atención al proceso de justificación de la desigualdad y cuáles son los factores asociados a ésta.
+
+En primer lugar, la literatura ha señalado una distinción clave entre *justificación* y *Legitimación* al momento de abordar el estudio de la desigualdad. En ocasiones estos conceptos se han utilizado de manera análoga y poco precisa [@Castillo2011]. Por un lado, la justificación individual de un nivel de desigualdad, no implica necesariamente que exista legitimidad de esta. La diferencia yace en que la legitimación de una idea o situación (autoridad, desigualdad, justicia, etc.) no proviene del consentimiento individual, sino que de un consenso de carácter social o colectivo [@Walker1993]; es decir, requiere de la aceptación de una idea entre grupos de distinto estatus social. Esto implicaría validez social, independiente del beneficio personal que devenga de esta [@Weber1947]. Conceptualmente, fenómenos como la desigualdad económica pueden considerarse legítimos en la medida de que existe consenso entre distintos grupos de estatus, independiente de las consecuencias individuales que puedan originarse por ésta. Entonces, teniendo en cuenta que el fenómeno central del presente estudio es la justificación de la desigualdad, sobre la base de la literatura sobre justicia distributiva, se ha argumentado que la manera en que un observador manifiesta sus preferencias con respecto a la magnitud de los salarios de ocupaciones de distinto estatus social [@Jasso2015], puede ser empleado como una medida indirecta para dar cuenta de la justificación de desigualdad, de modo tal que a través de la evaluación de las diferencias en la justificación de diferencias salariales entre distintos grupos de estatus, es posible determinar si la desigualdad económica es considerada legítima a nivel societal [@Castillo2011; @Castillo2012justice]. Con esa precisión conceptual establecida, se profundizará en los mecanismos que pueden explicar la manera en que la percepción de mayor desigualdad de ingresos puede estar asociada a una mayor justificación de la desigualdad económica.
+
+@Shepelak1986 examinaron el efecto que tenía la realidad en la que vivían las personas en su percepción sobre cómo debería ser esta, en torno al tema de justicia distributiva. Esta teoría plantea que las personas responden ante estándares existenciales de justicia, lo cual significa que los estándares de justicia que cada individuo recomiende estarán afectados por los estándares reales -o mejor dicho, percibidos de la realidad- que existan en el contexto en el que se encuentre. En términos simples esto significa que la distribución actual de los recursos en un contexto va a influir en el consenso sobre cuánta desigualdad es justificable [@Castilloetal2019].
+
+Lo anterior se produce, en parte, por el mecanismo de ajuste descrito por @Trump2017. Ante la pregunta de por qué frente a mayor desigualdad de ingresos no se produce un incremento en la demanda por mayor redistribución, esta hipótesis sugiere que los individuos tienden a justificar la desigualdad a partir de procesos cognitivos que producen como resultado un aumento en la brecha de ingresos que se considera justa. Este proceso de ajuste ocurre a nivel psicológico y se da a partir de dos vías: (1) sesgo de status quo y (2) teoría de justificación del sistema [@Trump2017]. El sesgo de status quo ocurre cuando las personas adaptan sus expectativas de la realidad, a través de justificaciones racionales, como también por el denominado mecanismo de anclaje.
+
+Por un lado, el ajuste racional se produce a partir de información objetiva, a través de lo cual las forman su opinión respecto de cómo debiesen ser las cosas [@Trump2017]. Un ejemplo de ello lo entrega esta misma autora, Kriss-Stella @Trump2017, donde una persona recibe información respecto de cuánto es el sueldo de un oficio o profesión en particular. En este caso, a través del mecanismo de ajuste racional, el individuo tenderá a justificar la magnitud de salario a través de características como el trabajo duro, la inversión o la productividad asociada a una ocupación, lo cual tiene como consecuencia que el individuo ajusta sus apreciaciones respecto de cuánto deberían ser los salarios según el estatus social de las ocupaciones evaluadas.
+
+En segunda instanncia, el mecanismo de anclaje cognitivo corresponde a una de las heurísticas cognitivas más robustas, caracterizándose por brindar respuestas intuitivas y rápidas con el objetivo de reducir complejidad al momento de para predecir valores [@Furnham2011]. Este mecanismo fue propuesto como alternativa al modelo de comportamiento económico racional, tomando como base el supuesto la racionalidad limitada [@Simon1955]. De esta manera, el efecto de anclaje sesga el juicio en la toma de desicones, lo cual se explica por la influencia que tiene la magnitud de un valor inicial [@Tversky1974]. Desde el ámbito de la justicia distributiva, @Markovsky1988 sostiene que la opinión sobre una recompensa justa está sesgada por una recompensa "ancla" basada en conocimiento previo que opera como punto de referencia.  Lo anterior supone que, tanto el 'ancla' como la recompensa justa, comparten la misma métrica y pueden ser comparables en sus magnitudes.
+
+Sobre la base de la evidencia presentada por @Trump2017, si a un individuo adquiere información objetiva sobre los salarios de ocupaciones de distinto estatus social, se espera que se actualice la información que previamente se empleaba como ancla, lo cual trae consigo la manifestación de un sesgo en relación al salario recomendado para cada ocupación. @Wegener1987 sostiene que las personas creen que la distribución de recursos o asignación de sueldos actual es justa porque no poseen conocimiento respecto a cómo se distribuyen en realidad, lo que vuelve a las personas propensas a sesgarse en relación a la información de la que disponen, lo cual fue denominado como la ilusión de la justicia distributiva. La relevancia argumento yace en el tipo de información sobre la realidad distributiva a la que accede cada persona se encuentra asociado a su posición en la jerarquía social [@Castillo2011].
+
+El segundo mecanismo desde donde es posible ofrecer una explicación a la relación positiva entre la percepción de desigualdad y mayor justificación de brechas salariales, proviene del argumento central de la Teoría de Justificación del Sistema [@Trump2017]. Melvin Lerner se preguntó cómo es que aquellos sistemas que generan sufrimiento son capaces de mantener el apoyo popular [@Lerner1966], sosteniendo que que el ser humano tiende a apoyar y defender el status quo social [@Blasi2006], de modo tal que el sistema en el que vive tiende a ser considerado justo y legítimo. El argumento central de esta aproximación sostiene que los individuos manifiestan esta conducta, con el objetivo de reducir el malestar y estrés psicológico que produce la idea contraria. Así, este ajuste tiene como resultado la legitimación por parte de las personas de la información que reciben sobre el sistema distributivo [@Trump2017]. Desde esta teoría, es posible argumentar que al recibir información respecto a cuan desigual es la distribución de recursos, los individuos tienden a justificarla y validarla acríticamente, con el objetivo de reducir la disonancia cognitiva y malestar, en consecuencia, luego recomienden como justos niveles superiores de desigualdad.
+
+Dicho lo anterior, esto no implica que las personas siempre acepten las injusticias. No obstante, frente a las distintas interpretaciones factibles, los individuos poseen sesgos con respecto a preferir situaciones que generen menores grados de disonancia cognitiva [@Trump2017]. Para medir de manera más directa esta última teoría descrita, acudiremos a la escala creada por @Rubin1975, "Creencia en un mundo justo". A través de ella recabaron evidencia de que muchas personas creen que el mundo es un lugar donde las buenas personas son recompensadas y las malas castigadas, admirando a personas afortunadas y mirando en menos a aquellas que no lo son. Su versión más actual "Creencia global en un mundo justo" de @Lipkus1991 está correlacionada con la motivación de justificación del sistema, ya que mide la creencia por parte de las personas de que el mundo donde viven es justo. Entonces, mediante esta escala se podrá operacionalizar el sesgo sicológico de justificación de sistemas, el cual debiese producir que aquellos que mayores puntajes alcancen, también validen mayores niveles de desigualdad como justos.
+
+La variable central de esta investigación es la desigualdad recomendada. A través de una segunda variable, desigualdad percibida, se explora el efecto de cuánta desigualdad percibían anteriormente las personas, de modo tal que sea factible testear la hipótesis de ajuste y a su vez cómo se relaciona la información sobre la desigualdad económica con su justificación. Con el objetivo de determinar que el efecto de a información es robusto, incorporamos medidas de estatus social, percepción de desigualdad y justificación del sistema. Esto último es para determinar que es la información la que genera un ajuste y no las preferencias ideológicas, el estatus social o la percepción que tienen los individuos con respecto a la sociedad en que habitan, y además, desentrañar el impacto de ambos mecanismos de ajuste (status quo y justificación de sistemas). Obteniendo estos resultados, es plausible determinar la validez de la hipótesis de ajuste para el contexto chileno, así como también en qué medida la teoría de elección racional juega un papel relevante en explicar la justificación de la desigualdad.
+
+A continuación se presentarán el procedimiento de elaboración del trabajo de campo, el diseño del estudio y medición de las variables más relevantes.
+
+# Datos, variables y método
+
+*Midiendo las actitudes hacia las Diferencias de Ingreso Legítimas*
+
+Al que igual @Trump2017, nuestra variable dependiente es la actitud hacia las diferencias de ingreso. Lo que se busca conocer es la opinión con respecto a qué tan grandes deberían estas diferencias entre ocupaciones de distinto estatus. Para realizar la medición de esta actitud, decidimos emplear las preguntas que ha utilizado previamente en Chile el módulo Social Inequality del *International Social Survey Programme*. Se les pregunta a los encuestados cuánto dinero creen que *gana* una lista de ocupaciones en un año, después se les pregunta cuánto creen que estas ocupaciones *deberían* ganar en un año. Con esto es posible conocer el nivel de desigualdad *percibida* por los individuos, como también conocer el nivel de desigualdad que *recomiendan* o que consideran justa.
+
+Las ocupaciones que se presentaron son "Un profesor de educación básica", "Un ministro de Gobierno chileno", Un obrero no calificado de una fábrica, Un dueño de una pequeña empresa, "Un gerente de una gran empresa" y "Un doctor o médico de medicina general". El orden en el que se posicionaron las ocupaciones se realizó de manera aleatoria. La operacionalización de la variable dependiente se realizó a través del Índice de justicia [@Jasso1999]. Esta medida permite conocer la desigualdad percibida y recomendada a través la función *(ln(Ocupación alto estatus / Ocupación bajo estatus))*. Un número más alto, indica una mayor brecha entre el salario de la ocupación de alto estatus con la de estatus bajo.
+
+Dicho lo anterior, empleamos dos medidas basadas en el índice de justicia. La ecuación 1  representa la medida empelada por @Trump2017, donde no se consideran las ocupaciones específicas, razón por la cual se utiliza el salario máximo y mínimo mencionado por el entrevistado. Esto se debe a que el interés principal es conocer la desigualdad, tanto percibida como recomendada, desde un punto de vista global.
+
+$$ D_1 = \ln\Bigg(\frac{\text{Máximo salario recomendado}}{\text{Mínimo salario recomendado}}\Bigg) (1)$$
+
+Adicionalmente, calculamos el mismo índice en base al salario de la ocupación de mayor y menor estatus [@Jasso1999], media que ha sido empleadas anteriormente en estudios realizados en Chile [@Castillo2012justice; @Castillo2012] y que permite disponer de una aproximación adicional a la desigualdad percibida y al salario justo.
+Para el cálculo del índice, la ecuación 2 muestra que el salario de "Un gerente de una gran empresa" es la ocupación de mayor estatus y que el salario de "Un obrero no calificado de una fábrica" es la ocupación de menor estatus.
+
+$$D_2= \ln\Bigg(\frac{\text{Salario Gerente}}{\text{Salario Obrero}}\Bigg) (2)$$
+
+## Experimento
+
+Entre noviembre y diciembre de 2014 se realizó una encuesta de corte transversal titulada "Creencias políticas y sociales". El estudio se realizó en individuos adultos con edad entre 18 y 87 años de sectores urbanos de la Región Metropolitana. El método de administración del cuestionario fue de manera presencial y asistido por *Tablet*. La media de edad de los participantes es de 44 años, 62% son mujeres, 18% tiene educación terciaria o superior y un 54% declara no tener posición política.
+
+Una parte de la muestra (226 participantes) corresponde al grupo control: estos no recibieron tratamiento de información, respondieron preguntas sociodemográficas, la escala de Creencia en un Mundo Justo (CMJ),[^1] seguido de las preguntas sobre desigualdad salarial percibida y justa. Adicionalmente, se emplearon 2 tratamientos en tres combinaciones distintas lo cual se resume en la Tabla 1. Posteriormente a responder a la pregunta sobre cuánto *cree que gana* mensualmente cada una de las seis ocupaciones, el primer grupo (*n*=104) recibió información sobre las consecuencias de la reforma educacional en producir mayor equidad (Anexo Figura 5), además una lista de salarios para las seis ocupaciones mencionadas en la pregunta relacionada a cuánto cree que gana cada ocupación (anexo Tabla 3). El segundo grupo (*n*=148) solo recibió la información a través del párrafo sobre las consecuencias de la reforma educacional; y finalmente, el tercer grupo (*n*=254) recibió el tratamiento con información de los salarios según ocupaciones de distinto estatus. Luego de recibir el tratamiento respectivo, a los entrevistados se les preguntó *"cuánto cree que debería ganar"* cada una de las ocupaciones.
+
+
+```{r include=FALSE}
+cap <- "Resumen Condiciones de Tratamiento"
+if (knitr::is_html_output()) {tab_res <- table_nums("tab_res",cap)} else {tab_res <- cap}
+```
+
+
+|                                | Condición A | Condición B | Condición C |
+|--------------------------------|:-----------:|:-----------:|:-----------:|
+| Párrafo Reforma Educacional    |      Sí     |      Sí     |     No      |
+| Lista Salarios según Ocupación |      Sí     |      No     |     Sí      |
+Table: `r tab_res`
+
+
+En la siguiente sección se presentan los principales resultados del análisis, donde se estimaron una serie de modelos de regresión lineal para determinar si la exposición a información sobre desigualdad tiene un efecto sobre la desigualdad recomendada. Adicionalmente, se realizaron una serie de análisis para determinar el balance de la asignación aleatoria (ver Anexo Tabla). Con el objetivo de poner a prueba la robustez de los resultados, se incluyeron como controles la escala de Creencia en Mundo Justo (CMJ), la posición política, nivel educacional y desigualdad percibida en base a las ocupaciones de alto y bajo estatus.
+
+# Resultados y discusión
+
+En primer lugar, es relevante destacar que un 82% de los participantes percibe que la brecha entre el salario de las ocupaciones de mayor y de menor estatus es menor a la que realmente se puede determinar según los datos CASEN 2011. Esta información permite confirmar que al ser expuestos a la condición de información, se está generando un ajuste efectivo en términos de la percepción de desigualdad.
+
+Los resultados generales del experimento son presentados en la Figura 1 para la desigualdad recomendada en base al máximo y mínimo salario mencionado. Así también, los resultados para la desigualdad recomendada en base al salario de las ocupaciones de alto y bajo esta tus son presentados en la Figura 2.
+
+A partir de la Figura 1, los resultados sugieren que al recibir el tratamiento de información sobre desigualdad, no existen diferencias estadísticamente significativas en términos de la desigualdad recomendada general ($D_1$) para el grupo tratamiento respecto al grupo control. Estos resultados sugieren que, contrario a las expectativas iniciales, individuos que son más conscientes de la desigualdad a nivel estructural no cambian sus preferencias en términos de el salario que consideran justo.
+
+```{r include=FALSE}
+cap <- "Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general."
+if (knitr::is_html_output()) {bar01 <- fig_nums("bar01",cap)} else {bar01 <- cap}
+```
+
+![`r bar01`](../output/images/barplot1.png){height=20em}
+
+Conforme a lo anterior, se realizó el análisis posterior para determinar el efecto del tratamiento sobre la desigualdad recomendada en base al índice propuesto por @Jasso1999, considerando el salario recomendado para las ocupaciones de alto y bajo estatus. Se evidenció que luego de recibir el tratamiento de información de la condición A  - lista de salarios reales y párrafo sobre consecuencias de la reforma educacional -, la desigualdad recomendada incrementó en 0,55 puntos. Esto en base a que el grupo que expuesto a ambas condiciones simultáneas recomienda 2,32 en contraste con 1.77 del grupo control ($p$<0.001), lo cual representa un incremento aproximado de un 31%. Por otro lado, se evidenció que el tratamiento de información de la condición B, basado en el párrafo sobre la reforma educacional, no afecta el nivel de desigualdad que prefieren los individuos. Si bien existe un incremento de 0,23 en la desigualdad recomendada, el tratamiento no genera una diferencia estadísticamente significativa respecto al grupo control. Finalmente, se evidenció que obtener información sobre la desigualdad salarial según ocupación -tratamiento de información bajo la condición C-, produce un cambio de 0,32 en la desigualdad recomendada, equivalente a un incremento de 18% respecto al grupo control. En ambos casos las diferencias son estadísticamente significativas, lo cual se explica fundamentalmente por el incremento del salario recomendado para la ocupación de gerente, mientras que el salario del obrero se mantuvo en un promedio similar (Ver en Anexos Figura 3 y 4).
+
+Los resultados del punto anterior confirma la hipótesis respecto de que al manipular la percepción de desigualdad de las personas a través de información sobre la magnitud de la desigualdad salarial entre distintas ocupaciones, existe una tendencia que se traduce en que se justifique mayor desigualdad en estos términos. Esto podría estar ocurriendo por la hipótesis de ajuste discutida en el marco teórico [@Trump2017], a partir del sesgo de ancla y de la justificación racional. Es interesante el que el ajuste cognitivo ocurra a partir de ver las cifras y no al ver el párrafo que induce percepción de mayor desigualdad. Esto da luces respecto de que efectivamente el mecanismo a través del cual se produce el ajuste puede ser el sesgo de anclaje, dado que la persona se ancla a la cifra que ya vio, y/o el ajuste racional, en el que la persona justifica racionalmente por qué tal ocupación gana lo que gana y por ende, luego recomienda más desigualdad. Estos resultados no dan luces de la teoría de justificación de sistemas, particularmente porque desde esta se esperaría que el párrafo que inducía percepción de desigualdad hubiese producido un ajuste significativo en la recomendación de desigualdad, por el esfuerzo de las personas de validar el sistema injusto en el que viven.
+
+```{r include=FALSE}
+cap <- "Resultados del experimento, en base a los valores predichos para la desigualdad recomendada según ocupaciones de alto y bajo estatus."
+if (knitr::is_html_output()) {bar02 <- fig_nums("bar02",cap)} else {bar02 <- cap}
+```
+
+![`r bar02`](../output/images/barplot2.png){height=20em}
+
+```{r include=FALSE}
+cap <- "Modelos de regresión para desigualdad recomendada."
+if (knitr::is_html_output()) {reg01 <- table_nums("reg01",cap)} else {reg01 <- cap}
+```
+
+```{r include=FALSE, results='asis'}
+load("output/tables/modelos02.RData")
+custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
+                      "Centro (ref: Izquierda)", "Derecha", "Ninguno", "No sabe",
+                      "Desigualdad percibida (Log)",
+                      "Tratamiento","Tratamiento")
+custom.note = "Intervalos de confianza entre paréntesis calculados al 95\\% empleando errores estándar robustos (HC2)"
+```
+
+```{r echo=FALSE, results='asis', eval=knitr::is_html_output()}
+htmlreg(l = list(e1ad04.so.r,logOGcov1.so.r,e1bd04.so.r,logOGcov2.so.r,e2cd04.so.r,logOGcov3.so.r),
+        custom.coef.names = custom.coef.names,
+        custom.model.names = c("MA1","MA2","MB1","MB2","MC1","MC2"),
+        digits = 3,center = TRUE,
+        doctype = FALSE,
+        reorder.coef = c(2:8, 1),
+        caption = reg01,
+        caption.above = T, include.rs = FALSE, include.rmse = FALSE,
+        custom.note = custom.note
+)
+```
+
+```{r echo=FALSE, results='asis', eval=knitr::is_latex_output()}
+texreg(l = list(e1ad04.so.r,logOGcov1.so.r,e1bd04.so.r,logOGcov2.so.r,e2cd04.so.r,logOGcov3.so.r),
+        custom.coef.names = custom.coef.names,
+        custom.model.names = c("MA1","MA2","MB1","MB2","MC1","MC2"),
+        digits = 3,reorder.coef = c(2:8, 1),
+        caption = reg01,center = TRUE,
+        caption.above = T,scalebox = 0.8,
+        float.pos = "H", booktabs = TRUE, use.packages = F, include.rs = FALSE, include.rmse = FALSE,
+        custom.note = custom.note)
+```
+
+La Tabla 2 muestra que el efecto de la exposición a la condición de desigualdad se mantiene cuando se controla por la creencia en un mundo justo, la posición política, percepción de desigualdad y educación. Estos resultados ofrecen evidencia a favor de la hipótesis de ajuste, de modo tal que el grado de información respecto a la desigualdad tiene como consecuencia una mayor desigualdad recomendada en términos de la brecha salarial entre ocupaciones de alto y bajo estatus, aun cuando se controle por otras variables relevantes.
+
+Es llamativo que la creencia en un mundo justo no presente una asociación estadísticamente significativa si se considera su alta correlación con la hipótesis de justificación de sistemas. Esto quiere decir que creer más en un mundo justo, implica un mayor nivel de justificación del sistema y por tanto, era de esperar que tuviera una relación positiva con recomendar mayores niveles de desigualdad. En la Tabla se observa que esta hipótesis no se cumple en ninguna dirección, ya que presenta coeficientes negativos en dos de los tratamientos, ni en magnitud, dado que en la tercera condición tiene valor cero y no es estadísticamente significativa en ningún modelo. Este resultado va en línea con lo antes mencionado respecto del efecto no significativo del tratamiento del párrafo y difiere de lo obtenido por @Trump2017 para el contexto estadounidense y Sueco, donde sí se cumple la hipótesis. Por esto, sería interesante analizar en futuras investigaciones qué ocurre particularmente en la sociedad chilena con la teoría de justificación de sistemas. @Trump2017 propone un diseño experimental para estudiarlo.
+
+Respecto del coeficiente positivo y estadísticamente significativo de percepción de desigualdad, cumple con las expectativas del estudio sobre que a mayores percepciones de desigualdad, las personas tienden a justificar una mayor brecha salarial debido a procesos de ajuste cognitivo. Por otro lado, desde un enfoque de interés racional, se esperaría que aquellas personas que perciban más ingresos recomienden mayores niveles de desigualdad debido a que es beneficioso para ellos.
+En la Tabla 2 podemos ver que la variable educación -la cual fue utilizada como un proxy de nivel socioeconómico-, aparece como positiva y significativa en el Modelo 3. Es decir, tener mayores niveles de educación se asocia con recomendar mayores niveles de desigualdad.
+
+Esto último va en consonancia con un enfoque de interés racional [@Meltzer1981], lo cual da cuenta de que individuos de mayor estatus tienden a justificar mayor desigualdad. Así también, es relevante observar que una mayor percepción de desigualdad se asocia con una mayor brecha salarial recomendada. Esta evidencia permite sostener que la justificación de brecha salariales se explica, por un lado, por el estatus social de los individuos, así como también por los niveles de desigualdad percibida, lo cual va en consonancia con los hallazgos reportados por @Trump2017 para el contexto estadounidense y sueco.
+
+# Conclusiones
+
+El presente trabajo ha evidenciado que la desigualdad recomendada se ve afectada por la percepción de desigualdad, específicamente cuando los individuos son consientes de la brecha salarial real. En base a la hipótesis propuesta, se ha evidenciado que tener mayor información con respecto a la desigualdad económica tiene como consecuencia que los individuos recomienden una mayor brecha salarial entre ocupaciones de bajo y alto estatus. En este sentido, se emplearon dos tratamientos en
+tres combinaciones distintas, donde la información respecto a los salarios afecta sustantivamente la magnitud de desigualdad recomendada, mientras que obtener información con respecto a las consecuencias de largo plazo que tendría la reforma educacional no afecta significativamente la brecha salarial recomendada. Así también, se evidenció que la combinación de ambos tratamientos posee un efecto promedio más alto que cada condición de manera individual.
+
+En un principio, se postuló la interrogante con respecto a si la hipótesis de ajuste cognitivo de expectativas se cumpliría para el contexto de Chile. @Trump2017 evidenció que en contextos con diversos grados desigualdad económica y diferencias sustantivas en términos de políticas de bienestar, poseer mayor información con respecto a la desigualdad económica sí afecta la desigualdad que recomiendan los individuos. En nuestro estudio empleamos dos medidas diferentes para abordar el análisis de la desigualdad recomendada, por un lado empleamos la medida que utilizó Trump para analizar la desigualdad general, donde no se evidenciaron diferencias significativas ente los distintos grupos de estudio. Por otro lado, decidimos emplear la medida propuesta por @Jasso1999 como alternativa a lo realizado por Trump, evidenciando que la información sobre desigualdad salarial tiene un efecto sustantivo en la desigualdad recomendada según ocupaciones de alto y bajo estatus.
+
+En base a esta evidencia, es factible sostener que las percepciones relacionadas con la desigualdad, y en particular con la desigualdad salarial, posee consecuencias sustantivas en cómo los individuos racionalizan estas diferencias. Desde la literatura sobre preferencias redistributivas, se sostiene que contextos más desiguales se asocian con mayor demanda por redistribución. No obstante, aquí sostenemos que el efecto de la información es robusto sobre la brecha salarial recomendada, independiente de la posición política, estatus social y creencias distributivas.
+
+Dicho lo anterior, nuestros resultados tiene implicancias en el estudio de las preferencias redistributivas en contextos de alta desigualdad y con diversas políticas de bienestar social, tal como ocurre en los distintos países de América Latina. Así, se abre la interrogante con respecto a cómo se asocia la desigualdad recomendada con la
+redistribución, o sobre qué ámbitos de política social se encuentra relacionado. Se ha evidenciado que el apoyo a distintas medidas redistributivas varía según el tópico en evaluación teniendo presente que la *necesidad* es distinta al ser *merecedor* [@Jensen2017; @Aaroe2014]. Esta racionalidad opera como diferenciador en el apoyo a políticas sociales en salud o pensiones de vejez, donde la magnitud de la desigualdad prefiere es un antecedente relevante cuando se evalúa la asignación de recursos.
+
+A diferencia de los experimentos en contextos cerrados y controlados, la realización de experimentos a través de encuestas ofrece la posibilidad de acceder a muestras de mayor tamaño y representatividad. Sin embargo, los resultados del presente estudio deben ser interpretados con cautela debido a que la muestra responde una parte del área urbana de la Región Metropolitana, lo cual imposibilita extrapolar los resultados a la sociedad en su conjunto. Por otro lado, se requiere mayor investigación
+en términos de que no es posible evidenciar la sostenibilidad temporal del efecto del tratamiento, debido a que las actitudes no son estáticas, en particular aquellas que se relacionan con temas distributivos. Futuras investigaciones deben avanzar hacia un estudio con tamaños muestrales que permitan realizar inferencias a nivel poblacional. En esta línea, recientes avances en el ámbito de la investigación realizada a través de encuestas a través de internet sugieren que la realización experimentos usando esta estrategia de muestreo tiene la ventaja de ser altamente eficiente en el uso de recursos, además de que permite obtener muestras con niveles de heterogeneidad socioedemográfica y socioeconómica similares a encuestas tradicionales [@Zhang2018].
+
+[^1]: En base a los criterios señalados por @Brown2008, se realizó un Análisis Factorial Confirmatorio que evidenció un buen ajuste de la escala para la Creencia en un Mundo Justo ($\chi^2(5)$=8.40, $p$=0.015, CFI=0.99, RMSEA=0.06). En base a esta evidencia, se procedió a crear un índice promedio con los ítems.
+
+# Anexos
+
+```{r include=FALSE}
+cap <- "Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento."
+if (knitr::is_html_output()) {obgapb <- fig_nums("obgapb",cap)} else {obgapb <- cap}
+```
+
+![`r obgapb` ](../output/images/obgapb.png){height=25em}
+
+
+```{r include=FALSE}
+cap <- "Comparación de la distribución de salario recomendado para un Gerente según asignación del tratamiento."
+if (knitr::is_html_output()) {gergapb <- fig_nums("gergapb",cap)} else {gergapb <- cap}
+```
+
+![`r gergapb`](../output/images/gergapb.png){height=25em}
+
+```{r include=FALSE}
+cap <- "Modelos de regresión para Desigualdad recomendada (estandarizada)"
+if (knitr::is_html_output()) {reg02 <- table_nums("reg02",cap)} else {reg02 <- cap}
+custom.note = "Intervalos de confianza entre paréntesis calculados al 95\\% empleando errores estándar robustos (HC2)"
+```
+
+```{r echo=FALSE, results='asis'}
+load("output/tables/modelos_z.RData")
+```
+
+```{r echo=FALSE, results='asis', eval=knitr::is_html_output()}
+htmlreg(
+  list(logOGcov1a, logOGcov2b, logOGcov3c),
+  custom.model.names = c("Modelo A", "Modelo B", "Modelo C"),
+  custom.coef.names = custom.coef.names,
+  caption = reg02,
+  caption.above = TRUE,
+  reorder.coef = c(2:8, 1),
+  booktabs = TRUE,
+  digits = 2,
+  leading.zero = TRUE,
+  include.rs = FALSE,
+  include.rmse = FALSE,
+  doctype = F,
+  custom.note = custom.note)
+```
+
+```{r echo=FALSE, results='asis', eval=knitr::is_latex_output()}
+texreg(
+  list(logOGcov1a, logOGcov2b, logOGcov3c),
+  custom.model.names = c("Modelo A", "Modelo B", "Modelo C"),
+  custom.coef.names = custom.coef.names,
+  digits = 3,
+  reorder.coef = c(2:8, 1),
+  caption = reg02,center = TRUE,
+  caption.above = T,scalebox = 1.0,
+  float.pos = "H", booktabs = TRUE, use.packages = F, include.rs = FALSE, include.rmse = FALSE,
+  custom.note = custom.note)
+```
+
+
+```{r include=FALSE}
+cap <- "Condición de Tratamiento B 'Consecuencias a largo plazo de la reforma educacional'."
+if (knitr::is_html_output()) {treat02 <- fig_nums("treat02",cap)} else {treat02 <- cap}
+```
+![`r treat02`](../output/images/treat2.png)
+
+```{r include=FALSE}
+cap <- "Condición de Tratamiento C Lista de salarios por ocupación."
+if (knitr::is_html_output()) {treat03 <- table_nums("treat03",cap)} else {treat03 <- cap}
+```
+
+**Ocupación**                            **Sueldo mensual**
+---------------------------------------- --------------------
+Un gerente de una gran empresa           \$ 10.171.496
+Un ministro de Gobierno chileno          \$ 7.417.865
+Un doctor o médico de medicina general   \$ 2.912.983
+Un dueño de una pequeña empresa          \$ 958.173
+Un profesor de educación básica          \$ 597.646
+Un obrero no calificado de una fábrica   \$ 228.640
+---------------------------------------- --------------------
+Table: `r treat03`
+
+
+# Referencias
