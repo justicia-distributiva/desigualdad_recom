@@ -1,0 +1,22 @@
+
+
+body{
+  text-align: justify;
+  font-size: 12px;
+}
+
+td { font-size: 10px;
+align: center;}
+
+.right {
+  text-align: right;
+  line-height: 0.25;
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}

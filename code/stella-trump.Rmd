@@ -1,0 +1,587 @@
+---
+title: "Experimento Stella-Trump"
+author: "Julio César Iturra Sanhueza- jciturra@uc.cl"
+output:
+  html_document:
+    highlight: textmate
+    theme: journal
+    code_folding: hide
+---
+
+```{r, message=FALSE, warning=FALSE}
+options(scipen=999)
+library(haven)
+library(dplyr)
+library(car)
+library(stargazer)
+library(ggplot2)
+library(gridExtra)
+library(knitr)
+library(kableExtra)
+library(RItools) #xBalance
+library(texreg)
+```
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+rm(list=ls())
+# # BASE DE DATOS -----------------------------------------------------------
+# stella1 <- as.data.frame(read_dta("BBDD  FINAL ISUC PONDERADA.dta"))
+# # stella2 <- as.data.frame(read_dta("BBDD FINAL ISUC PONDERADA 2.dta"))
+# stella1[] <- lapply(stella1, unclass)
+load("trump2019.Rdata")
+```
+
+Cosas por preguntar:
+
+* Consultar por los 9's en NA (Listo)
+* Ver los casos <200 (No cambia, mantener)
+* Pendiente controlar por otras covariables
+    - ideología política
+    - Percepción de desigualdad (log)
+
+```{r variable selection, eval=FALSE, include=FALSE, results='asis'}
+st <- stella1 %>% dplyr::select(TIPO,TIPO2, #Grupos "tipo" (?)
+                         P_TC,P_TC_2,P_TC_3, #Tratamiento =1; Control =2
+                         P31_1,P31_2,P31_3,P31_4,P31_5,P31_6, #Cuánto gana (ocupación)
+                         P32_1,P32_2,P32_3,P32_4,P32_5,P32_6, #Cuánto debería ganar (Ocupación)
+                         P33_2, # ROG4: Resp-Gob. reducir brecha entre ricos y pobres
+                         P33_7, #Las diferencias de ingresos en Chile son demasiado grandes
+                         P30_1,P30_2,P30_3,P30_4,P30_5, #Belief just world
+                         P40,# Sexo del entrevistado 1= hombre 2 = mujer
+                         P41,# Edad del entrevistado
+                         P45,# Estado civil
+                         P44,# Nivel educacional
+                         P49,# Rango de ingreso total mensual del hogar
+                         P3,#Posición política
+                         COR) #ID
+
+st$JW1 <-  recode(st$P30_1,"1=5;2=4;3=3;4=2;5=1;9=NA")
+st$JW2 <-  recode(st$P30_2,"1=5;2=4;3=3;4=2;5=1;9=NA")
+st$JW3 <-  recode(st$P30_3,"1=5;2=4;3=3;4=2;5=1;9=NA")
+st$JW4 <-  recode(st$P30_4,"1=5;2=4;3=3;4=2;5=1;9=NA")
+st$JW5 <-  recode(st$P30_5,"1=5;2=4;3=3;4=2;5=1;9=NA")
+
+st$just <- as.numeric((st$JW1+st$JW2+st$JW3+st$JW4+st$JW5)/5)
+
+st$P_TC   <- recode(st$P_TC  ,"2=0")#Recode tratamiento y control:
+st$P_TC_2 <- recode(st$P_TC_2,"2=0")#Recode tratamiento y control:
+st$P_TC_3 <- recode(st$P_TC_3,"2=0")#Recode tratamiento y control:
+st$P31_1 <- recode(st$P31_1,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P31_2 <- recode(st$P31_2,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P31_3 <- recode(st$P31_3,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P31_4 <- recode(st$P31_4,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P31_5 <- recode(st$P31_5,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P31_6 <- recode(st$P31_6,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+
+st$P32_1 <- recode(st$P32_1,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P32_2 <- recode(st$P32_2,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P32_3 <- recode(st$P32_3,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P32_4 <- recode(st$P32_4,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P32_5 <- recode(st$P32_5,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+st$P32_6 <- recode(st$P32_6,"c(99999,999999,9999999,99999999,999999999)=NA")#Recode missing data
+
+st$educ <- recode(st$P44, "99=NA")
+st$P33_2 <- recode(st$P33_2,"1=5;2=4;3=3;4=2;5=1;9=NA")#Recode missing data de ROG4
+table(st$P33_2)
+
+st$pdesi <- recode(st$P33_7,"1=5;2=4;3=3;4=2;5=1;9=NA")#Recode missing data de Percepción de desigualdad
+table(st$perdesi)
+
+st$ppol  <- car::recode(st$P3, "c(0,1,2,3,4)=1;5=2;c(6,7,8,9,10)=3;
+                           96=4;
+                           c(88,99)=5")
+st$ppol  <- factor(st$ppol, levels = c(1,2,3,4,5), labels = c("Izquierda/Centro Izquierda",
+                                                      "Centro",
+                                                      "Derecha/Centro Derecha",
+                                                      "Ninguno",
+                                                      "No sabe/ no responde "))
+```
+
+##Desigualdad recomendada ratio máximo/mínimo
+
+$$ratio_{salario\ máximo/salario\ mínimo} =  \ln\Bigg(\frac{Salario\ máximo\ señalado}{Salario\ mínimo\ señalado}\Bigg ) $$
+```{r desigualdad-recomendada, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+#Variables Basadas en el indicador de Jasso(1999) modificada Stella-Trump(2016) según el ratio salario máximo/salario mínimo ----
+# Selección de Ingreso percibido ----
+st$min_per <- pmin(st$P31_1,st$P31_2,st$P31_3,st$P31_4,st$P31_5,st$P31_6, na.rm = TRUE) #Seleccionar el mínimo de ingreso percibido
+st$max_per <- pmax(st$P31_1,st$P31_2,st$P31_3,st$P31_4,st$P31_5,st$P31_6, na.rm = TRUE) #Seleccionar el máximo de ingreso percibido
+
+# Selección de Ingreso recomendado ----
+st$min_rec <- pmin(st$P32_1,st$P32_2,st$P32_3,st$P32_4,st$P32_5,st$P32_6, na.rm = TRUE) #Seleccionar el mínimo de ingreso recomendado
+st$max_rec <- pmax(st$P32_1,st$P32_2,st$P32_3,st$P32_4,st$P32_5,st$P32_6, na.rm = TRUE) #Seleccionar el máximo de ingreso recomendado
+
+# Indice de diferencias percibidas simple (sin Log) ----
+st$perc <- st$max_per/st$min_per
+# Indice de diferencias recomendadas ("Recomended inequality") simple (sin Log) ----
+st$reco <- st$max_rec/st$min_rec
+# st <- st %>% filter(reco.s < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
+
+# Indice de diferencias percibidas (2) Logaritmizada ----
+st$log_perc <- log(st$max_per/st$min_per)
+# Indice de diferencias recomendadas ("Recomended inequality") (2) Logaritmizada ----
+st$log_reco <- log(st$max_rec/st$min_rec)
+```
+
+##Desigualdad recomendada ratio Gerente/obrero
+$$ratio_{Gerente/obrero}= \ln\Bigg(\frac{Salario\ Gerente}{Salario\ Obrero}\Bigg ) $$
+```{r ratio Gerente/Obrero, eval=FALSE, include=FALSE}
+# Variables Basadas en el indicador de Jasso(1999) según el ratio Gerente/Obrero ----
+st$perc_OG <- st$P31_2/st$P31_4 # Indice de diferencias percibidas simple
+st$reco_OG <- st$P32_2/st$P32_4 # Indice de diferencias recomendadas simple ("Recomended inequality")
+st$log_perc_OG <- log(st$P31_2/st$P31_4) # Indice de diferencias percibidas
+st$log_reco_OG <- log(st$P32_2/st$P32_4) # Indice de diferencias recomendadas ("Recomended inequality")
+```
+
+```{r, eval=FALSE, include=FALSE}
+# save(st,file = "trump2019.Rdata")
+```
+
+#Análisis del experimento
+
+##Condiciones:
+
+* Grupo A - Se les mostró párrafo y lista de sueldos
+* Grupo B - Se les mostró párrafo
+* Grupo C - Se les mostró lista de sueldos
+* Grupo D - Control, no se les mostró nada.
+
+
+```{r subset-treatment-groups, message=FALSE, warning=FALSE, include=FALSE, results='asis'}
+#Subset según variable TIPO2 full muestra
+# st <- st %>% filter(reco < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
+tpab2 <- st %>% filter(TIPO2==1 | TIPO2==2) #Subset según TIPO==1 & 2 | A vs B
+tpac2 <- st %>% filter(TIPO2==1 | TIPO2==3) #Subset según TIPO==1 & 3 | A vs C
+tpad2 <- st %>% filter(TIPO2==1 | TIPO2==4) #Subset según TIPO==1 & 3 | A vs D
+tpbc2 <- st %>% filter(TIPO2==2 | TIPO2==3) #Subset según TIPO==1 & 3 | B vs C
+tpbd2 <- st %>% filter(TIPO2==2 | TIPO2==4) #Subset según TIPO==1 & 3 | B vs D
+tpcd2 <- st %>% filter(TIPO2==3 | TIPO2==4) #Subset según TIPO==3 & 4 | C vs D
+
+tpab2$TIPO2 <- recode(tpab2$TIPO2,"2=0;1=1")#Recode tratamiento y control: Condción A y Control B| para comparar tratamientos
+tpac2$TIPO2 <- recode(tpac2$TIPO2,"3=0;1=1")#Recode tratamiento y control: Condción A y Control C| para comparar tratamientos
+tpbc2$TIPO2 <- recode(tpbc2$TIPO2,"2=0;3=1")#Recode tratamiento y control: Condción C y Control B| para comparar tratamientos
+
+tpad2$TIPO2 <- recode(tpad2$TIPO2,"4=0;1=1")#Recode tratamiento y control: Condción A y Control D| para testear tratamiento
+tpbd2$TIPO2 <- recode(tpbd2$TIPO2,"4=0;2=1")#Recode tratamiento y control: Condción B y Control D| para testear tratamiento
+tpcd2$TIPO2 <- recode(tpcd2$TIPO2,"4=0;3=1")#Recode tratamiento y control: Condción C y Control D| para testear tratamiento
+st$treat <- relevel(factor(st$TIPO2), ref = 4)
+```
+
+```{r subset <200 DONT RUN, message=FALSE, warning=FALSE, include=FALSE, results='asis'}
+#Subset según variable TIPO2 VALORES <200
+# st <- st %>% filter(reco < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
+# tpab2 <- st %>% filter(TIPO2==1 | TIPO2==2) #Subset según TIPO==1 & 2 | A vs B
+# tpac2 <- st %>% filter(TIPO2==1 | TIPO2==3) #Subset según TIPO==1 & 3 | A vs C
+# tpad2 <- st %>% filter(TIPO2==1 | TIPO2==4) #Subset según TIPO==1 & 3 | A vs D
+# tpbc2 <- st %>% filter(TIPO2==2 | TIPO2==3) #Subset según TIPO==1 & 3 | B vs C
+# tpbd2 <- st %>% filter(TIPO2==2 | TIPO2==4) #Subset según TIPO==1 & 3 | B vs D
+# tpcd2 <- st %>% filter(TIPO2==3 | TIPO2==4) #Subset según TIPO==3 & 4 | C vs D
+#
+#
+# tpab2$TIPO2 <- recode(tpab2$TIPO2,"2=0;1=1")#Recode tratamiento y control: Condción A y Control B| para comparar tratamientos
+# tpac2$TIPO2 <- recode(tpac2$TIPO2,"3=0;1=1")#Recode tratamiento y control: Condción A y Control C| para comparar tratamientos
+# tpbc2$TIPO2 <- recode(tpbc2$TIPO2,"2=0;3=1")#Recode tratamiento y control: Condción C y Control B| para comparar tratamientos
+#
+# tpad2$TIPO2 <- recode(tpad2$TIPO2,"4=0;1=1")#Recode tratamiento y control: Condción A y Control D| para testear tratamiento
+# tpbd2$TIPO2 <- recode(tpbd2$TIPO2,"4=0;2=1")#Recode tratamiento y control: Condción B y Control D| para testear tratamiento
+# tpcd2$TIPO2 <- recode(tpcd2$TIPO2,"4=0;3=1")#Recode tratamiento y control: Condción C y Control D| para testear tratamiento
+```
+
+# Balance
+## Balance regresión OLS
+
+```{r balance-ols, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+bal1 <- lm(TIPO2~factor(P40)+P41+factor(educ)+just+ppol+pdesi+log_perc_OG,data =tpad2 )# balance asignación aleatoria Grupo A vs D
+bal2 <- lm(TIPO2~factor(P40)+P41+factor(educ)+just+ppol+pdesi+log_perc_OG,data =tpbd2 )# balance asignación aleatoria Grupo B vs D
+bal3 <- lm(TIPO2~factor(P40)+P41+factor(educ)+just+ppol+pdesi+log_perc_OG,data =tpcd2 )# balance asignación aleatoria Grupo C vs D
+
+# texreg::screenreg(list(bal1,bal2,bal3))
+texreg::htmlreg(list(bal1,bal2,bal3),
+                custom.coef.names = c("(Intercepto)","Mujer","Edad","Básica o preparatoria incompleta ",
+                                      "Básica o preparatoria completa ",
+                                      "Media o humanidades incompleta ",
+                                      "Media o humanidades completa",
+                                      "Técnica superior incompleta ",
+                                      "Técnica superior completa ",
+                                      "Universitaria incompleta" ,
+                                      "Universitaria completa",
+                                      "Estudios de postgrado",
+                                      "BJworld",
+                                      "Centro", "Derecha/Centro Derecha", "Ninguno", "NS/NR",
+                                      "Percepción de Desigualdad",
+                                      "Log(Desigualdad percibida)"))
+
+st$edcine2 <- car::recode(st$educ, "c(1,2)=1; c(3)=2;c(4,5)=3;c(6,7)=4;c(8,9,10)=5")
+round(prop.table(table(st$edcine2)), 3)
+
+st$edcine2 <- factor(st$edcine2,levels = c(1,2,3,4,5), labels=c("cine0",
+                                                                      "cine12",
+                                                                      "cine34",
+                                                                      "cine5",
+                                                                      "cine678"))
+
+a <- st %>% select(log_reco, log_reco_OG, log_perc_OG)
+
+stargazer::stargazer(a, type = "html", digits = 2, nobs = FALSE)
+```
+
+```{r hansen-bowers, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+prebal<-xBalance(TIPO2~factor(P40)+P41+factor(educ)+ppol+pdesi+log_perc_OG,data =tpad2, report =c("chisquare.test","std.diffs"))
+bals <- as.matrix(prebal[["overall"]])
+rownames(bals)<- c("Balance")
+
+kableExtra::kable(bals,"html",booktabs =TRUE,caption = "Hansen-Bowers Test", col.names = c("$\\chi^2$", "df","$p$"))%>%
+  kable_styling(full_width = FALSE)
+```
+
+### Test tratamiento Log(máximo/mínimo) y (máximo/minimo) sin log
+
+```{r Test-treat-log(max/min) & (max/min), echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+e1ad03 <- lm(log_reco~factor(TIPO2), data = tpad2) #Grupo A vs D con Log(máximo/minimo)
+e1bd03 <- lm(log_reco~factor(TIPO2), data = tpbd2) #Grupo B vs D con Log(máximo/minimo)
+e2cd03 <- lm(log_reco~factor(TIPO2), data = tpcd2) #Grupo C vs D con Log(máximo/minimo)
+
+e1ad200 <- lm(reco~factor(TIPO2), data = tpad2) #Grupo A vs D con (máximo/mínimo) sin log
+e1bd200 <- lm(reco~factor(TIPO2), data = tpbd2) #Grupo B vs D con (máximo/mínimo) sin log
+e2cd200 <- lm(reco~factor(TIPO2), data = tpcd2) #Grupo C vs D con (máximo/mínimo) sin log
+
+logmaxmin <- lm(log_reco~treat, data = st) #Test tratamientos simultaneamente
+summary(logmaxmin)
+#log(máximo/mínimo) ----
+texreg::htmlreg(list(e1ad03,e1bd03,e2cd03),
+                custom.model.names = c("Condición A", "Condición B", "Condición C"),
+                caption = "Log(máximo/mínimo)",
+                custom.coef.names = c("(Intercepto)","Tratamiento"),
+                caption.above = TRUE,
+                file = "log_min_max.doc")
+#Máximos/mínimo sin log ----
+texreg::htmlreg(list(e1ad200,e1bd200,e2cd200),
+                custom.model.names = c("Condición A", "Condición B", "Condición C"),
+                caption = "(máximo/mínimo) sin log",
+                custom.coef.names = c("(Intercepto)","Tratamiento"),
+                caption.above = TRUE,
+                file = "slog_min_max.doc")
+```
+
+```{r predicted-log(max/min), include=FALSE}
+#Predited logaritmizado Max/min
+predad05 <- as.data.frame(predict.lm(lm(log_reco~factor(TIPO2), data = tpad2), interval = "confidence")) #loged
+predbd05 <- as.data.frame(predict.lm(lm(log_reco~factor(TIPO2), data = tpbd2), interval = "confidence")) #loged
+predcd05 <- as.data.frame(predict.lm(lm(log_reco~factor(TIPO2), data = tpcd2), interval = "confidence")) #loged
+
+m01 <-tpad2 %>% select(COR,log_reco)%>% na.omit() %>% select(-(log_reco))
+m02 <-tpbd2 %>% select(COR,log_reco)%>% na.omit() %>% select(-(log_reco))
+m03 <-tpcd2 %>% select(COR,log_reco)%>% na.omit() %>% select(-(log_reco))
+
+f04 <- cbind(m01,predad05)
+f05 <- cbind(m02,predbd05)
+f06 <- cbind(m03,predcd05)
+
+tpad2lg <- merge(tpad2,f04, by="COR")#para hacer los barplot
+tpbd2lg <- merge(tpbd2,f05, by="COR")#para hacer los barplot
+tpcd2lg <- merge(tpcd2,f06, by="COR")#para hacer los barplot
+```
+
+```{r barplot-log(max/min), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
+p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = "Log(Máximo/Mínimo)", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+library(gridExtra)
+barplot2 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3) #Logaritmizado
+
+ggsave("C:/Users/JC/Dropbox/Investigacion-Trump/presentacion-alas/barplot3.png", barplot2,units = "cm", width = 20,height = 15)
+```
+
+###Comparación de tratamientos Log(salario máximo/salario mínimo)
+
+```{r comparison-treat-Log(max/min), echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+#COMPARACION ENTRE GRUPOS TRATAMIENTO
+e1ab03 <- lm(log_reco~factor(TIPO2), data = tpab2) #Grupo A vs B | Log(máximo/mínimo)
+e1ac03 <- lm(log_reco~factor(TIPO2), data = tpac2) #Grupo A vs C | Log(máximo/mínimo)
+e2bc03 <- lm(log_reco~factor(TIPO2), data = tpbc2) #Grupo B vs C | Log(máximo/mínimo)
+
+
+texreg::htmlreg(list(e1ab03,e1ac03,e2bc03),
+                custom.model.names = c("Condición A vs B", "Condición A vs C", "Condición B vs C"),
+                caption = "Log(Ingreso Recomendado)",
+                custom.coef.names = c("(Intercepto)","Tratamiento"),
+                caption.above = TRUE,
+                file = "compare_treats.doc")
+```
+
+# Log(Gerente/obrero)
+
+```{r Test-treat-Log(gerente/obrero), echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+
+e1ad04 <- lm(log_reco_OG~factor(TIPO2), data = tpad2) #Grupo A vs D | Log(Gerente/obrero)
+e1bd04 <- lm(log_reco_OG~factor(TIPO2), data = tpbd2) #Grupo B vs D | Log(Gerente/obrero)
+e2cd04 <- lm(log_reco_OG~factor(TIPO2), data = tpcd2) #Grupo C vs D | Log(Gerente/obrero)
+
+logOG <- lm(log_reco_OG~treat, data = st) #Test tratamientos simultaneamente Log(Gerente/obrero)
+summary(logOG)
+
+texreg::htmlreg(list(e1ad04,e1bd04,e2cd04),
+                custom.model.names = c("Condición A", "Condición B", "Condición C"),
+                caption = "Log(Gerente/Obrero)",
+                custom.coef.names = c("(Intercepto)","Tratamiento"),
+                caption.above = TRUE)
+
+texreg::htmlreg(list(e1ad04,e1bd04,e2cd04,logOG),
+                custom.model.names = c("Condición A", "Condición B", "Condición C","Condiciones ABC"),
+                caption = "Log(Gerente/Obrero)",
+                custom.coef.names = c("(Intercepto)",
+                                      "Tratamiento",
+                                      "Tratamiento A",
+                                      "Tratamiento B",
+                                      "Tratamiento C"),
+                caption.above = TRUE,
+                file = "C:/Users/JC/Dropbox/Investigacion-Trump/Resultados/tables/log_min_max.xls")
+
+```
+
+```{r predicted-log(gerente/obrero), include=FALSE}
+#Predited logaritmizado
+predad04 <- as.data.frame(predict.lm(lm(log_reco_OG~factor(TIPO2), data = tpad2), interval = "confidence")) #loged
+predbd04 <- as.data.frame(predict.lm(lm(log_reco_OG~factor(TIPO2), data = tpbd2), interval = "confidence")) #loged
+predcd04 <- as.data.frame(predict.lm(lm(log_reco_OG~factor(TIPO2), data = tpcd2), interval = "confidence")) #loged
+
+m01 <-tpad2 %>% select(COR,log_reco_OG)%>% na.omit() %>% select(-(log_reco_OG))
+m02 <-tpbd2 %>% select(COR,log_reco_OG)%>% na.omit() %>% select(-(log_reco_OG))
+m03 <-tpcd2 %>% select(COR,log_reco_OG)%>% na.omit() %>% select(-(log_reco_OG))
+
+f01 <- cbind(m01,predad04)
+f02 <- cbind(m02,predbd04)
+f03 <- cbind(m03,predcd04)
+
+tpad2lg <- merge(tpad2,f01, by="COR")#para hacer los barplot
+tpbd2lg <- merge(tpbd2,f02, by="COR")#para hacer los barplot
+tpcd2lg <- merge(tpcd2,f03, by="COR")#para hacer los barplot
+```
+
+```{r barplot-log(gerente/obrero), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
+p1.log <- ggplot(tpad2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = "Log(Gerente/obrero)", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+p2.log <- ggplot(tpbd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+
+
+p3.log <- ggplot(tpcd2lg, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=5, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+library(gridExtra)
+barplot1 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3) #Logaritmizado
+
+ggsave("C:/Users/JC/Dropbox/Investigación Trump/presentacion-alas/barplot1.png", barplot1,units = "cm", width = 20,height = 15, dpi = "retina")
+
+ggsave("C:/Users/JC/Dropbox/Investigación Trump/presentacion-alas/barplot1.pdf", barplot1,units = "cm", width = 20,height = 15)
+```
+
+```{r Test-treat-Log(gerente/obrero)+controles, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+logOGcov1 <- lm(log_reco_OG~factor(TIPO2)+just+ppol+log_perc_OG, data = tpad2) #Grupo A vs D | Log(Gerente/obrero) + cov
+logOGcov2 <- lm(log_reco_OG~factor(TIPO2)+just+ppol+log_perc_OG, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + cov
+logOGcov3 <- lm(log_reco_OG~factor(TIPO2)+just+ppol+log_perc_OG, data = tpcd2) #Grupo C vs D | Log(Gerente/obrero) + cov
+
+logOGcov4 <- lm(log_reco_OG~treat+just+ppol+log_perc_OG, data = st) #Grupo simultáneo | Log(Gerente/obrero) + cov
+
+logOGcov2a <- lm(log_reco_OG~just, data = tpbd2) #Grupo B vs D | Log(Gerente/obrero) + cov
+
+summary(logOGcov2a)
+library(sandwich) #HC2
+library(lmtest) #coeftest
+
+#---Test según cada Tratamiento Log(Gerente/obrero) con HC2--------------------
+logOGhc2a <- coeftest(logOGcov1, vcov.= vcovHC(logOGcov1, "HC2"))
+logOGhc2b <- coeftest(logOGcov2, vcov.= vcovHC(logOGcov2, "HC2"))
+logOGhc2c <- coeftest(logOGcov3, vcov.= vcovHC(logOGcov3, "HC2"))
+
+#---Test simultáneo Log(Gerente/obrero) con HC2--------------------
+logOGhc2 <- coeftest(logOGcov4, vcov.= vcovHC(logOGcov4, "HC2"))
+logOGhc2[,1] #coef
+logOGhc2[,2] #SE
+nobs(logOGcov2)
+
+# EL SE HC2 es consistente en muestras finitas e infinitas. Además, no asume ni homoscedasticidad ni linealidad.
+
+pdesi1 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpad2) #Grupo A vs D | Dif ingreso son demasiado grandes + cov
+pdesi2 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpbd2) #Grupo B vs D | Dif ingreso son demasiado grandes + cov
+pdesi3 <- lm(pdesi~factor(TIPO2)+ppol+log_perc_OG, data = tpcd2) #Grupo C vs D | Dif ingreso son demasiado grandes + cov
+
+library(texreg)
+texreg::htmlreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
+                custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3","Modelo 4", "Modelo 5", "Modelo 6"),
+                caption = "Log(Gerente/Obrero)",
+<<<<<<< HEAD
+                custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
+                                      "Centro", "Derecha", "Ninguno", "No sabe",
+                                      "Desigualdad percibida (Log)"),
+=======
+                custom.coef.names = c("(Intercepto)","Tratamiento información","Creencia Mundo Justo",
+                                      "Centro", "Derecha/Centro Derecha", "Ninguno", "NS/NR",
+                                      "Log(Desigualdad percibida)"),
+>>>>>>> f1d6cd68443eec9156c1fb9af0acfb8ed779bf4a
+                caption.above = TRUE,
+                reorder.coef = c(2:8,1),
+                file = "C:/Users/JC/Dropbox/Investigacion-Trump/Resultados/tables/log_min_max_controls.xls")
+
+<<<<<<< HEAD
+# texreg::texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
+=======
+# texreg::texreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3),
+>>>>>>> f1d6cd68443eec9156c1fb9af0acfb8ed779bf4a
+#                 custom.model.names = c("Modelo A", "Controles", "Modelo B","Controles", "Modelo C", "Controles"),
+#                 caption = "Log(Gerente/Obrero)",
+#                 custom.coef.names = c("(Intercepto)","Tratamiento información","Creencia Mundo Justo",
+#                                       "Centro", "Derecha/Centro Derecha", "Ninguno", "NS/NR",
+#                                       "Log(Desigualdad percibida)"),
+#                 caption.above = TRUE,
+#                dcolumn = TRUE,float.pos = "H")
+
+texreg::screenreg(list(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3,logOGhc2))
+```
+
+## Gerente/obrero sin logaritmo
+
+```{r Test-treat-(gerente/obrero), echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+
+e1ad05 <- lm(reco_OG~factor(TIPO2), data = tpad2) #Grupo A vs D | Gerente/obrero sin log
+e1bd05 <- lm(reco_OG~factor(TIPO2), data = tpbd2) #Grupo B vs D | Gerente/obrero sin log
+e2cd05 <- lm(reco_OG~factor(TIPO2), data = tpcd2) #Grupo C vs D | Gerente/obrero sin log
+
+texreg::htmlreg(list(e1ad05,e1bd05,e2cd05),
+                custom.model.names = c("Condición A", "Condición B", "Condición C"),
+                caption = "Gerente/Obrero",
+                custom.coef.names = c("(Intercepto)","Tratamiento"),
+                caption.above = TRUE)
+
+texreg::texreg(list(e1ad05,e1bd05,e2cd05),
+                custom.model.names = c("Condición A", "Condición B", "Condición C"),
+                caption = "Gerente/Obrero",
+                custom.coef.names = c("(Intercepto)","Tratamiento"),
+                caption.above = TRUE)
+```
+
+```{r predicted-(gerente/obrero), include=FALSE}
+#predicted-normal
+predad04 <- as.data.frame(predict.lm(lm(reco~factor(TIPO2), data = tpad2), interval = "confidence")) #normal
+predbd04 <- as.data.frame(predict.lm(lm(reco~factor(TIPO2), data = tpbd2), interval = "confidence")) #normal
+predcd04 <- as.data.frame(predict.lm(lm(reco~factor(TIPO2), data = tpcd2), interval = "confidence")) #normal
+
+m01 <-tpad2 %>% select(COR,reco)%>% na.omit() %>% select(-(reco))
+m02 <-tpbd2 %>% select(COR,reco)%>% na.omit() %>% select(-(reco))
+m03 <-tpcd2 %>% select(COR,reco)%>% na.omit() %>% select(-(reco))
+
+f01 <- cbind(m01,predad04)
+f02 <- cbind(m02,predbd04)
+f03 <- cbind(m03,predcd04)
+
+tpad2n <- merge(tpad2,f01, by="COR")
+tpbd2n <- merge(tpbd2,f02, by="COR")
+tpcd2n <- merge(tpcd2,f03, by="COR")
+```
+
+```{r barplot-(gerente/obrero), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
+p1<- ggplot(tpad2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = "Gerente/obrero", limits = c(0,45))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+p2 <- ggplot(tpbd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,45))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+p3 <- ggplot(tpcd2n, aes(factor(TIPO2),fit, fill=factor(TIPO2))) +
+  stat_summary(geom= 'bar',fun.y = mean, width =0.8) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08) +
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,45))+
+  scale_fill_grey(""," ")+
+  theme_bw() +
+  geom_text(aes(label=round(fit,2), colour = factor(TIPO2)), vjust=16, size=3.5)+
+  guides(color=FALSE) +
+  scale_colour_manual(values=c("white", "black"))
+
+barplot2 <- grid.arrange(p1,p2,p3,ncol=3) #Normal
+ggsave("C:/Users/JC/Dropbox/Investigación Trump/presentacion-alas/barplot2.png", barplot2,units = "cm", width = 20,height = 15,dpi = "retina")
+```
+
+### Comparación de tratamientos Gerente/obrero sin log
+
+```{r comparison-treat-(gerente/obrero), echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+e1ab07 <- lm(reco_OG~factor(TIPO2), data = tpab2) #Grupo A vs B
+e1ac07 <- lm(reco_OG~factor(TIPO2), data = tpac2) #Grupo A vs C
+e2bc07 <- lm(reco_OG~factor(TIPO2), data = tpbc2) #Grupo B vs C
+
+texreg::htmlreg(list(e1ab07,e1ac07,e2bc07),
+                custom.model.names = c("Condición A vs B", "Condición A vs C", "Condición B vs C"),
+                caption = "Gerente/obrero sin log",
+                custom.coef.names = c("(Intercepto)","Tratamiento"),
+                caption.above = TRUE)
+```
