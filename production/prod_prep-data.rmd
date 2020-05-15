@@ -165,6 +165,11 @@ st_1<- st %>%
 
 * Primero, realizamos el filtro según lo realizado en al artículo ["Cambios en percepción y justificación de desigualdad salarial en Chile entre 1999-2019"](https://juancarloscastillo.github.io/chilegapstime/)
 
+1. Para la variable salario percibido de un obrero nos quedamos con valores: `<= $ 40.000 y >= $1.000.000`
+2. Para la variable salario percibido de un gerente nos quedamos con valores: `<= $ 250.000 y >= $100.000.001`
+3. Para la variable salario justo de un obrero nos quedamos con valores: `<= $ 40.000 `
+4. Para la variable salario justo de un gerente nos quedamos con valores: `<= $ 100.000`
+
 
 **Descriptivos sin outliers I**
 ```{r results='asis'}
@@ -194,8 +199,6 @@ sjPlot::plot_frq(st_1$P32_2,type = "v") + coord_flip()
 
 **Filtro outliers II**
 
-* En base a los análisis descriptivos, se toma la desición de recodificar salario justo gerente >= $30.000.001 (percentil 97.5) como NA con el objetivo de mantener la distribución con un menor grado de sesgo hacia el extremo superior.
-
 ```{r}
 st_2<- st %>%
        mutate(P31_4=replace(P31_4, P31_4 <= 40000  | P31_4>= 1000000,  NA)) %>% #percibido obrero
@@ -203,6 +206,13 @@ st_2<- st %>%
        mutate(P32_4=replace(P32_4, P32_4 <= 40000   , NA)) %>%                  #justo obrero    
        mutate(P32_2=replace(P32_2, P32_2 <= 100000 | P32_2>= 30000001, NA))     #justo gerente  
 ```
+
+* En base a los análisis descriptivos, se toma la desición de recodificar salario justo gerente >= $30.000.001 (percentil 97.5) como `NA` con el objetivo de mantener la distribución con un menor grado de sesgo hacia el extremo superior.
+
+1. Para la variable salario percibido de un obrero nos quedamos con valores: `<= $ 40.000 y >= $1.000.000`
+2. Para la variable salario percibido de un gerente nos quedamos con valores: `<= $ 250.000 y >= $100.000.001`
+3. Para la variable salario justo de un obrero nos quedamos con valores: `<= $ 40.000 `
+4. Para la variable salario justo de un gerente nos quedamos con valores: `<= $ 100.000 y >= 30.000.001`
 
 **Descriptivos sin outliers II**
 ```{r results='asis'}
