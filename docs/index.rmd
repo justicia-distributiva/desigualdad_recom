@@ -6,7 +6,7 @@ csl:
 - '../input/bib/apa6.csl'
 title: " "
 output:
-    html_document:
+    bookdown::html_document2:
         smart: false
         includes:
           in_header: head_github-activity.html
@@ -37,7 +37,7 @@ Based on the study "Political and Social Beliefs" conducted in 2014 using a repr
   - _Analysis_: Balance, Treatment effect analysis (OLS) and annexes
   - _Paper_: final output
 
-### Reproducibility and documentation
+### Reproducibility and documentation 
 
 The repository of the project in Github is structured according to the [IPO reproducibility protocol](https://juancarloscastillo.github.io/ipo/).
 

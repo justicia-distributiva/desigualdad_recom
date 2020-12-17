@@ -1,9 +1,8 @@
 ---
 title: "Analysis"
 date: "`r format(Sys.time(), '%A %d %B %Y %X')`"
-# css: "../input/css/style.css"
 output:
-  html_document:
+  bookdown::html_document2:
     number_sections: true
     toc: true
     toc_float:
@@ -27,7 +26,6 @@ rmarkdown::render("production/prod_analysis.rmd",
                   output_dir = "production",
                   encoding = "UTF-8");browseURL("production/prod_analysis.html")
 ```
-
 
 ```{r library, message=FALSE, warning=FALSE}
 library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics
@@ -76,14 +74,25 @@ load("input/data/proc/st_c-sinout.Rdata")
 ```
 
 <!-- P40,# Sexo del entrevistado 1= hombre 2 = mujer -->
+
 <!-- P41,# Edad del entrevistado -->
+
 <!-- P45,# Estado civil -->
+
 <!-- P44,# Nivel educacional -->
+
 <!-- P49,# Rango de ingreso total mensual del hogar -->
+
 <!-- P3,#Posición política -->
 
 ```{r}
 print(dfSummary(st, headings = FALSE,varnumbers = F),method = "render",max.tbl.height = 500)
+```
+
+```{r}
+st.a.sinout %>% select(treat_a,log_reco_OG,just,ppol,log_perc_OG,educ) %>%na.omit() %>% summary()
+st.b.sinout %>% select(treat_b,log_reco_OG,just,ppol,log_perc_OG,educ) %>%na.omit() %>% summary()
+st.c.sinout %>% select(treat_c,log_reco_OG,just,ppol,log_perc_OG,educ) %>%na.omit() %>% summary()
 ```
 
 # Balance
@@ -92,10 +101,23 @@ print(dfSummary(st, headings = FALSE,varnumbers = F),method = "render",max.tbl.h
 bal1 <- lm(as.numeric(treat_a)~sexo+edad+educ+just+ppol+log_perc_OG,data =st)# balance asignacion aleatoria Grupo A vs D
 bal2 <- lm(as.numeric(treat_b)~sexo+edad+educ+just+ppol+log_perc_OG,data =st)# balance asignacion aleatoria Grupo B vs D
 bal3 <- lm(as.numeric(treat_c)~sexo+edad+educ+just+ppol+log_perc_OG,data =st)# balance asignacion aleatoria Grupo C vs D
+
+bal.st.a<- st_1 %>% select(COR,treat_a,log_reco_OG,just,ppol,log_perc_OG,educ) %>% na.omit()
+bal.st.b<- st_1 %>% select(COR,treat_b,log_reco_OG,just,ppol,log_perc_OG,educ) %>% na.omit()
+bal.st.c<- st_1 %>% select(COR,treat_c,log_reco_OG,just,ppol,log_perc_OG,educ) %>% na.omit()
+st.bal<- st[,c("COR","sexo","edad")]
+bal.st.a<- bal.st.a %>% left_join(st.bal)
+bal.st.b<- bal.st.b %>% left_join(st.bal)
+bal.st.c<- bal.st.c %>% left_join(st.bal)
+
+bal1.so <- lm(as.numeric(treat_a)~sexo+edad+educ+just+ppol+log_perc_OG,data =bal.st.a)# balance asignacion aleatoria Grupo A vs D
+bal2.so <- lm(as.numeric(treat_b)~sexo+edad+educ+just+ppol+log_perc_OG,data =bal.st.b)# balance asignacion aleatoria Grupo B vs D
+bal3.so <- lm(as.numeric(treat_c)~sexo+edad+educ+just+ppol+log_perc_OG,data =bal.st.c)# balance asignacion aleatoria Grupo C vs D
 ```
 
 ```{r eval=FALSE, include=FALSE}
 screenreg(list(bal1,bal2,bal3))
+screenreg(list(bal1.so,bal2.so,bal3.so))
 ```
 
 ```{r}
@@ -120,7 +142,11 @@ htmlreg(l = list(bal1,bal2,bal3),
         doctype = F)
 ```
 
-1. El balance de la asignación aleatoria es satisfactorio para las covariables.
+```{r}
+save(bal1,bal2,bal3,bal1.so,bal2.so,bal3.so,file = "output/tables/balance-models01.RData")
+```
+
+1.  El balance de la asignación aleatoria es satisfactorio para las covariables.
 
 ```{r include=FALSE}
 texreg(list(bal1,bal2,bal3),
@@ -146,7 +172,6 @@ texreg(list(bal1,bal2,bal3),
   file = "output/tables/anexo_balance.tex")
 ```
 
-
 # Análisis efecto tratamiento
 
 ## Análisis I: log(minimo/maximo)
@@ -167,16 +192,14 @@ effect_plot(e1bd03, pred = "treat_b", interval = TRUE)
 effect_plot(e2cd03, pred = "treat_c", interval = TRUE)
 ```
 
-
 ```{r results='asis'}
 htmlreg(list(e1ad03,e1bd03,e2cd03),doctype = F)
 ```
 
-1. No hay efecto del tratamiento en la variable ln(máximo/mínimo)
-2. La variable original del estudio es la brecha entre la diferencia máxima mencionada como justa (recomendada)
-3. Se usó muestra no filtrada por na.omit(), no es significativo el tratamiento.
-4. Se usó muestra filtrada por na.omit(), no es significativo el tratamiento.
-
+1.  No hay efecto del tratamiento en la variable ln(máximo/mínimo)
+2.  La variable original del estudio es la brecha entre la diferencia máxima mencionada como justa (recomendada)
+3.  Se usó muestra no filtrada por na.omit(), no es significativo el tratamiento.
+4.  Se usó muestra filtrada por na.omit(), no es significativo el tratamiento.
 
 ```{r percepcion desigualdad ~ treatment}
 pdesi1 <- lm(pdesi~treat+ppol+log_perc_OG, data = st) #Grupo A vs D | Dif ingreso son demasiado grandes + cov
@@ -186,7 +209,7 @@ pdesi1 <- lm(pdesi~treat+ppol+log_perc_OG, data = st) #Grupo A vs D | Dif ingres
 htmlreg(list(pdesi1),doctype = F)
 ```
 
-1. No hay efecto del tratamiento en la variable percepción de desigualdad de ingreso entre ricos y pobres
+1.  No hay efecto del tratamiento en la variable percepción de desigualdad de ingreso entre ricos y pobres
 
 ## Análisis II: log(gerente/obrero)
 
@@ -197,9 +220,9 @@ e1ad04 <- lm(log_reco_OG~treat_a, data = na.omit(st.a)) # A vs D
 e1bd04 <- lm(log_reco_OG~treat_b, data = na.omit(st.b)) # B vs D 
 e2cd04 <- lm(log_reco_OG~treat_c, data = na.omit(st.c)) # C vs D 
 
-logOGcov1 <- lm(log_reco_OG~treat_a+just+ppol+log_perc_OG, data = st.a) # A vs D
-logOGcov2 <- lm(log_reco_OG~treat_b+just+ppol+log_perc_OG, data = st.b) # B vs D
-logOGcov3 <- lm(log_reco_OG~treat_c+just+ppol+log_perc_OG, data = st.c) # C vs D
+logOGcov1 <- lm(log_reco_OG~treat_a+just+ppol+log_perc_OG+educ, data = st.a) # A vs D
+logOGcov2 <- lm(log_reco_OG~treat_b+just+ppol+log_perc_OG+educ, data = st.b) # B vs D
+logOGcov3 <- lm(log_reco_OG~treat_c+just+ppol+log_perc_OG+educ, data = st.c) # C vs D
 ```
 
 ```{r}
@@ -229,9 +252,9 @@ e1ad04.so <- lm(log_reco_OG~treat_a, data = na.omit(st.a.sinout)) # A vs D
 e1bd04.so <- lm(log_reco_OG~treat_b, data = na.omit(st.b.sinout)) # B vs D 
 e2cd04.so <- lm(log_reco_OG~treat_c, data = na.omit(st.c.sinout)) # C vs D 
 
-logOGcov1.so <- lm(log_reco_OG~treat_a+just+ppol+log_perc_OG, data = st.a.sinout) # A vs D
-logOGcov2.so <- lm(log_reco_OG~treat_b+just+ppol+log_perc_OG, data = st.b.sinout) # B vs D
-logOGcov3.so <- lm(log_reco_OG~treat_c+just+ppol+log_perc_OG, data = st.c.sinout) # C vs D
+logOGcov1.so <- lm(log_reco_OG~treat_a+just+ppol+log_perc_OG+educ, data = st.a.sinout) # A vs D
+logOGcov2.so <- lm(log_reco_OG~treat_b+just+ppol+log_perc_OG+educ, data = st.b.sinout) # B vs D
+logOGcov3.so <- lm(log_reco_OG~treat_c+just+ppol+log_perc_OG+educ, data = st.c.sinout) # C vs D
 ```
 
 ```{r eval=FALSE, include=FALSE}
@@ -252,9 +275,9 @@ e1ad04.so.r <- lm_robust(log_reco_OG~treat_a, data = na.omit(st.a.sinout),alpha 
 e1bd04.so.r <- lm_robust(log_reco_OG~treat_b, data = na.omit(st.b.sinout),alpha = 0.05) # B vs D 
 e2cd04.so.r <- lm_robust(log_reco_OG~treat_c, data = na.omit(st.c.sinout),alpha = 0.05) # C vs D 
 
-logOGcov1.so.r <- lm_robust(log_reco_OG~treat_a+just+ppol+log_perc_OG, data = st.a.sinout,alpha = 0.05) # A vs D
-logOGcov2.so.r <- lm_robust(log_reco_OG~treat_b+just+ppol+log_perc_OG, data = st.b.sinout,alpha = 0.05) # B vs D
-logOGcov3.so.r <- lm_robust(log_reco_OG~treat_c+just+ppol+log_perc_OG, data = st.c.sinout,alpha = 0.05) # C vs D
+logOGcov1.so.r <- lm_robust(log_reco_OG~treat_a+just+ppol+log_perc_OG+educ, data = st.a.sinout,alpha = 0.05) # A vs D
+logOGcov2.so.r <- lm_robust(log_reco_OG~treat_b+just+ppol+log_perc_OG+educ, data = st.b.sinout,alpha = 0.05) # B vs D
+logOGcov3.so.r <- lm_robust(log_reco_OG~treat_c+just+ppol+log_perc_OG+educ, data = st.c.sinout,alpha = 0.05) # C vs D
 ```
 
 ```{r eval=FALSE, include=FALSE}
@@ -268,7 +291,7 @@ save(e1ad04.so.r,logOGcov1.so.r,e1bd04.so.r,logOGcov2.so.r,e2cd04.so.r,logOGcov3
 ```{r}
 custom.coef.names = c("(Intercepto)","Tratamiento","Creencia Mundo Justo",
                       "Centro (ref: Izquierda)", "Derecha", "Ninguno", "No sabe",
-                      "Desigualdad percibida (ln)",
+                      "Desigualdad percibida (ln)","Educación",
                       "Tratamiento","Tratamiento")
 ```
 
@@ -278,7 +301,7 @@ htmlreg(l = list(e1ad04.so.r,logOGcov1.so.r,e1bd04.so.r,logOGcov2.so.r,e2cd04.so
         custom.model.names = c("MA1","MA2","MB1","MB2","MC1","MC2"),
         digits = 3,center = TRUE,
         doctype = FALSE,
-        reorder.coef = c(2:8, 1),
+        reorder.coef = c(2:9, 1),
         caption = "Modelos de regresión", caption.above = T, 
         custom.note = "Intervalos de confianza entre paréntesis calculados al 95% empleando errores estándar robustos (HC2)")
 ```
@@ -332,18 +355,20 @@ cc  <- extract.lmHC2(logOGcov3) # C + robust SE + cova
 htmlreg(l = c(m0a,ac,m0b,bc,m0c,cc),custom.coef.names = custom.coef.names,doctype = FALSE) #models + robust SE
 ```
 
-1. Empleamos la variable dependiente brecha salarial justa =  ln(Gerente/Obrero) 
-2. Los tratamientos A y C tienen efecto en la brecha salarial por ocupación.
-3. Si vemos la sección \@ref(modelos-variable-estandarizada), los tratamientos se complementan, es decir, el efecto de ambos en conjunto es más alto. Siendo la lista de salarios por ocupación (Tratamiento C) el que tiene un mayor efecto sobre la brecha justa.
-4. Los modelos con errores estándar robustos (HC2) mantienen los resultados. 
+1.  Empleamos la variable dependiente brecha salarial justa = ln(Gerente/Obrero)
+2.  Los tratamientos A y C tienen efecto en la brecha salarial por ocupación.
+3.  Si vemos la sección \@ref(modelos-variable-estandarizada), los tratamientos se complementan, es decir, el efecto de ambos en conjunto es más alto. Siendo la lista de salarios por ocupación (Tratamiento C) el que tiene un mayor efecto sobre la brecha justa.
+4.  Los modelos con errores estándar robustos (HC2) mantienen los resultados.
 
 <!-- ----------------------------------------------------------------------------------------------------------------------------------- -->
+
 <!-- SECCION PLOTS --------------------------------------------------------------------------------------------------------------------- -->
+
 <!-- ----------------------------------------------------------------------------------------------------------------------------------- -->
 
 # Plots
 
-## Valores predichos Desigualdad Global: ln(max/min) 
+## Valores predichos Desigualdad Global: ln(max/min)
 
 ```{r predicted-log(max/min), include=FALSE}
 #Predited logaritmizado Max/min
@@ -369,8 +394,9 @@ bar_col <- c("gray35", "gray87")
 p1.log <- ggplot(tpad2lg, aes(factor(treat_a),fit, fill=factor(treat_a), colour=factor(treat_a))) +
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
-  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[1]*')'), limits = c(0,3))+
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
+  # scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[1]*')'), limits = c(0,3))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
@@ -393,8 +419,8 @@ p2.log <- ggplot(tpbd2lg, aes(factor(treat_b),fit, fill=factor(treat_b),colour=f
 p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=factor(treat_c))) +
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
-  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[1]*')'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
@@ -404,20 +430,20 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
 ```
 
 ```{r save plot01, echo=TRUE, fig.align="center", message=FALSE, warning=FALSE, out.width="100%", results='hold'}
-barplot01 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3) #Logaritmizado
+barplot01 <- grid.arrange(p3.log,p2.log,p1.log,ncol=3) #Logaritmizado
 ggsave(filename = "output/images/barplot1.png", barplot01,units = "cm", width = 25,height = 10)
 ```
 
-# Valores predichos Desigualdad justa: ln(ger/obr) 
+# Valores predichos Desigualdad justa: ln(ger/obr)
 
 ```{r predicted-log(gerente/obrero), include=FALSE}
 predad04 <- data.frame(predict.lm(e1ad04.so, interval = "confidence")) #loged
 predbd04 <- data.frame(predict.lm(e1bd04.so, interval = "confidence")) #loged
 predcd04 <- data.frame(predict.lm(e2cd04.so, interval = "confidence")) #loged
 
-m01 <- st.a.sinout %>% select(COR,log_reco_OG,treat_a,just,ppol,log_perc_OG) %>% na.omit() %>% select(COR,-log_reco_OG,-treat_a,-just,-ppol,-log_perc_OG)
-m02 <- st.b.sinout %>% select(COR,log_reco_OG,treat_b,just,ppol,log_perc_OG) %>% na.omit() %>% select(COR,-log_reco_OG,-treat_b,-just,-ppol,-log_perc_OG)
-m03 <- st.c.sinout %>% select(COR,log_reco_OG,treat_c,just,ppol,log_perc_OG) %>% na.omit() %>% select(COR,-log_reco_OG,-treat_c,-just,-ppol,-log_perc_OG)
+m01 <- st.a.sinout %>% select(COR,log_reco_OG,treat_a,just,ppol,log_perc_OG,educ) %>% na.omit() %>% select(COR,-log_reco_OG,-treat_a,-just,-ppol,-log_perc_OG)
+m02 <- st.b.sinout %>% select(COR,log_reco_OG,treat_b,just,ppol,log_perc_OG,educ) %>% na.omit() %>% select(COR,-log_reco_OG,-treat_b,-just,-ppol,-log_perc_OG)
+m03 <- st.c.sinout %>% select(COR,log_reco_OG,treat_c,just,ppol,log_perc_OG,educ) %>% na.omit() %>% select(COR,-log_reco_OG,-treat_c,-just,-ppol,-log_perc_OG)
 
 f04 <- cbind(m01,predad04)
 f05 <- cbind(m02,predbd04)
@@ -428,14 +454,14 @@ tpbd2lg <- merge(st.b,f05, by="COR")#para hacer los barplot
 tpcd2lg <- merge(st.c,f06, by="COR")#para hacer los barplot
 ```
 
-
 ```{r barplot-log(gerente/obrero), echo=TRUE, message=FALSE, warning=FALSE, out.width="100%", results='hold', fig.align="center"}
 bar_col <- c("gray35", "gray87")
 p1.log <- ggplot(tpad2lg, aes(factor(treat_a),fit, fill=factor(treat_a), colour=factor(treat_a))) +
   stat_summary(geom= 'bar',fun = mean, width =0.8, colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[2]*')'), limits = c(0,3))+
-  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  # scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[2]*')'), limits = c(0,3))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
@@ -457,8 +483,8 @@ p2.log <- ggplot(tpbd2lg, aes(factor(treat_b),fit, fill=factor(treat_b),colour=f
 p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=factor(treat_c))) +
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
-  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[2]*')'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
@@ -468,7 +494,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
 ```
 
 ```{r save plot02, echo=TRUE, fig.align="center", message=FALSE, warning=FALSE, out.width="100%", results='hold'}
-barplot02 <- grid.arrange(p1.log,p2.log,p3.log,ncol=3) #Logaritmizado
+barplot02 <- grid.arrange(p3.log,p2.log,p1.log,ncol=3) #Logaritmizado
 ggsave("output/images/barplot2.png", barplot02,units = "cm", width = 25,height = 10)
 ```
 
@@ -568,7 +594,6 @@ fa2latex(f = efa,
 sjt.itemanalysis(just)
 ```
 
-
 ```{r echo=TRUE,eval=FALSE}
 bjw <- 'just=~jw1+jw2+jw3+jw4+jw5'
 fit <- cfa(model = bjw,
@@ -586,16 +611,15 @@ summary(fit2, standardized=TRUE)
 fitmeasures(fit2, fit.measures = c("chisq","pvalue","df","cfi.scaled","rmsea.scaled"))
 ```
 
-
 ## Modelos variable estandarizada
 
 ```{r zscore-log_anexos, eval=TRUE, include=FALSE}
 e1ad05 <- lm_robust(zlog~treat_a, data = na.omit(st.a.sinout)) # A vs D | ln(ger/ob)
 e1bd05 <- lm_robust(zlog~treat_b, data = na.omit(st.b.sinout)) # B vs D | ln(ger/ob)
 e2cd05 <- lm_robust(zlog~treat_c, data = na.omit(st.c.sinout)) # C vs D | ln(ger/ob)
-logOGcov1a <- lm_robust(zlog~treat_a+just+ppol+log_perc_OG, data = na.omit(st.a.sinout)) # A vs D | ln(ger/ob) + cov
-logOGcov2b <- lm_robust(zlog~treat_b+just+ppol+log_perc_OG, data = na.omit(st.b.sinout)) # B vs D | ln(ger/ob) + cov
-logOGcov3c <- lm_robust(zlog~treat_c+just+ppol+log_perc_OG, data = na.omit(st.c.sinout)) # C vs D | ln(ger/ob) + cov
+logOGcov1a <- lm_robust(zlog~treat_a+just+ppol+log_perc_OG+educ, data = na.omit(st.a.sinout)) # A vs D | ln(ger/ob) + cov
+logOGcov2b <- lm_robust(zlog~treat_b+just+ppol+log_perc_OG+educ, data = na.omit(st.b.sinout)) # B vs D | ln(ger/ob) + cov
+logOGcov3c <- lm_robust(zlog~treat_c+just+ppol+log_perc_OG+educ, data = na.omit(st.c.sinout)) # C vs D | ln(ger/ob) + cov
 save(logOGcov1a, logOGcov2b, logOGcov3c,file = "output/tables/modelos_z.RData")
 ```
 
@@ -610,7 +634,7 @@ htmlreg(
   custom.coef.names = custom.coef.names,
   caption = "",
   caption.above = TRUE,
-  reorder.coef = c(2:8, 1),
+  reorder.coef = c(2:9, 1),
   label = "tab:logcov_z",
   no.margin = FALSE,
   booktabs = TRUE,
@@ -630,18 +654,9 @@ htmlreg(
 htmlreg(
   list(logOGcov1a, logOGcov2b, logOGcov3c),
   custom.model.names = c("Modelo A", "Modelo B", "Modelo C"),
-  custom.coef.names = c(
-    "Intercepto",
-    "Tratamiento",
-    "Creencia Mundo Justo",
-    "Centro (ref: Izquierda)",
-    "Derecha",
-    "Ninguno",
-    "No sabe",
-    "Desigualdad percibida (Log)","Tratamiento","Tratamiento"),
-  caption = "",
+  custom.coef.names = custom.coef.names,
   caption.above = TRUE,
-  reorder.coef = c(2:8, 1),
+  reorder.coef = c(2:9, 1),
   no.margin = FALSE,
   booktabs = TRUE,
   dcolumn = TRUE,
@@ -658,7 +673,6 @@ htmlreg(
   file = "output/tables/tabla_zval.html")
 ```
 
-
 ```{r eval=FALSE, include=FALSE}
 #--- EN LATEX-------------------------------------------------#
 nota <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre paréntesis \\\\
@@ -668,18 +682,10 @@ nota <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre parén
 texreg(
   list(logOGcov1a, logOGcov2b, logOGcov3c),
   custom.model.names = c("Modelo A", "Modelo B", "Modelo C"),
-  custom.coef.names = c(
-    "Intercepto",
-    "Tratamiento",
-    "Creencia Mundo Justo",
-    "Centro",
-    "Derecha",
-    "Ninguno",
-    "No sabe",
-    "Desigualdad percibida (Log)",
+  custom.coef.names = custom.coef.names,
   caption = "Modelos de regresi\\'on para Desigualdad recomendada en unidades de desviación estándar $z$",
   caption.above = TRUE,
-  reorder.coef = c(2:11, 1),
+  reorder.coef = c(2:9, 1),
   label = "tab:logcov_z",
   no.margin = T,
   booktabs = TRUE,
@@ -699,6 +705,7 @@ texreg(
 ## Boxplots
 
 ### Salario justo: Obrero
+
 ```{r}
 # "saljusger"=P32_4,"saljusobr"=P32_2
 st_1$condition <- factor(x = st$treat,levels = levels(st$treat),labels = c("Control", "Condición A", "Condición B", "Condición C"))
@@ -732,7 +739,6 @@ ggplot(data = st_1,aes(x=condition, y=saljusobr,fill=factor(condition))) +
   xlab("")+
   ylab("Salario justo: Un obrero no calificado de una fábrica")
 ```
-
 
 ```{r out.width='120%', fig.width=12}
 #----parrafo + lista de salarios -----
@@ -813,7 +819,6 @@ ggplot(data = st_1,aes(x=condition, y=saljusger,fill=factor(condition))) +
   xlab("")+ylab("Salario justo: Un gerente de una gran empresa")
 ```
 
-
 ```{r out.width='120%', fig.width=12}
 #----parrafo + lista de salarios -----
 ger1b <- ggplot(data = st.a.sinout,aes(x=treat_a.2, y=saljusger,fill=factor(treat_a.2))) + 
@@ -862,4 +867,3 @@ gergapb <- grid.arrange(ger1b, ger2b, ger3b, nrow = 3,
 ```{r}
 ggsave("output/images/gergapb.png", gergapb,units = "cm", width = 30,height = 18)
 ```
-

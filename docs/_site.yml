@@ -13,6 +13,7 @@ navbar:
       icon: fa-github fa-lg
       href: https://github.com/jciturras/desigualdad_recom
 output:
-  html_document:
-    css: "custom.css"
+  bookdown::html_document2:
+    # css: "https://juancarloscastillo.github.io/merit-scale/custom.css"
+    css: '../input/css/custom.css'
     theme: cosmo

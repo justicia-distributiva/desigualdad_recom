@@ -1,9 +1,8 @@
 ---
 title: "Data preparation"
 date: "`r format(Sys.time(), '%A %d %B %Y %X')`"
-# css: "../input/css/style.css"   
 output:
-  html_document:
+  bookdown::html_document2:
     number_sections: true
     toc: true
     toc_float:
@@ -253,7 +252,7 @@ st_1 <- st_2
 
 **Brecha salarial máximo/mínimo**
 
-```{r message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # Selección de Ingreso percibido ----
 st$min_per <- pmin(st$P31_1,st$P31_2,st$P31_3,st$P31_4,st$P31_5,st$P31_6, na.rm = TRUE) #Seleccionar el mínimo de ingreso percibido
 st$max_per <- pmax(st$P31_1,st$P31_2,st$P31_3,st$P31_4,st$P31_5,st$P31_6, na.rm = TRUE) #Seleccionar el máximo de ingreso percibido
@@ -301,7 +300,8 @@ st$zlog <- set_label(st$zlog,label = "Brecha justa ln(Gerente/obrero) - estandar
 ## Base sin outliers
 
 **Desigualdad justa máximo/mínimo**
-```{r message=FALSE, warning=FALSE}
+
+```{r}
 # Selección de Ingreso percibido ----
 st_1$min_per <- pmin(st_1$P31_1,st_1$P31_2,st_1$P31_3,st_1$P31_4,st_1$P31_5,st_1$P31_6, na.rm = TRUE) #Seleccionar el mínimo de ingreso percibido
 st_1$max_per <- pmax(st_1$P31_1,st_1$P31_2,st_1$P31_3,st_1$P31_4,st_1$P31_5,st_1$P31_6, na.rm = TRUE) #Seleccionar el máximo de ingreso percibido
@@ -325,6 +325,7 @@ st_1$log_perc  <- set_label(st_1$log_perc ,label = "Brecha salarial percibida gl
 st_1$log_reco <- as.numeric(log(st_1$max_rec/st_1$min_rec))
 st_1$log_reco <- set_label(st_1$log_reco ,label = "Brecha salarial justa global (ln)")
 ```
+
 
 **Desigualdad justa Gerente/obrero**
 ```{r}
@@ -362,11 +363,11 @@ st.c_mm <- st %>% select(COR,treat_c,reco,log_reco,just,ppol) %>% filter(treat_c
 
 **subset variables gerente/obrero** 
 ```{r}
-st.a <- st %>% select(COR,treat_a,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol) %>% 
+st.a <- st %>% select(COR,treat_a,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_a==1 | treat_a==0)  
-st.b <- st %>% select(COR,treat_b,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol) %>% 
+st.b <- st %>% select(COR,treat_b,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_b==1 | treat_b==0)  
-st.c <- st %>% select(COR,treat_c,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol) %>% 
+st.c <- st %>% select(COR,treat_c,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_c==1 | treat_c==0)  
 ```
 
@@ -407,11 +408,11 @@ st.c_mm.sinout <- st_1 %>% select(COR,treat_c,reco,log_reco,just,ppol) %>% filte
 
 **subset gerente/obrero** 
 ```{r}
-st.a.sinout <- st_1 %>% select(COR,treat_a,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol) %>% 
+st.a.sinout <- st_1 %>% select(COR,treat_a,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_a==1 | treat_a==0)
-st.b.sinout <- st_1 %>% select(COR,treat_b,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol) %>% 
+st.b.sinout <- st_1 %>% select(COR,treat_b,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_b==1 | treat_b==0)
-st.c.sinout <- st_1 %>% select(COR,treat_c,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol) %>% 
+st.c.sinout <- st_1 %>% select(COR,treat_c,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_c==1 | treat_c==0)
 ```
 

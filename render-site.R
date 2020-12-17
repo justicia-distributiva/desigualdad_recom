@@ -19,7 +19,7 @@ css<- list.files(path = "input/css",pattern = "custom")        # a list with the
 
 file.copy(file.path("production",production), "docs",overwrite = TRUE)# copy data proc and analysis files
 file.copy(file.path("input/css",css), "docs",overwrite = TRUE)       # copy css style files
-
+  
 
 rmarkdown::render_site("docs",quiet = F) # Render site
 

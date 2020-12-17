@@ -2,7 +2,8 @@
 
 body{
   text-align: justify;
-  font-size: 15px;
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
   }
 
 /**td { font-size: 14px;
@@ -10,8 +11,19 @@ body{
 
 } **/
 
-h1, .h1{
-    margin-top: 65px;
+
+
+h1, h2, h3{
+  font-family: "Times New Roman", Times, serif;
+  padding-top: 55px;
+  margin-top: 55px;
+  line-height: 2em;
+  display:
+}
+
+h4{
+  font-size:20px;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .right {
@@ -60,6 +72,7 @@ table, td, th {
   margin-right: auto;
   margin-top: 1em;
   margin-bottom: 1em;
+  font-size: 20px !important; 
 }
 
 
@@ -69,6 +82,20 @@ p.caption {
   font-style: bold;
   color: black;
   margin-right: 10%;
-  margin-left: 10%;  
-  text-align: justify;
+  margin-left: 10%;
+  text-align: center;
 }
+
+/* expandir el espacio del documento*/
+body .main-container {
+      max-width: 1300px !important;
+      width: 1300px !important;
+    }
+
+/* expandir width de la TOC*/
+div.tocify {
+    width: 22% !important;
+    max-width: 331px !important;
+    max-height: 102% !important;
+}
+
