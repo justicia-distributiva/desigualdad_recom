@@ -254,6 +254,8 @@ effect_plot(logOGcov3, pred = "treat_c", interval = TRUE)
 
 ### Base sin outliers
 
+> Comentario de Luis (diciembre 2020). Se realizan análisis simultáneos.
+
 ```{r}
 e1ad04.so <- lm(log_reco_OG~treat_a, data = na.omit(st.a.sinout)) # A vs D 
 e1bd04.so <- lm(log_reco_OG~treat_b, data = na.omit(st.b.sinout)) # B vs D 
@@ -269,6 +271,7 @@ saljus2 <- lm(log_reco_OG~treat+just+ppol+log_perc_OG+educ, data = st_1)
 knitreg(list(saljus2,logOGcov1.so,logOGcov2.so,logOGcov3.so),ci.force = F)
 ```
 
+Nota: Los efectos son distintos en magnitud. 
 
 ```{r eval=FALSE, include=FALSE}
 screenreg(list(e1ad04.so,logOGcov1.so,e1bd04.so,logOGcov2.so,e2cd04.so,logOGcov3.so))
