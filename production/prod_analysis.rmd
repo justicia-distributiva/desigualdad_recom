@@ -206,7 +206,7 @@ pdesi1 <- lm(pdesi~treat+ppol+log_perc_OG, data = st) #Grupo A vs D | Dif ingres
 ```
 
 ```{r results='asis'}
-htmlreg(list(pdesi1),doctype = F)
+knitreg(list(pdesi1),doctype = F)
 ```
 
 1.  No hay efecto del tratamiento en la variable percepción de desigualdad de ingreso entre ricos y pobres
@@ -220,10 +220,17 @@ e1ad04 <- lm(log_reco_OG~treat_a, data = na.omit(st.a)) # A vs D
 e1bd04 <- lm(log_reco_OG~treat_b, data = na.omit(st.b)) # B vs D 
 e2cd04 <- lm(log_reco_OG~treat_c, data = na.omit(st.c)) # C vs D 
 
+
 logOGcov1 <- lm(log_reco_OG~treat_a+just+ppol+log_perc_OG+educ, data = st.a) # A vs D
 logOGcov2 <- lm(log_reco_OG~treat_b+just+ppol+log_perc_OG+educ, data = st.b) # B vs D
 logOGcov3 <- lm(log_reco_OG~treat_c+just+ppol+log_perc_OG+educ, data = st.c) # C vs D
 ```
+
+```{r}
+saljus1 <- lm(log_reco_OG~treat+just+ppol+log_perc_OG+educ, data = st)
+knitreg(list(saljus1,logOGcov1,logOGcov2,logOGcov3),ci.force = F)
+```
+
 
 ```{r}
 save(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3,file = "output/tables/modelos01.RData")
@@ -256,6 +263,12 @@ logOGcov1.so <- lm(log_reco_OG~treat_a+just+ppol+log_perc_OG+educ, data = st.a.s
 logOGcov2.so <- lm(log_reco_OG~treat_b+just+ppol+log_perc_OG+educ, data = st.b.sinout) # B vs D
 logOGcov3.so <- lm(log_reco_OG~treat_c+just+ppol+log_perc_OG+educ, data = st.c.sinout) # C vs D
 ```
+
+```{r}
+saljus2 <- lm(log_reco_OG~treat+just+ppol+log_perc_OG+educ, data = st_1)
+knitreg(list(saljus2,logOGcov1.so,logOGcov2.so,logOGcov3.so),ci.force = F)
+```
+
 
 ```{r eval=FALSE, include=FALSE}
 screenreg(list(e1ad04.so,logOGcov1.so,e1bd04.so,logOGcov2.so,e2cd04.so,logOGcov3.so))

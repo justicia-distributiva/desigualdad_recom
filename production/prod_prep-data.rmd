@@ -70,7 +70,7 @@ st$P41 <- as.numeric(st$P41)
 st$P41 <- set_label(st$P41,label = "Edad")
 
 for (i in starts_with(match = "P30",vars = names(st))) {
-  st[[i]]<- recode(st[[i]],"1=5;2=4;3=3;4=2;5=1;9=NA",as.numeric = TRUE)
+  st[[i]]<- recode(st[[i]],"1=6;2=5;3=4;4=3;5=2;6=1;9=NA",as.numeric = TRUE)
 }
 # st$just <- as.numeric((st$P30_1+st$P30_2+st$P30_3+st$P30_4+st$P30_5)/5) #BJW scale 5 items
 st$just <- as.numeric((st$P30_2+st$P30_3+st$P30_4+st$P30_5)/4) #BJW scale 4 items
@@ -252,27 +252,28 @@ st_1 <- st_2
 
 **Brecha salarial máximo/mínimo**
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-# Selección de Ingreso percibido ----
+```{r}
+
+# Selección de Ingreso percibido ----#
 st$min_per <- pmin(st$P31_1,st$P31_2,st$P31_3,st$P31_4,st$P31_5,st$P31_6, na.rm = TRUE) #Seleccionar el mínimo de ingreso percibido
 st$max_per <- pmax(st$P31_1,st$P31_2,st$P31_3,st$P31_4,st$P31_5,st$P31_6, na.rm = TRUE) #Seleccionar el máximo de ingreso percibido
 
-# Selección de Ingreso recomendado ----
+# Selección de Ingreso recomendado ----#
 st$min_rec <- pmin(st$P32_1,st$P32_2,st$P32_3,st$P32_4,st$P32_5,st$P32_6, na.rm = TRUE) #Seleccionar el mínimo de ingreso recomendado
 st$max_rec <- pmax(st$P32_1,st$P32_2,st$P32_3,st$P32_4,st$P32_5,st$P32_6, na.rm = TRUE) #Seleccionar el máximo de ingreso recomendado
 
-# Indice de diferencias percibidas simple (sin Log) ----
+# Indice de diferencias percibidas simple (sin Log) ----#
 st$perc <- as.numeric(st$max_per/st$min_per)
 st$perc <- set_label(st$perc,label = "Brecha salarial percibida global")
-# Indice de diferencias recomendadas ("Recomended inequality") simple (sin Log) ----
+# Indice de diferencias recomendadas ("Recomended inequality") simple (sin Log) ----#
 st$reco <- as.numeric(st$max_rec/st$min_rec)
 st$reco <- set_label(st$reco,label = "Brecha salarial justa global")
 # st <- st %>% filter(reco.s < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
 
-# Indice de diferencias percibidas (2) Logaritmizada ----
+# Indice de diferencias percibidas (2) Logaritmizada ----#
 st$log_perc <- as.numeric(log(st$max_per/st$min_per))
 st$log_perc  <- set_label(st$log_perc ,label = "Brecha salarial percibida global (ln)")
-# Indice de diferencias recomendadas ("Recomended inequality") (2) Logaritmizada ----
+# Indice de diferencias recomendadas ("Recomended inequality") (2) Logaritmizada ----#
 st$log_reco <- as.numeric(log(st$max_rec/st$min_rec))
 st$log_reco <- set_label(st$log_reco ,label = "Brecha salarial justa global (ln)")
 ```
@@ -302,26 +303,26 @@ st$zlog <- set_label(st$zlog,label = "Brecha justa ln(Gerente/obrero) - estandar
 **Desigualdad justa máximo/mínimo**
 
 ```{r}
-# Selección de Ingreso percibido ----
+# Selección de Ingreso percibido ----#
 st_1$min_per <- pmin(st_1$P31_1,st_1$P31_2,st_1$P31_3,st_1$P31_4,st_1$P31_5,st_1$P31_6, na.rm = TRUE) #Seleccionar el mínimo de ingreso percibido
 st_1$max_per <- pmax(st_1$P31_1,st_1$P31_2,st_1$P31_3,st_1$P31_4,st_1$P31_5,st_1$P31_6, na.rm = TRUE) #Seleccionar el máximo de ingreso percibido
 
-# Selección de Ingreso recomendado ----
+# Selección de Ingreso recomendado ----#
 st_1$min_rec <- pmin(st_1$P32_1,st_1$P32_2,st_1$P32_3,st_1$P32_4,st_1$P32_5,st_1$P32_6, na.rm = TRUE) #Seleccionar el mínimo de ingreso recomendado
 st_1$max_rec <- pmax(st_1$P32_1,st_1$P32_2,st_1$P32_3,st_1$P32_4,st_1$P32_5,st_1$P32_6, na.rm = TRUE) #Seleccionar el máximo de ingreso recomendado
 
-# Indice de diferencias percibidas simple (sin Log) ----
+# Indice de diferencias percibidas simple (sin Log) ----#
 st_1$perc <- as.numeric(st_1$max_per/st_1$min_per)
 st_1$perc <- set_label(st_1$perc,label = "Brecha salarial percibida global")
-# Indice de diferencias recomendadas ("Recomended inequality") simple (sin Log) ----
+# Indice de diferencias recomendadas ("Recomended inequality") simple (sin Log) ----#
 st_1$reco <- as.numeric(st_1$max_rec/st_1$min_rec)
 st_1$reco <- set_label(st_1$reco,label = "Brecha salarial justa global")
 # st_1 <- st_1 %>% filter(reco.s < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
 
-# Indice de diferencias percibidas (2) Logaritmizada ----
+# Indice de diferencias percibidas (2) Logaritmizada ----#
 st_1$log_perc <- as.numeric(log(st_1$max_per/st_1$min_per))
 st_1$log_perc  <- set_label(st_1$log_perc ,label = "Brecha salarial percibida global (ln)")
-# Indice de diferencias recomendadas ("Recomended inequality") (2) Logaritmizada ----
+# Indice de diferencias recomendadas ("Recomended inequality") (2) Logaritmizada ----#
 st_1$log_reco <- as.numeric(log(st_1$max_rec/st_1$min_rec))
 st_1$log_reco <- set_label(st_1$log_reco ,label = "Brecha salarial justa global (ln)")
 ```
