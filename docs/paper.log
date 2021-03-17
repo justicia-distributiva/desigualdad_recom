@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.11)  16 DEC 2020 23:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.28)  17 MAR 2021 12:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **paper.tex
 (./paper.tex
-LaTeX2e <2020-10-01> patch level 2
-L3 programming layer <2020-12-07> xparse <2020-03-03> (c:/Users/Julio/AppData/R
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-01-09> xparse <2020-03-03> (c:/Users/Julio/AppData/R
 oaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
@@ -210,7 +210,7 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.
 sty
-Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
+Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
 
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdfte
 xcmds.sty
@@ -251,9 +251,14 @@ Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.de
 f
-File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2021-02-27 v7.00k Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
+)
+(c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-
+langpatches.def
+File: hyperref-langpatches.def 2021-02-27 v7.00k Hyperref: patches for babel la
+nguages
 )
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.
 sty
@@ -264,26 +269,26 @@ s.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count266
-Package hyperref Info: Option `unicode' set `true' on input line 4338.
 
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2020-05-15 v7.00e Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Hyper figures OFF on input line 4464.
-Package hyperref Info: Link nesting OFF on input line 4469.
-Package hyperref Info: Hyper index ON on input line 4472.
-Package hyperref Info: Plain pages OFF on input line 4479.
-Package hyperref Info: Backreferencing OFF on input line 4484.
+Package hyperref Info: Option `unicode' set `true' on input line 4073.
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4717.
+Package hyperref Info: Bookmarks ON on input line 4445.
 \c@Hy@tempcnt=\count267
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 5076.
+LaTeX Info: Redefining \url on input line 4804.
 \XeTeXLinkMargin=\dimen149
 
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.st
@@ -298,15 +303,15 @@ Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 \Fld@menulength=\count268
 \Field@Width=\dimen150
 \Fld@charsize=\dimen151
-Package hyperref Info: Hyper figures OFF on input line 6347.
-Package hyperref Info: Link nesting OFF on input line 6352.
-Package hyperref Info: Hyper index ON on input line 6355.
-Package hyperref Info: backreferencing OFF on input line 6362.
-Package hyperref Info: Link coloring OFF on input line 6367.
-Package hyperref Info: Link coloring with OCG OFF on input line 6372.
-Package hyperref Info: PDF/A mode OFF on input line 6377.
-LaTeX Info: Redefining \ref on input line 6417.
-LaTeX Info: Redefining \pageref on input line 6421.
+Package hyperref Info: Hyper figures OFF on input line 6075.
+Package hyperref Info: Link nesting OFF on input line 6080.
+Package hyperref Info: Hyper index ON on input line 6083.
+Package hyperref Info: backreferencing OFF on input line 6090.
+Package hyperref Info: Link coloring OFF on input line 6095.
+Package hyperref Info: Link coloring with OCG OFF on input line 6100.
+Package hyperref Info: PDF/A mode OFF on input line 6105.
+LaTeX Info: Redefining \ref on input line 6145.
+LaTeX Info: Redefining \pageref on input line 6149.
 
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.
 sty
@@ -322,7 +327,7 @@ Package hyperref Info: Driver (autodetected): hpdftex.
 
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.d
 ef
-File: hpdftex.def 2020-05-15 v7.00e Hyperref driver for pdfTeX
+File: hpdftex.def 2021-02-27 v7.00k Hyperref driver for pdfTeX
 
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx
 .sty
@@ -432,9 +437,9 @@ Package graphics Info: Driver file: pdftex.def on input line 105.
 \Gin@req@width=\dimen176
 ) (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.st
 y
-Package: babel 2020/10/27 3.51 The Babel package
+Package: babel 2021/03/03 3.55 The Babel package
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2020/10/27 3.51 Babel common definitions
+File: babel.def 2021/03/03 3.55 Babel common definitions
 \babel@savecnt=\count286
 \U@D=\dimen177
 \l@babelnohyphens=\language4
@@ -593,8 +598,8 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backen
 d-pdftex.def
-File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
-\l__kernel_color_stack_int=\count304
+File: l3backend-pdftex.def 2021-03-02 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count304
 \l__pdf_internal_box=\box65
 ) (./paper.aux
 LaTeX Info: Redefining \. on input line 25.
@@ -642,7 +647,7 @@ Package hyperref Info: Link coloring OFF on input line 116.
 
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.s
 ty
-Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
 (c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.
 sty
@@ -749,57 +754,48 @@ Package hyperref Warning: Suppressing link with empty target on input line 118.
 {c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
 x.map}] [2] [3]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 171.
+(Font)              <10> on input line 168.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 171.
+(Font)              <7> on input line 168.
 [4] [5] [6]
-<../output/images/barplot1.png, id=121, 711.1368pt x 284.5029pt>
+<../output/images/barplot1.png, id=123, 711.1368pt x 284.5029pt>
 File: ../output/images/barplot1.png Graphic file (type png)
 <use ../output/images/barplot1.png>
-Package pdftex.def Info: ../output/images/barplot1.png  used on input line 248.
+Package pdftex.def Info: ../output/images/barplot1.png  used on input line 269.
 
 (pdftex.def)             Requested size: 399.29729pt x 159.74596pt.
-<../output/images/barplot2.png, id=124, 711.1368pt x 284.5029pt>
+[7]
+<../output/images/barplot2.png, id=136, 711.1368pt x 284.5029pt>
 File: ../output/images/barplot2.png Graphic file (type png)
 <use ../output/images/barplot2.png>
-Package pdftex.def Info: ../output/images/barplot2.png  used on input line 265.
+Package pdftex.def Info: ../output/images/barplot2.png  used on input line 286.
 
 (pdftex.def)             Requested size: 399.29729pt x 159.74596pt.
-[7 <../output/images/barplot1.png>] [8 <../output/images/barplot2.png>] [9] [10
-] [11pdfTeX warning (ext4): destination with the same identifier (name{ref-Mald
-onadoetal2019}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.456 
-      pdfTeX warning (ext4): destination with the same identifier (name{ref-Osb
-erg2006}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.456 
-      ]
-<../output/images/obgapb.png, id=240, 853.5087pt x 511.9125pt>
+[8 <../output/images/barplot1.png>] [9 <../output/images/barplot2.png>] [10] [1
+1] [12]
+<../output/images/obgapb.png, id=244, 767.9892pt x 426.6339pt>
 File: ../output/images/obgapb.png Graphic file (type png)
 <use ../output/images/obgapb.png>
-Package pdftex.def Info: ../output/images/obgapb.png  used on input line 488.
-(pdftex.def)             Requested size: 352.31111pt x 211.30711pt.
-<../output/images/gergapb.png, id=241, 853.5087pt x 511.9125pt>
+Package pdftex.def Info: ../output/images/obgapb.png  used on input line 513.
+(pdftex.def)             Requested size: 352.31839pt x 195.72015pt.
+<../output/images/gergapb.png, id=245, 767.9892pt x 426.6339pt>
 File: ../output/images/gergapb.png Graphic file (type png)
 <use ../output/images/gergapb.png>
-Package pdftex.def Info: ../output/images/gergapb.png  used on input line 497.
-(pdftex.def)             Requested size: 352.31111pt x 211.30711pt.
-[12 <../output/images/obgapb.png>] [13 <../output/images/gergapb.png>]
-<../output/images/treat2.png, id=267, 954.56625pt x 252.945pt>
+Package pdftex.def Info: ../output/images/gergapb.png  used on input line 522.
+(pdftex.def)             Requested size: 352.31839pt x 195.72015pt.
+[13 <../output/images/obgapb.png>] [14 <../output/images/gergapb.png>]
+<../output/images/treat2.png, id=276, 954.56625pt x 252.945pt>
 File: ../output/images/treat2.png Graphic file (type png)
 <use ../output/images/treat2.png>
-Package pdftex.def Info: ../output/images/treat2.png  used on input line 580.
+Package pdftex.def Info: ../output/images/treat2.png  used on input line 624.
 (pdftex.def)             Requested size: 399.28377pt x 105.8039pt.
-<../output/images/flujo-experimento.png, id=268, 853.68938pt x 426.84468pt>
+<../output/images/flujo-experimento.png, id=277, 853.68938pt x 426.84468pt>
 File: ../output/images/flujo-experimento.png Graphic file (type png)
 <use ../output/images/flujo-experimento.png>
 Package pdftex.def Info: ../output/images/flujo-experimento.png  used on input 
-line 608.
+line 633.
 (pdftex.def)             Requested size: 469.76509pt x 234.88254pt.
-[14 <../output/images/treat2.png>]
+[15 <../output/images/treat2.png>]
 
 Package caption Warning: Unused \captionsetup[figure] on input line \caption@op
 t@figure@lineno .
@@ -810,24 +806,24 @@ Package caption Warning: Unused \captionsetup[ table] on input line \caption@op
 t@ table@lineno .
 See the caption package documentation for explanation.
 
-[15 <../output/images/flujo-experimento.png>] (./paper.aux
+[16 <../output/images/flujo-experimento.png>] (./paper.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
-Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 6510AA13DC953FE6BDED9F8CE8A5E9C0;1948.
 
 LaTeX Warning: There were multiply-defined labels.
 
+Package rerunfilecheck Info: File `paper.out' has not changed.
+(rerunfilecheck)             Checksum: 71D9C71C9591097E3A29E7BD87A7BC33;2050.
  ) 
 Here is how much of TeX's memory you used:
- 14467 strings out of 481346
- 213878 string characters out of 5916644
- 554621 words of memory out of 5000000
- 30931 multiletter control sequences out of 15000+600000
- 461588 words of font info for 81 fonts, out of 8000000 for 9000
+ 14057 strings out of 481272
+ 210161 string characters out of 5914717
+ 555360 words of memory out of 5000000
+ 30584 multiletter control sequences out of 15000+600000
+ 469961 words of font info for 87 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,13n,72p,1880b,405s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,13n,74p,1868b,470s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.e
 nc}{c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hsy.enc}{c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
@@ -836,22 +832,24 @@ m-mathit.enc}{c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips
 dvips/base/8r.enc}<c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
 1/public/lm/lmex10.pfb><c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/fonts
 /type1/public/lm/lmmi10.pfb><c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/
-fonts/type1/public/lm/lmmi8.pfb><c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-d
-ist/fonts/type1/public/lm/lmr10.pfb><c:/Users/Julio/AppData/Roaming/TinyTeX/tex
-mf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/Julio/AppData/Roaming/TinyTeX/
-texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/Julio/AppData/Roaming/TinyT
-eX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/Julio/AppData/Roaming/Ti
-nyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/Julio/AppData/Roaming
-/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/Julio/AppData/Ro
-aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb><c:/Users/Julio/AppDat
-a/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/Julio/Ap
-pData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/Jul
-io/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/User
-s/Julio/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (15 pages, 428315 bytes).
+fonts/type1/public/lm/lmmi7.pfb><c:/Users/Julio/AppData/Roaming/TinyTeX/texmf-d
+ist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/Julio/AppData/Roaming/TinyTeX/tex
+mf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/Julio/AppData/Roaming/TinyTeX
+/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/Julio/AppData/Roaming/Tiny
+TeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/Julio/AppData/Roaming/T
+inyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/Julio/AppData/Roamin
+g/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/Julio/AppData/Roa
+ming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/Julio/AppDat
+a/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb><c:/Users/Julio/Ap
+pData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/Juli
+o/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users
+/Julio/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/
+Users/Julio/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pf
+b>
+Output written on paper.pdf (16 pages, 429766 bytes).
 PDF statistics:
- 353 PDF objects out of 1000 (max. 8388607)
- 307 compressed objects within 4 object streams
- 104 named destinations out of 1000 (max. 500000)
- 135 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 367 PDF objects out of 1000 (max. 8388607)
+ 319 compressed objects within 4 object streams
+ 109 named destinations out of 1000 (max. 500000)
+ 143 words of extra memory for PDF output out of 10000 (max. 10000000)
 

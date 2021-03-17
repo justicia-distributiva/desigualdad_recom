@@ -226,6 +226,7 @@ logOGcov2 <- lm(log_reco_OG~treat_b+just+ppol+log_perc_OG+educ, data = st.b) # B
 logOGcov3 <- lm(log_reco_OG~treat_c+just+ppol+log_perc_OG+educ, data = st.c) # C vs D
 ```
 
+
 ```{r}
 saljus1 <- lm(log_reco_OG~treat+just+ppol+log_perc_OG+educ, data = st)
 knitreg(list(saljus1,logOGcov1,logOGcov2,logOGcov3),ci.force = F)
@@ -271,7 +272,7 @@ saljus2 <- lm(log_reco_OG~treat+just+ppol+log_perc_OG+educ, data = st_1)
 knitreg(list(saljus2,logOGcov1.so,logOGcov2.so,logOGcov3.so),ci.force = F)
 ```
 
-Nota: Los efectos son distintos en magnitud. 
+Nota: Los efectos son distintos en magnitud. Los errores estándar varían en el tercer decimal.
 
 ```{r eval=FALSE, include=FALSE}
 screenreg(list(e1ad04.so,logOGcov1.so,e1bd04.so,logOGcov2.so,e2cd04.so,logOGcov3.so))
@@ -384,6 +385,11 @@ htmlreg(l = c(m0a,ac,m0b,bc,m0c,cc),custom.coef.names = custom.coef.names,doctyp
 
 # Plots
 
+```{r}
+theme_set(new = theme_classic(base_family = "serif"))
+```
+
+
 ## Valores predichos Desigualdad Global: ln(max/min)
 
 ```{r predicted-log(max/min), include=FALSE}
@@ -417,8 +423,7 @@ p1.log <- ggplot(tpad2lg, aes(factor(treat_a),fit, fill=factor(treat_a), colour=
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
-  scale_colour_manual(values=c("white","black"))+
-  theme_classic()
+  scale_colour_manual(values=c("white","black"))
 
 p2.log <- ggplot(tpbd2lg, aes(factor(treat_b),fit, fill=factor(treat_b),colour=factor(treat_b))) +
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
@@ -429,20 +434,18 @@ p2.log <- ggplot(tpbd2lg, aes(factor(treat_b),fit, fill=factor(treat_b),colour=f
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
-  scale_colour_manual(values=c("white","black"))+
-  theme_classic()
+  scale_colour_manual(values=c("white","black"))
 
 p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=factor(treat_c))) +
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[1]*')'), limits = c(0,3))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ( '*D[1]*' )'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
-  scale_colour_manual(values=c("white","black"))+
-  theme_classic()
+  scale_colour_manual(values=c("white","black"))
 ```
 
 ```{r save plot01, echo=TRUE, fig.align="center", message=FALSE, warning=FALSE, out.width="100%", results='hold'}
@@ -482,8 +485,8 @@ p1.log <- ggplot(tpad2lg, aes(factor(treat_a),fit, fill=factor(treat_a), colour=
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
-  scale_colour_manual(values=c("white","black"))+
-  theme_classic()
+  scale_colour_manual(values=c("white","black"))
+
 p2.log <- ggplot(tpbd2lg, aes(factor(treat_b),fit, fill=factor(treat_b),colour=factor(treat_b))) +
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
@@ -493,20 +496,18 @@ p2.log <- ggplot(tpbd2lg, aes(factor(treat_b),fit, fill=factor(treat_b),colour=f
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
-  scale_colour_manual(values=c("white","black"))+
-  theme_classic()
+  scale_colour_manual(values=c("white","black"))
 
 p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=factor(treat_c))) +
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ('*D[2]*')'), limits = c(0,3))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ( '*D[2]*' )'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
   scale_fill_manual(values=bar_col)+
-  scale_colour_manual(values=c("white","black"))+
-  theme_classic()
+  scale_colour_manual(values=c("white","black"))
 ```
 
 ```{r save plot02, echo=TRUE, fig.align="center", message=FALSE, warning=FALSE, out.width="100%", results='hold'}
@@ -747,7 +748,6 @@ st_1 %>% group_by("Condición"=condition) %>% summarise(
 ggplot(data = st_1,aes(x=condition, y=saljusobr,fill=factor(condition))) + 
   stat_boxplot(geom = "errorbar", width=0.3)+
   geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
-  theme_classic() +
   coord_flip() +
   scale_y_continuous(limits = c(0, 8000000),labels = label_dollar(big.mark = ".")) +
   scale_fill_brewer(palette = 6) +
@@ -762,7 +762,6 @@ ggplot(data = st_1,aes(x=condition, y=saljusobr,fill=factor(condition))) +
 ob1b <- ggplot(data = st.a.sinout,aes(x=treat_a.2, y=saljusobr,fill=factor(treat_a.2))) + 
   stat_boxplot(geom = "errorbar", width=0.3)+
   geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
-  theme_classic() + 
   guides(fill=FALSE) +
   scale_fill_manual(values=c("snow1", "snow3")) +
   ggtitle(label ="Parrafo reforma educacional y lista de salarios por ocupación")+ 
@@ -776,7 +775,6 @@ ob1b <- ggplot(data = st.a.sinout,aes(x=treat_a.2, y=saljusobr,fill=factor(treat
 ob2b <- ggplot(data = st.b.sinout ,aes(x=treat_b.2, y=saljusobr,fill=factor(treat_b.2))) + 
   stat_boxplot(geom = "errorbar", width=0.3)+
   geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
-  theme_classic() + 
   guides(fill=FALSE) +
   scale_fill_manual(values=c("snow1", "snow3")) +
   ggtitle(label = "Párrafo sobre reforma educacional") + 
@@ -790,7 +788,6 @@ ob2b <- ggplot(data = st.b.sinout ,aes(x=treat_b.2, y=saljusobr,fill=factor(trea
 ob3b <- ggplot(data = st.c.sinout ,aes(x=treat_c.2, y=saljusobr,fill=factor(treat_c.2))) + 
   stat_boxplot(geom = "errorbar", width=0.3)+
   geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
-  theme_classic() +
   guides(fill=FALSE) +
   scale_fill_manual(values=c("snow1", "snow3")) +
   ggtitle(label = "Lista de salarios por ocupación")+ 
@@ -805,7 +802,7 @@ obgapb <- grid.arrange(ob1b, ob2b, ob3b, nrow = 3,
 ```
 
 ```{r}
-ggsave("output/images/obgapb.png", obgapb,units = "cm", width = 30,height = 18)
+ggsave("output/images/obgapb.png", obgapb,units = "cm", width = 27,height = 15)
 ```
 
 ### Salario justo: Gerente
@@ -827,7 +824,6 @@ st_1 %>% group_by("Condición"=condition) %>% summarise(
 ggplot(data = st_1,aes(x=condition, y=saljusger,fill=factor(condition))) + 
   stat_boxplot(geom = "errorbar", width=0.3)+
   geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
-  theme_classic() +
   coord_flip() +
   scale_y_continuous(limits = c(0,30000000), breaks = seq(0,30000000,5000000),labels = label_dollar(big.mark = ".")) +
   scale_fill_brewer(palette = 6) +
@@ -840,7 +836,6 @@ ggplot(data = st_1,aes(x=condition, y=saljusger,fill=factor(condition))) +
 ger1b <- ggplot(data = st.a.sinout,aes(x=treat_a.2, y=saljusger,fill=factor(treat_a.2))) + 
   stat_boxplot(geom = "errorbar", width=0.3) +
   geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
-  theme_classic() + 
   guides(fill=FALSE) +
   scale_fill_manual(values=c("snow1", "snow3")) +
   ggtitle(label = "Parrafo reforma educacional y lista de salarios por ocupación") + 
@@ -852,7 +847,6 @@ ger1b <- ggplot(data = st.a.sinout,aes(x=treat_a.2, y=saljusger,fill=factor(trea
 ger2b <- ggplot(data = st.b.sinout,aes(x=treat_b.2, y=saljusger,fill=factor(treat_b.2))) + 
   stat_boxplot(geom = "errorbar", width=0.3)+
   geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
-  theme_classic() + 
   guides(fill=FALSE) +
   scale_fill_manual(values=c("snow1", "snow3")) +
   ggtitle(label = "Párrafo sobre reforma educacional")+ 
@@ -866,7 +860,6 @@ ger2b <- ggplot(data = st.b.sinout,aes(x=treat_b.2, y=saljusger,fill=factor(trea
 ger3b <- ggplot(data = st.c.sinout,aes(x=treat_c.2, y=saljusger,fill=factor(treat_c.2))) + 
   stat_boxplot(geom = "errorbar", width=0.3)+
   geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
-  theme_classic() +
   guides(fill=FALSE) +
   scale_fill_manual(values=c("snow1", "snow3")) +
   ggtitle(label = "Lista de salarios por ocupación")+ 
@@ -881,5 +874,5 @@ gergapb <- grid.arrange(ger1b, ger2b, ger3b, nrow = 3,
 ```
 
 ```{r}
-ggsave("output/images/gergapb.png", gergapb,units = "cm", width = 30,height = 18)
+ggsave("output/images/gergapb.png", gergapb,units = "cm", width = 27,height = 15)
 ```
