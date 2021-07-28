@@ -153,6 +153,23 @@ texreg::knitreg(l = list(bal1,bal2,bal3),
         caption = "Balance de la asignación aleatoria al grupo tratamiento",
         caption.above = TRUE,
         doctype = F)
+
+coef <- c("(Intercepto)","Sexo (ref: Mujer)","Edad","Educación",
+          "Creencia Mundo Justo",
+          "Centro (ref: Izquierda)",
+          "Derecha",
+          "Ninguno","No sabe",
+          "Desigualdad percibida (Log)")
+cap <- "Balance de la asignación aleatoria al grupo tratamiento"
+custom.note = "***p < 0,001;**p < 0,01;*p < 0,05; Modelos excluyen outliers¹"
+
+texreg::htmlreg(l = list(bal3,bal2,bal1,bal3.so,bal2.so,bal1.so),
+        custom.model.names = c("Cond. A", "Cond. B", "Cond. C","Cond. A¹", "Cond. B¹", "Cond. C¹"),
+        custom.coef.names = coef,
+        caption = paste("(\\#tab:tab-balance)",cap),
+        caption.above = TRUE,
+        doctype = F, custom.note = custom.note,
+        file = "../output/tables/tab_balance.xls")
 ```
 
 ```{r}
@@ -256,7 +273,7 @@ logOGcov2.so.r <- lm_robust(log_reco_OG~treat_b+just+ppol+log_perc_OG+educ, data
 logOGcov3.so.r <- lm_robust(log_reco_OG~treat_c+just+ppol+log_perc_OG+educ, data = st.c.sinout,alpha = 0.05) # C vs D
 ```
 
-```{r results='asis'}
+```{r tab_modelos, results='asis'}
 custom.coef.names = c("(Intercepto)","Tratamiento","Creencia Mundo Justo",
                       "Centro (ref: Izquierda)", "Derecha", "Ninguno", "No sabe",
                       "Desigualdad percibida (ln)","Educación",
@@ -269,7 +286,31 @@ texreg::knitreg(l = list(e1ad04.so.r,logOGcov1.so.r,e1bd04.so.r,logOGcov2.so.r,e
         reorder.coef = c(2:9, 1),
         caption = "Modelos de regresión", caption.above = T, 
         custom.note = "Intervalos de confianza entre paréntesis calculados al 95% empleando errores estándar robustos (HC2)")
+
+cap <- "Modelos de regresión para desigualdad recomendada."
+custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
+                      "Centro (ref: Izquierda)", "Derecha", "Ninguno", "No sabe",
+                      "Desigualdad percibida (Log)","Educación",
+                      "Tratamiento","Tratamiento")
+custom.note = " *** < 0,001;**p < 0,01;*p < 0,05. Errores estándar robustos entre paréntesis (HC2)"
+texreg::htmlreg(l = list(e2cd04.so.r,logOGcov3.so.r,e1bd04.so.r,logOGcov2.so.r,e1ad04.so.r,logOGcov1.so.r),
+        custom.coef.names = custom.coef.names,
+        custom.model.names = c("Modelo 1","Modelo 2","Modelo 3","Modelo 4","Modelo 5","Modelo 6"),
+        custom.header = list("Condición A"=1:2,"Condición B"=3:4,"Condición C"=5:6),
+        digits = 3,center = TRUE,
+        doctype = FALSE,
+        reorder.coef = c(2:9, 1),
+        caption = paste(cap),
+        caption.above = T, include.rs = FALSE, include.rmse = FALSE,include.ci = FALSE,
+        custom.note = custom.note,
+        file="../output/tables/tab_modelos.xls")
 ```
+
+
+
+
+
+
 
 ```{r}
 save(e1ad04.so.r,logOGcov1.so.r,e1bd04.so.r,logOGcov2.so.r,e2cd04.so.r,logOGcov3.so.r,file = "../output/tables/modelos02.RData")
@@ -397,6 +438,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
 ```{r save plot01, echo=TRUE, fig.align="center", message=FALSE, warning=FALSE, out.width="100%", results='hold'}
 barplot01 <- grid.arrange(p3.log,p2.log,p1.log,ncol=3) #Logaritmizado
 ggsave(filename = "../output/images/barplot1.png", barplot01,units = "cm", width = 25,height = 10)
+ggsave(filename = "../output/images/barplot1.pdf", barplot01,units = "cm", width = 25,height = 10)
 ```
 
 ## Valores predichos Desigualdad justa: ln(ger/obr)
@@ -465,6 +507,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
 ```{r save plot02, echo=TRUE, fig.align="center", message=FALSE, warning=FALSE, out.width="100%", results='hold'}
 barplot02 <- grid.arrange(p3.log,p2.log,p1.log,ncol=3) #Logaritmizado
 ggsave("../output/images/barplot2.png", barplot02,units = "cm", width = 25,height = 10)
+ggsave("../output/images/barplot2.pdf", barplot02,units = "cm", width = 25,height = 10)
 ```
 
 # Anexos
@@ -521,30 +564,39 @@ save(logOGcov1a, logOGcov2b, logOGcov3c,file = "../output/tables/modelos_z.RData
 ```
 
 ```{r echo=FALSE, results='asis'}
-nota <- c("\\parbox{.61\\linewidth}{\\vspace{2pt} Errores estándar entre paréntesis \\\\
-          $^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$. \\\\
-          \\textbf{\\textit{Nota}}: Variable dependiente en unidades de desviación estándar}")
+cap <- "Modelos de regresión para Desigualdad recomendada (estandarizada)"
+custom.note = "Intervalos de confianza entre paréntesis calculados al 95% empleando errores estándar robustos (HC2)"
+
 texreg::knitreg(
-  list(logOGcov1a, logOGcov2b, logOGcov3c),
+  list(logOGcov3c, logOGcov2b, logOGcov1a),
   custom.model.names = c("Modelo A", "Modelo B", "Modelo C"),
   custom.coef.names = custom.coef.names,
-  caption = "Modelos de regresi\\'on para Desigualdad recomendada en unidades de desviación estándar $z$",
+  caption = paste(cap),
   caption.above = TRUE,
   reorder.coef = c(2:9, 1),
-  label = "tab:logcov_z",
-  no.margin = T,
   booktabs = TRUE,
-  dcolumn = TRUE,
-  single.row = FALSE,
-  bold = FALSE,
   digits = 2,
   leading.zero = TRUE,
-  use.packages = FALSE,
-  float.pos = "H",
-  scalebox = 0.75,
   include.rs = FALSE,
   include.rmse = FALSE,
-  custom.note = nota)
+  doctype = F,
+  custom.note = custom.note)
+
+texreg::htmlreg(
+  list(logOGcov3c, logOGcov2b, logOGcov1a),
+  custom.model.names = c("Modelo A", "Modelo B", "Modelo C"),
+  custom.coef.names = custom.coef.names,
+  caption = paste(cap),
+  caption.above = TRUE,
+  reorder.coef = c(2:9, 1),
+  booktabs = TRUE,
+  digits = 2,
+  leading.zero = TRUE,
+  include.rs = FALSE,
+  include.rmse = FALSE,
+  doctype = F,
+  custom.note = custom.note,
+  file = "../output/tables/tab_modelos_z.xls")
 ```
 
 ## Boxplots
@@ -631,6 +683,7 @@ obgapb <- grid.arrange(ob1b, ob2b, ob3b, nrow = 3,
 
 ```{r}
 ggsave("../output/images/obgapb.png", obgapb,units = "cm", width = 27,height = 15)
+ggsave("../output/images/obgapb.pdf", obgapb,units = "cm", width = 27,height = 15)
 ```
 
 ### Salario justo: Gerente
@@ -703,4 +756,5 @@ gergapb <- grid.arrange(ger1b, ger2b, ger3b, nrow = 3,
 
 ```{r}
 ggsave("../output/images/gergapb.png", gergapb,units = "cm", width = 27,height = 15)
+ggsave("../output/images/gergapb.pdf", gergapb,units = "cm", width = 27,height = 15)
 ```
