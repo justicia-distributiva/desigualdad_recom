@@ -14,31 +14,58 @@ editor_options:
 ---
 
 ```{r eval=FALSE, include=FALSE}
-rmarkdown::render(input = "production/prod_prep-data.Rmd",output_format = "html_document",output_dir = "production/");browseURL(url = "production/prod_prep-data.html")
+rmarkdown::render(input = "production/prod_prep-data.Rmd",
+                  output_format = "html_document",
+                  output_dir = "production/");browseURL(url = "production/prod_prep-data.html")
 ```
 
+# Setup
+
 ```{r include=FALSE}
-knitr::opts_chunk$set(warning = FALSE,message = FALSE, cache = FALSE,results = "hold")
-knitr::opts_knit$set(root.dir = "../")
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE, 
+                      cache = FALSE,
+                      results = "hold")
 options(scipen=999)
 rm(list=ls())
 options(knitr.kable.NA = '')
 ```
 
-**load packages**
-```{r}
-library(dplyr)
-library(car)
-library(sjlabelled)
-library(summarytools)
-library(stargazer)
-library(sjPlot)
-library(ggplot2)
-library(knitr)
+```{css, echo=FALSE}
+# /* expandir el espacio del documento*/
+body .main-container {
+      max-width: 1600px !important;
+      width: 1600px !important;
+    }
+#/* expandir width de la TOC*/
+div.tocify {
+    width: 22% !important;
+    max-width: 331px !important;
+    max-height: 102% !important;
+}
 ```
 
+**load packages**
 ```{r}
-data01 <- sjlabelled::read_stata(path = "input/data/original/BBDD_FINAL_ISUC_PONDERADA.dta")
+if (!require("pacman")) install.packages("pacman") # instalar pacman
+pacman::p_load(dplyr,       # Manipulacion de datos 
+               haven,       # importar datos en .dta o .sav
+               sjmisc,      # descriptivos y frecuencias
+               sjPlot,      # tablas, plots y descriptivos
+               sjlabelled,
+               summarytools,# resumen de dataframe
+               knitr,       # tablas kable
+               kableExtra,  # tablas kable personalizadas
+               ggplot2,     # plots
+               corrplot,    # plot correlacion
+               stargazer
+               )
+```
+
+# Data
+
+```{r}
+data01 <- sjlabelled::read_stata(path = "../input/data/original/BBDD_FINAL_ISUC_PONDERADA.dta")
 ```
 
 <!-- Cosas por preguntar: -->
@@ -65,52 +92,40 @@ st <- data01 %>% dplyr::select(TIPO2, #Grupos "tipo" (?)
                          COR) #ID
 
 st$P40 <- factor(data01$P40,levels = c(1,2),labels = c("Hombre","Mujer")) 
-st$P40 <- set_label(st$P40,label = "Sexo")
+st$P40 <- sjlabelled::set_label(st$P40,label = "Sexo")
 st$P41 <- as.numeric(st$P41)
-st$P41 <- set_label(st$P41,label = "Edad")
+st$P41 <- sjlabelled::set_label(st$P41,label = "Edad")
 
 for (i in starts_with(match = "P30",vars = names(st))) {
-  st[[i]]<- recode(st[[i]],"1=6;2=5;3=4;4=3;5=2;6=1;9=NA",as.numeric = TRUE)
+  st[[i]]<- car::recode(st[[i]],"1=6;2=5;3=4;4=3;5=2;6=1;9=NA",as.numeric = TRUE)
 }
-# st$just <- as.numeric((st$P30_1+st$P30_2+st$P30_3+st$P30_4+st$P30_5)/5) #BJW scale 5 items
 st$just <- as.numeric((st$P30_2+st$P30_3+st$P30_4+st$P30_5)/4) #BJW scale 4 items
-
-st$just <- set_label(st$just,label = "Índice escala Creencia Mundo justo")
-
-# st$just <- set_label(st$just,label = "Índice escala Creencia Mundo justo")
-
-st$P31_1 <- recode(st$P31_1,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: doctor
-st$P31_2 <- recode(st$P31_2,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: gerente
-st$P31_3 <- recode(st$P31_3,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: pequeno empresario
-st$P31_4 <- recode(st$P31_4,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: obrero
-st$P31_5 <- recode(st$P31_5,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: ministro
-st$P31_6 <- recode(st$P31_6,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: profesor basica
-
-st$P32_1 <- recode(st$P32_1,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: doctor
-st$P32_2 <- recode(st$P32_2,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: gerente
-st$P32_3 <- recode(st$P32_3,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: pequeno empresario
-st$P32_4 <- recode(st$P32_4,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: obrero
-st$P32_5 <- recode(st$P32_5,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: ministro
-st$P32_6 <- recode(st$P32_6,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: profesor basica
+st$just <- sjlabelled::set_label(st$just,label = "Índice escala Creencia Mundo justo")
 
 
-# for (i in starts_with(match = "P31",vars = names(st))) {
-#   st[[i]]<- recode(st[[i]],"c(99999,999999,9999999,99999999,999999999)=NA",as.numeric = TRUE)
-# }
-# 
-# for (i in starts_with(match = "P32",vars = names(st))) {
-#   st[[i]]<- recode(st[[i]],"c(99999,999999,9999999,99999999,999999999)=NA",as.numeric = TRUE)
-# }
+st$P31_1 <- car::recode(st$P31_1,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: doctor
+st$P31_2 <- car::recode(st$P31_2,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: gerente
+st$P31_3 <- car::recode(st$P31_3,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: pequeno empresario
+st$P31_4 <- car::recode(st$P31_4,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: obrero
+st$P31_5 <- car::recode(st$P31_5,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: ministro
+st$P31_6 <- car::recode(st$P31_6,"c(99999,999999,9999999,99999999,999999999)=NA")# percibido: profesor basica
 
-st$P32_4 <- set_label(st$P32_4,label = "Salario justo: Un obrero no calificado de una fábrica")
-st$P32_2 <- set_label(st$P32_2,label = "Salario justo: Un gerente de una gran empresa")
+st$P32_1 <- car::recode(st$P32_1,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: doctor
+st$P32_2 <- car::recode(st$P32_2,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: gerente
+st$P32_3 <- car::recode(st$P32_3,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: pequeno empresario
+st$P32_4 <- car::recode(st$P32_4,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: obrero
+st$P32_5 <- car::recode(st$P32_5,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: ministro
+st$P32_6 <- car::recode(st$P32_6,"c(99999,999999,9999999,99999999,999999999)=NA")# justo: profesor basica
 
-st$educ  <- recode(st$P44, "99=NA")
-st$educ <- set_label(st$educ,label = "Nivel Educacional")
+st$P32_4 <- sjlabelled::set_label(st$P32_4,label = "Salario justo: Un obrero no calificado de una fábrica")
+st$P32_2 <- sjlabelled::set_label(st$P32_2,label = "Salario justo: Un gerente de una gran empresa")
 
-st$P33_2 <- recode(st$P33_2,"1=5;2=4;3=3;4=2;5=1;9=NA")# Recode missing data rich/poor income differences are too large
+st$educ  <- car::recode(st$P44, "99=NA")
+st$educ <- sjlabelled::set_label(st$educ,label = "Nivel Educacional")
 
-st$pdesi <- recode(st$P33_7,"1=5;2=4;3=3;4=2;5=1;9=NA")# Recode missing data de Percepcion de desigualdad likert
+st$P33_2 <- car::recode(st$P33_2,"1=5;2=4;3=3;4=2;5=1;9=NA")# Recode missing data rich/poor income differences are too large
+
+st$pdesi <- car::recode(st$P33_7,"1=5;2=4;3=3;4=2;5=1;9=NA")# Recode missing data de Percepcion de desigualdad likert
 
 st$ppol  <- car::recode(st$P3, "c(0,1,2,3,4)=1;5=2;c(6,7,8,9,10)=3;96=4;c(88,99)=5")
 st$ppol  <- factor(st$ppol, levels = c(1,2,3,4,5), labels = c("Izquierda/Centro Izquierda",
@@ -118,19 +133,19 @@ st$ppol  <- factor(st$ppol, levels = c(1,2,3,4,5), labels = c("Izquierda/Centro 
                                                               "Derecha/Centro Derecha",
                                                               "Ninguno",
                                                               "No sabe/ no responde"))
-st$ppol <- set_label(st$ppol,label = "Posición política")
+st$ppol <- sjlabelled::set_label(st$ppol,label = "Posición política")
 
 st$treat <- factor(st$TIPO2,levels = c(1,2,3,4),labels = c("A: parrafo-salarios","B: parrafo","C: salarios","D: control"))
 st$treat <- relevel(factor(st$treat), ref = 4) # treatment condition, ref = control group
-st$treat <- set_label(st$treat,label = "Condición Tratamiento")
+st$treat <- sjlabelled::set_label(st$treat,label = "Condición Tratamiento")
 
 
 st$treat_a <- car::recode(as_numeric(st$treat),recodes = "1=0;2=1;c(3,4)=NA",as.factor = T) #dummy 0 = control, 1 = group A
-st$treat_a <- set_label(st$treat_a,label = "A: parrafo-salarios")
+st$treat_a <- sjlabelled::set_label(st$treat_a,label = "A: parrafo-salarios")
 st$treat_b <- car::recode(as_numeric(st$treat),recodes = "1=0;3=1;c(2,4)=NA",as.factor = T) #dummy 0 = control, 1 = group B
-st$treat_b <- set_label(st$treat_b,label = "B: parrafo")
+st$treat_b <- sjlabelled::set_label(st$treat_b,label = "B: parrafo")
 st$treat_c <- car::recode(as_numeric(st$treat),recodes = "1=0;4=1;c(2,3)=NA",as.factor = T) #dummy 0 = control, 1 = group C
-st$treat_c <- set_label(st$treat_c,label = "C: salarios")
+st$treat_c <- sjlabelled::set_label(st$treat_c,label = "C: salarios")
 ```
 
 ## Filtro outliers 
@@ -264,15 +279,15 @@ st$max_rec <- pmax(st$P32_1,st$P32_2,st$P32_3,st$P32_4,st$P32_5,st$P32_6, na.rm 
 
 # Indice de diferencias percibidas simple (sin Log) ----#
 st$perc <- as.numeric(st$max_per/st$min_per)
-st$perc <- set_label(st$perc,label = "Brecha salarial percibida global")
+st$perc <- sjlabelled::set_label(st$perc,label = "Brecha salarial percibida global")
 # Indice de diferencias recomendadas ("Recomended inequality") simple (sin Log) ----#
 st$reco <- as.numeric(st$max_rec/st$min_rec)
-st$reco <- set_label(st$reco,label = "Brecha salarial justa global")
+st$reco <- sjlabelled::set_label(st$reco,label = "Brecha salarial justa global")
 # st <- st %>% filter(reco.s < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
 
 # Indice de diferencias percibidas (2) Logaritmizada ----#
 st$log_perc <- as.numeric(log(st$max_per/st$min_per))
-st$log_perc  <- set_label(st$log_perc ,label = "Brecha salarial percibida global (ln)")
+st$log_perc  <- sjlabelled::set_label(st$log_perc ,label = "Brecha salarial percibida global (ln)")
 # Indice de diferencias recomendadas ("Recomended inequality") (2) Logaritmizada ----#
 st$log_reco <- as.numeric(log(st$max_rec/st$min_rec))
 st$log_reco <- set_label(st$log_reco ,label = "Brecha salarial justa global (ln)")
@@ -283,19 +298,19 @@ st$log_reco <- set_label(st$log_reco ,label = "Brecha salarial justa global (ln)
 ```{r}
 # Variables Basadas en el indicador de Jasso(1999) según el ratio Gerente/Obrero ----#
 st$perc_OG <- st$P31_2/st$P31_4 # Indice de diferencias percibidas simple
-st$perc_OG <- set_label(st$perc_OG,label = "Brecha salarial percibida (Gerente/obrero)")
+st$perc_OG <- sjlabelled::set_label(st$perc_OG,label = "Brecha salarial percibida (Gerente/obrero)")
 
 st$reco_OG <- st$P32_2/st$P32_4 # Indice de diferencias recomendadas simple 
-st$reco_OG <- set_label(st$reco_OG,label = "Brecha salarial justa (Gerente/obrero)")
+st$reco_OG <- sjlabelled::set_label(st$reco_OG,label = "Brecha salarial justa (Gerente/obrero)")
 
 st$log_perc_OG <- log(st$P31_2/st$P31_4) # Indice de diferencias percibidas
-st$log_perc_OG <- set_label(st$log_perc_OG,label = "Brecha salarial percibida ln(Gerente/obrero)")
+st$log_perc_OG <- sjlabelled::set_label(st$log_perc_OG,label = "Brecha salarial percibida ln(Gerente/obrero)")
 
 st$log_reco_OG <- log(st$P32_2/st$P32_4) # Indice de diferencias recomendadas 
-st$log_reco_OG <- set_label(st$log_reco_OG,label = "Brecha salarial justa ln(Gerente/obrero)")
+st$log_reco_OG <- sjlabelled::set_label(st$log_reco_OG,label = "Brecha salarial justa ln(Gerente/obrero)")
 
 st$zlog <- as.numeric(scale(st$log_reco_OG)) # zscore 
-st$zlog <- set_label(st$zlog,label = "Brecha justa ln(Gerente/obrero) - estandarizada")
+st$zlog <- sjlabelled::set_label(st$zlog,label = "Brecha justa ln(Gerente/obrero) - estandarizada")
 ```
 
 ## Base sin outliers
@@ -313,18 +328,17 @@ st_1$max_rec <- pmax(st_1$P32_1,st_1$P32_2,st_1$P32_3,st_1$P32_4,st_1$P32_5,st_1
 
 # Indice de diferencias percibidas simple (sin Log) ----#
 st_1$perc <- as.numeric(st_1$max_per/st_1$min_per)
-st_1$perc <- set_label(st_1$perc,label = "Brecha salarial percibida global")
+st_1$perc <- sjlabelled::set_label(st_1$perc,label = "Brecha salarial percibida global")
 # Indice de diferencias recomendadas ("Recomended inequality") simple (sin Log) ----#
 st_1$reco <- as.numeric(st_1$max_rec/st_1$min_rec)
-st_1$reco <- set_label(st_1$reco,label = "Brecha salarial justa global")
-# st_1 <- st_1 %>% filter(reco.s < 200) #filtrar anterior < 200 para dejar la base sin datos extremos (superiores)
+st_1$reco <- sjlabelled::set_label(st_1$reco,label = "Brecha salarial justa global")
 
 # Indice de diferencias percibidas (2) Logaritmizada ----#
 st_1$log_perc <- as.numeric(log(st_1$max_per/st_1$min_per))
-st_1$log_perc  <- set_label(st_1$log_perc ,label = "Brecha salarial percibida global (ln)")
+st_1$log_perc  <- sjlabelled::set_label(st_1$log_perc ,label = "Brecha salarial percibida global (ln)")
 # Indice de diferencias recomendadas ("Recomended inequality") (2) Logaritmizada ----#
 st_1$log_reco <- as.numeric(log(st_1$max_rec/st_1$min_rec))
-st_1$log_reco <- set_label(st_1$log_reco ,label = "Brecha salarial justa global (ln)")
+st_1$log_reco <- sjlabelled::set_label(st_1$log_reco ,label = "Brecha salarial justa global (ln)")
 ```
 
 
@@ -332,19 +346,19 @@ st_1$log_reco <- set_label(st_1$log_reco ,label = "Brecha salarial justa global 
 ```{r}
 # Variables Basadas en el indicador de Jasso(1999) según el ratio Gerente/Obrero ----#
 st_1$perc_OG <- st_1$P31_2/st_1$P31_4 # Indice de diferencias percibidas simple
-st_1$perc_OG <- set_label(st_1$perc_OG,label = "Brecha salarial percibida (Gerente/obrero)")
+st_1$perc_OG <- sjlabelled::set_label(st_1$perc_OG,label = "Brecha salarial percibida (Gerente/obrero)")
 
 st_1$reco_OG <- st_1$P32_2/st_1$P32_4 # Indice de diferencias recomendadas simple 
-st_1$reco_OG <- set_label(st_1$reco_OG,label = "Brecha salarial justa (Gerente/obrero)")
+st_1$reco_OG <- sjlabelled::set_label(st_1$reco_OG,label = "Brecha salarial justa (Gerente/obrero)")
 
 st_1$log_perc_OG <- log(st_1$P31_2/st_1$P31_4) # Indice de diferencias percibidas
-st_1$log_perc_OG <- set_label(st_1$log_perc_OG,label = "Brecha salarial percibida ln(Gerente/obrero)")
+st_1$log_perc_OG <- sjlabelled::set_label(st_1$log_perc_OG,label = "Brecha salarial percibida ln(Gerente/obrero)")
 
 st_1$log_reco_OG <- log(st_1$P32_2/st_1$P32_4) # Indice de diferencias recomendadas 
-st_1$log_reco_OG <- set_label(st_1$log_reco_OG,label = "Brecha salarial justa ln(Gerente/obrero)")
+st_1$log_reco_OG <- sjlabelled::set_label(st_1$log_reco_OG,label = "Brecha salarial justa ln(Gerente/obrero)")
 
 st_1$zlog <- as.numeric(scale(st_1$log_reco_OG)) # zscore 
-st_1$zlog <- set_label(st_1$zlog,label = "Brecha just_1a ln(Gerente/obrero) - est_1andarizada")
+st_1$zlog <- sjlabelled::set_label(st_1$zlog,label = "Brecha just_1a ln(Gerente/obrero) - est_1andarizada")
 ```
 
 # Seleccionar variables {.tabset .tabset-pills}
@@ -352,23 +366,52 @@ st_1$zlog <- set_label(st_1$zlog,label = "Brecha just_1a ln(Gerente/obrero) - es
 ## Base con outliers {.tabset .tabset-pills}
 
 ```{r}
-st <- st %>% select(COR,treat,treat_a,treat_b,treat_c,"saljusger"=P32_4,"saljusobr"=P32_2,perc,reco,pdesi,jw1=P30_1,jw2=P30_2,jw3=P30_3,jw4=P30_4,jw5=P30_5, log_perc,log_reco,perc_OG,reco_OG,log_perc_OG,log_reco_OG,zlog,just,"sexo"=P40,"edad"=P41,educ,ppol)
+st <-
+  st %>% dplyr::select(
+    COR,
+    treat,
+    treat_a,
+    treat_b,
+    treat_c,
+    "saljusger" = P32_4,
+    "saljusobr" = P32_2,
+    perc,
+    reco,
+    pdesi,
+    jw1 = P30_1,
+    jw2 = P30_2,
+    jw3 = P30_3,
+    jw4 = P30_4,
+    jw5 = P30_5,
+    log_perc,
+    log_reco,
+    perc_OG,
+    reco_OG,
+    log_perc_OG,
+    log_reco_OG,
+    zlog,
+    just,
+    "sexo" = P40,
+    "edad" = P41,
+    educ,
+    ppol
+  )
 ```
 
 **subset variables maximo/minimo** 
 ```{r}
-st.a_mm <- st %>% select(COR,treat_a,reco,log_reco,just,ppol) %>% filter(treat_a==1 | treat_a==0)  
-st.b_mm <- st %>% select(COR,treat_b,reco,log_reco,just,ppol) %>% filter(treat_b==1 | treat_b==0)  
-st.c_mm <- st %>% select(COR,treat_c,reco,log_reco,just,ppol) %>% filter(treat_c==1 | treat_c==0)  
+st.a_mm <- st %>% dplyr::select(COR,treat_a,reco,log_reco,just,ppol) %>% filter(treat_a==1 | treat_a==0)  
+st.b_mm <- st %>% dplyr::select(COR,treat_b,reco,log_reco,just,ppol) %>% filter(treat_b==1 | treat_b==0)  
+st.c_mm <- st %>% dplyr::select(COR,treat_c,reco,log_reco,just,ppol) %>% filter(treat_c==1 | treat_c==0)  
 ```
 
 **subset variables gerente/obrero** 
 ```{r}
-st.a <- st %>% select(COR,treat_a,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
+st.a <- st %>% dplyr::select(COR,treat_a,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_a==1 | treat_a==0)  
-st.b <- st %>% select(COR,treat_b,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
+st.b <- st %>% dplyr::select(COR,treat_b,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_b==1 | treat_b==0)  
-st.c <- st %>% select(COR,treat_c,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
+st.c <- st %>% dplyr::select(COR,treat_c,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_c==1 | treat_c==0)  
 ```
 
@@ -379,41 +422,70 @@ st.c <- st %>% select(COR,treat_c,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol
 ### brecha ln(máximo/mínimo) con outliers
 
 ```{r results='asis'}
-stargazer(st      %>% select(reco,log_reco,treat_a),type = "html",median = T,title = "Muestra completa")
-stargazer(st.a_mm %>% select(reco,log_reco,treat_a),type = "html",median = T,title = "Grupo A")
-stargazer(st.b_mm %>% select(reco,log_reco,treat_b),type = "html",median = T,title = "Grupo B")
-stargazer(st.c_mm %>% select(reco,log_reco,treat_c),type = "html",median = T,title = "Grupo C")
+stargazer(st      %>% dplyr::select(reco,log_reco,treat_a),type = "html",median = T,title = "Muestra completa")
+stargazer(st.a_mm %>% dplyr::select(reco,log_reco,treat_a),type = "html",median = T,title = "Grupo A")
+stargazer(st.b_mm %>% dplyr::select(reco,log_reco,treat_b),type = "html",median = T,title = "Grupo B")
+stargazer(st.c_mm %>% dplyr::select(reco,log_reco,treat_c),type = "html",median = T,title = "Grupo C")
 ```
 
 ### brecha ln(obrero/gerente) con outliers
 
 ```{r results='asis'}
-stargazer(st   %>% select(reco_OG,log_reco_OG,treat_a),type = "html",median = T,title = "Muestra completa")
-stargazer(st.a %>% select(reco_OG,log_reco_OG,treat_a),type = "html",median = T,title = "Grupo A")
-stargazer(st.b %>% select(reco_OG,log_reco_OG,treat_b),type = "html",median = T,title = "Grupo B")
-stargazer(st.c %>% select(reco_OG,log_reco_OG,treat_c),type = "html",median = T,title = "Grupo C")
+stargazer(st   %>% dplyr::select(reco_OG,log_reco_OG,treat_a),type = "html",median = T,title = "Muestra completa")
+stargazer(st.a %>% dplyr::select(reco_OG,log_reco_OG,treat_a),type = "html",median = T,title = "Grupo A")
+stargazer(st.b %>% dplyr::select(reco_OG,log_reco_OG,treat_b),type = "html",median = T,title = "Grupo B")
+stargazer(st.c %>% dplyr::select(reco_OG,log_reco_OG,treat_c),type = "html",median = T,title = "Grupo C")
 ```
 
 ## Base sin outliers {.tabset .tabset-pills}
 
 ```{r}
-st_1 <- st_1 %>% select(COR,treat,treat_a,treat_b,treat_c,"saljusobr"=P32_4,"saljusger"=P32_2,perc,reco,pdesi,jw1=P30_1,jw2=P30_2,jw3=P30_3,jw4=P30_4,jw5=P30_5, log_perc,log_reco,perc_OG,reco_OG,log_perc_OG,log_reco_OG,zlog,just,"sexo"=P40,"edad"=P41,educ,ppol)
+st_1 <-
+  st_1 %>% dplyr::select(
+    COR,
+    treat,
+    treat_a,
+    treat_b,
+    treat_c,
+    "saljusobr" = P32_4,
+    "saljusger" = P32_2,
+    perc,
+    reco,
+    pdesi,
+    jw1 = P30_1,
+    jw2 = P30_2,
+    jw3 = P30_3,
+    jw4 = P30_4,
+    jw5 = P30_5,
+    log_perc,
+    log_reco,
+    perc_OG,
+    reco_OG,
+    log_perc_OG,
+    log_reco_OG,
+    zlog,
+    just,
+    "sexo" = P40,
+    "edad" = P41,
+    educ,
+    ppol
+  )
 ```
 
 **subset maximo/minimo** 
 ```{r}
-st.a_mm.sinout <- st_1 %>% select(COR,treat_a,reco,log_reco,just,ppol) %>% filter(treat_a==1 | treat_a==0)  
-st.b_mm.sinout <- st_1 %>% select(COR,treat_b,reco,log_reco,just,ppol) %>% filter(treat_b==1 | treat_b==0)  
-st.c_mm.sinout <- st_1 %>% select(COR,treat_c,reco,log_reco,just,ppol) %>% filter(treat_c==1 | treat_c==0)  
+st.a_mm.sinout <- st_1 %>% dplyr::select(COR,treat_a,reco,log_reco,just,ppol) %>% filter(treat_a==1 | treat_a==0)  
+st.b_mm.sinout <- st_1 %>% dplyr::select(COR,treat_b,reco,log_reco,just,ppol) %>% filter(treat_b==1 | treat_b==0)  
+st.c_mm.sinout <- st_1 %>% dplyr::select(COR,treat_c,reco,log_reco,just,ppol) %>% filter(treat_c==1 | treat_c==0)  
 ```
 
 **subset gerente/obrero** 
 ```{r}
-st.a.sinout <- st_1 %>% select(COR,treat_a,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
+st.a.sinout <- st_1 %>% dplyr::select(COR,treat_a,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_a==1 | treat_a==0)
-st.b.sinout <- st_1 %>% select(COR,treat_b,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
+st.b.sinout <- st_1 %>% dplyr::select(COR,treat_b,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_b==1 | treat_b==0)
-st.c.sinout <- st_1 %>% select(COR,treat_c,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
+st.c.sinout <- st_1 %>% dplyr::select(COR,treat_c,saljusger,saljusobr,reco_OG,log_reco_OG,log_perc_OG,zlog,just,ppol,educ) %>% 
   filter(treat_c==1 | treat_c==0)
 ```
 
@@ -441,12 +513,14 @@ stargazer(st.c.sinout %>% select(reco_OG,log_reco_OG,treat_c),type = "html",medi
 # Descriptivo general {.tabset .tabset-pills}
 
 ## Base con outliers 
-```{r}
+```{r, results='asis'}
+st_css()
 print(dfSummary(st, headings = FALSE,varnumbers = F),method = "render")
 ```
 
 ## Base sin outliers 
-```{r}
+```{r, results='asis'}
+st_css()
 print(dfSummary(st_1, headings = FALSE,varnumbers = F),method = "render")
 ```
 
@@ -454,27 +528,27 @@ print(dfSummary(st_1, headings = FALSE,varnumbers = F),method = "render")
 # Guardar datos
 
 ```{r}
-save(st,    file =   "input/data/proc/st2014.Rdata")
-save(st_1,  file = "input/data/proc/st2014sinout.Rdata")
+save(st,    file =   "../input/data/proc/st2014.Rdata")    # completa con outliers
+save(st_1,  file = "../input/data/proc/st2014sinout.Rdata")# completa sin outliers
 ```
 
 ```{r}
-save(st.a_mm.sinout,file = "input/data/proc/st.a_mmsinout.Rdata")
-save(st.b_mm.sinout,file = "input/data/proc/st.b_mmsinout.Rdata")
-save(st.c_mm.sinout,file = "input/data/proc/st.c_mmsinout.Rdata")
+save(st.a_mm.sinout,file = "../input/data/proc/st.a_mmsinout.Rdata") # subset max/min sin outliers
+save(st.b_mm.sinout,file = "../input/data/proc/st.b_mmsinout.Rdata") # subset max/min sin outliers
+save(st.c_mm.sinout,file = "../input/data/proc/st.c_mmsinout.Rdata") # subset max/min sin outliers
 
-save(st.a.sinout,file = "input/data/proc/st_a-sinout.Rdata")
-save(st.b.sinout,file = "input/data/proc/st_b-sinout.Rdata")
-save(st.c.sinout,file = "input/data/proc/st_c-sinout.Rdata")
+save(st.a_mm,file = "../input/data/proc/st.a_mm.Rdata") # subset max/min con outliers
+save(st.b_mm,file = "../input/data/proc/st.b_mm.Rdata") # subset max/min con outliers
+save(st.c_mm,file = "../input/data/proc/st.c_mm.Rdata") # subset max/min con outliers
 ```
 
 ```{r}
-save(st.a_mm,file = "input/data/proc/st.a_mm.Rdata")
-save(st.b_mm,file = "input/data/proc/st.b_mm.Rdata")
-save(st.c_mm,file = "input/data/proc/st.c_mm.Rdata")
+save(st.a.sinout,file = "../input/data/proc/st_a-sinout.Rdata")  # subset gerente/obrero sin outliers
+save(st.b.sinout,file = "../input/data/proc/st_b-sinout.Rdata")  # subset gerente/obrero sin outliers
+save(st.c.sinout,file = "../input/data/proc/st_c-sinout.Rdata")  # subset gerente/obrero sin outliers
 
-save(st.a,file = "input/data/proc/st_a.Rdata")
-save(st.b,file = "input/data/proc/st_b.Rdata")
-save(st.c,file = "input/data/proc/st_c.Rdata")
+save(st.a,file = "../input/data/proc/st_a.Rdata") # subset gerente/obrero con outliers
+save(st.b,file = "../input/data/proc/st_b.Rdata") # subset gerente/obrero con outliers
+save(st.c,file = "../input/data/proc/st_c.Rdata") # subset gerente/obrero con outliers
 ```
 

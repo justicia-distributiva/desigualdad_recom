@@ -1,0 +1,52 @@
+---
+author: " "
+bibliography:
+- 'input/bib/zlibrary.bib'
+csl:
+- 'input/bib/apa6.csl'
+title: " "
+output:
+    bookdown::html_document2:
+        smart: false
+        includes:
+          in_header: "input/head_github-activity.html"
+---
+
+<br>
+
+# This is the project website for the paper "Economic inequality and its influence on the justification of legitimate income differences. {.left}
+
+Last update: `r format(Sys.time(), "%A %d %B %Y %X")`
+
+# Authors:
+
+- Julio Iturra, Centro de Estudios de Conflicto y Cohesión Social - COES [julioiturra@uchile.cl](julioiturra@uchile.cl)
+- Juan Carlos Castillo, Departamento de Sociología, Universidad de Chile.
+- Catalina Rufs, Pontificia Universidad Católica de Chile.
+- Luis Maldonado, Instituto de Sociología, Pontificia Universidad Católica de Chile.
+
+
+Based on the study "Political and Social Beliefs" conducted in 2014 using a representative sample of the Metropolitan Region of Chile, we replicate the original experimental study conducted by [Trump (2018)](https://doi.org/10.1017/S0007123416000326). We tested how percieved economic inequality affects afects the global and ocupational based salary gaps in a highly unequal context.
+
+# Structure of the project website:
+
+- The tabs follow the logic of the [IPO protocol](https://github.com/juancarloscastillo/ipo) for academic workflows, based on three main components = **I**nput -> **P**roduction -> **O**utput. Here we show only one the main parts of each component: Data $\rightarrow$ Analysis $\rightarrow$ Paper.
+
+* The complete reproducible files are in the [Github repo: https://jciturras.github.io/desigualdad_recom/](https://jciturras.github.io/desigualdad_recom/)
+
+  - _Data_: pre-processing and general descriptives
+  - _Analysis_: Balance, Treatment effect analysis (OLS) and annexes
+  - _Paper_: final output
+
+## Reproducibility and documentation
+
+The repository of the project in Github is structured according to the [IPO reproducibility protocol](https://juancarloscastillo.github.io/ipo/).
+
+
+<br>
+
+## [Github activity feed](https://github.com/jciturras/github-activity)
+
+<div id="feed"></div>
+
+<br>
