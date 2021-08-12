@@ -4,7 +4,7 @@ author:
 - Juan Carlos Castillo
 - Catalina Rufs
 - Luis Maldonado
-bibliography: "C:/Users/Julio/Dropbox/Bibtex/zlibrary.bib"
+bibliography: "input/bib/referencias.bib"
 csl: 'input/bib/apa6.csl'
 title: "Percepción de desigualdad económica y su influencia sobre la justificación de las diferencias de ingreso legítimas"
 output:
