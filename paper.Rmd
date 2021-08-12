@@ -210,7 +210,7 @@ Los resultados generales del experimento son presentados en la Figura \@ref(fig:
 
 A partir de la Figura \@ref(fig:barplot1), los resultados sugieren que al recibir el tratamiento de información sobre desigualdad, no existen diferencias estadísticamente significativas en términos de la desigualdad recomendada general ($D_1$) para el grupo tratamiento respecto al grupo control. Estos resultados sugieren que, contrario a las expectativas iniciales, individuos que son más conscientes de la desigualdad a nivel estructural no cambian sus preferencias en términos de el salario que consideran justo.
 
-```{r barplot1, echo=FALSE, fig.cap = "Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general.", fig.align='center'}
+```{r barplot1, echo=FALSE, fig.cap = "Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general.", fig.align='center',fig.height=3}
 pacman::p_load(dplyr,ggplot2,grid,gridExtra)
 theme_set(new = theme_classic(base_family = "serif"))
 load("input/data/proc/st.a_mm.Rdata")
@@ -265,7 +265,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ( '*D[1]*' )'), limits = c(0,3))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada (   '*D[1]*' )'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   scale_fill_manual(values=bar_col)+
@@ -285,7 +285,7 @@ Estos resultados se explican principalmente por el incremento del salario recome
 
 La evidencia ofrece evidencia a favor de la hipótesis que sostiene que manipular la percepción de desigualdad de las personas a través de información factual sobre los salarios de ocupaciones de distinto estatus se traduce en mayor justificación de desigualdad. Respecto del mecanismo que podría estar operando, @Trump2017 plantea que el cambio en las preferencias se genera a partir del sesgo de anclaje y de justificación racional. Por un lado, el sesgo de anclaje implica que los individuos ajustan sus preferencias respecto a la percepción. En este caso, la actualización respecto al salario real de la ocupación de alto estatus, genera que la persona justifique racionalmente que determinada ocupación obtenga dicho salario, lo cual se traduce en un incremento del promedio en la brecha salarial justa.
 
-```{r barplot2, echo=FALSE, fig.cap = "Resultados del experimento, en base a los valores predichos para la desigualdad recomendada según ocupaciones de alto y bajo estatus.", fig.align='center'}
+```{r barplot2, echo=FALSE, fig.cap = "Resultados del experimento, en base a los valores predichos para la desigualdad recomendada según ocupaciones de alto y bajo estatus.", fig.align='center',fig.height=3}
 pacman::p_load(dplyr,ggplot2,grid,gridExtra)
 theme_set(new = theme_classic(base_family = "serif"))
 load("input/data/proc/st_a-sinout.Rdata")
@@ -347,7 +347,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ( '*D[2]*' )'), limits = c(0,3))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada (   '*D[2]*' )'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   scale_fill_manual(values=bar_col)+
@@ -443,7 +443,7 @@ A diferencia de los experimentos en contextos cerrados y controlados, la realiza
 
 `r if (knitr::is_latex_output()){ '\\appendix'}` `r if (knitr::is_latex_output()){ '\\section{Anexos}'}`
 
-```{r obgapb, echo=FALSE, fig.cap = "Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento.", fig.align='center',out.width='75%'}
+```{r obgapb, echo=FALSE, fig.cap = "Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento.", fig.align='center',out.width='100%',fig.height=4}
 pacman::p_load(ggplot2,scales)
 load("input/data/proc/st_a-sinout.Rdata")
 load("input/data/proc/st_b-sinout.Rdata")
@@ -496,7 +496,7 @@ obgapb <- grid.arrange(ob1b, ob2b, ob3b, nrow = 3,
 # knitr::include_graphics('output/images/obgapb.png')
 ```
 
-```{r gergapb, echo=FALSE, fig.cap = "Comparación de la distribución de salario recomendado para un Gerente según asignación del tratamiento.", fig.align='center',out.width='75%'}
+```{r gergapb, echo=FALSE, fig.cap = "Comparación de la distribución de salario recomendado para un Gerente según asignación del tratamiento.", fig.align='center',out.width='100%',fig.height=4}
 pacman::p_load(ggplot2,scales)
 load("input/data/proc/st_a-sinout.Rdata")
 load("input/data/proc/st_b-sinout.Rdata")
