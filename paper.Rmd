@@ -16,7 +16,7 @@ output:
     bookdown::word_document2:
         reference_docx: input/template.docx
         number_sections: false
-css: input/css/custom.css         
+css: input/css/custom.css
 header-includes:
   - \usepackage[spanish,es-tabla]{babel}
   - \usepackage{times}           # Times New Roman
@@ -34,8 +34,6 @@ header-includes:
   - \usepackage{pdflscape}
   - \usepackage{tabu}
   - \usepackage{threeparttable}
-editor_options:
-  chunk_output_type: console
 abstract: "Este estudio analiza el efecto de la información factual sobre desigualdad económica en la justificación de desigualdad económica. Se implementó un diseño de carácter experimental a través de encuestas en una muestra representativa del área metropolitana de Santiago de Chile (n=732), con el objetivo de replicar los resultados reportados por Kriss-Stella Trump (2017) para el contexto de Suecia y Estados Unidos en torno a la justificación de brechas salariales globales. Nuestros resultados muestran que la información sobre salarios reales no impacta la justificación de brechas salariales globales. No obstante, se evidenció que la información sobre desigualdad salarial incrementa la justificación de brechas salarial según ocupaciones de alto y bajo estatus, lo cual es potenciado por la exposición conjunta a la condición que busca motivar la justificación del sistema social."
 ---
 
@@ -107,7 +105,7 @@ El estudio de las brechas salariales subjetivas ha sido escasamente abordado des
 En un estudio experimental en Estados Unidos, @laurin_Stability_2013 dan cuenta que un sistema social que se percibe más estable y estático contribuye a que los individuos detentan visiones más conservadoras de la sociedad, lo cual conduce a una mayor legitimidad de las desigualdades sociales en general. Por otro lado, @trump_Does_2018 abordan empíricamente en qué medida la percepción de desigualdad motiva una mayor justificación del sistema social, evidenciando que la información sobre desigualdad no tiene un efecto sobre el apoyo global al sistema. No obstante, sus resultados muestran que la exposición a dicha información tiene un efecto negativo sobre la justificación del sistema económico.
 
 
-En el ámbito de las actitudes hacia la redistribución económica, estudios como los de @Cruces2011 y @karadja_Richer_2017 han puesto su atención en el rol de la percepción de desigualdad y las implicancias que tiene la información factual en individuos que detentan percepciones sesgadas respecto de la distribución del ingreso, evidenciado que la corrección de dicho sesgo tiene un efecto positivo sobre las actitudes hacia la redistribución en individuos que subestiman la desigualdad y que a su vez subestimaban su posición en la distribución del ingreso. En un estudio similar, @becker_Mind_2019 analizó el rol de la corrección del sesgo en la brecha salarial de distintos grupos de estatus el acuerdo hacía mayor redistribución, evidenciando un efecto positivo en individuos que subestimaban la desigualdad previa al tratamiento, lo cual es particularmente pronunciado en la población no blanca y mujeres@kuziemko_How_2015 muestran que la información sobre desigualdad tiene un efecto nulo sobre las actitudes de los estadounidenses en ámbitos como el aumento de los impuestos, el salario mínimo o el acceso a alimentos; no obstante encontraron un efecto significativo sobre el incremento del impuesto al patrimonio y límite a la herencia como formas de reproducción de la desigualdad económica. @heiserman_Judgments_2020 realizaron una serie de experimentos donde se analizó el efecto de la información en torno a la desigualdad en Estados Unidos sobre la percepción de desigualdad y la actitud hacia justicia económica. Los autores evidenciaron un incremento de la percepción de desigualdad general en quienes fueron expuestos al tratamiento, como también un efecto negativo sobre la evaluación sobre la justicia económica. Adicionalmente, los autores evidenciaron un nulo efecto sobre medidas mitigadoras como la intervención del Estado o la reducción de la desigualdad en general.  
+En el ámbito de las actitudes hacia la redistribución económica, estudios como los de @Cruces2011 y @karadja_Richer_2017 han puesto su atención en el rol de la percepción de desigualdad y las implicancias que tiene la información factual en individuos que detentan percepciones sesgadas respecto de la distribución del ingreso, evidenciado que la corrección de dicho sesgo tiene un efecto positivo sobre las actitudes hacia la redistribución en individuos que subestiman la desigualdad y que a su vez subestimaban su posición en la distribución del ingreso. En un estudio similar, @becker_Mind_2019 analizó el rol de la corrección del sesgo en la brecha salarial de distintos grupos de estatus el acuerdo hacía mayor redistribución, evidenciando un efecto positivo en individuos que subestimaban la desigualdad previa al tratamiento, lo cual es particularmente pronunciado en la población no blanca y mujeres. @kuziemko_How_2015 muestran que la información sobre desigualdad tiene un efecto nulo sobre las actitudes de los estadounidenses en ámbitos como el aumento de los impuestos, el salario mínimo o el acceso a alimentos; no obstante encontraron un efecto significativo sobre el incremento del impuesto al patrimonio y límite a la herencia como formas de reproducción de la desigualdad económica. @heiserman_Judgments_2020 realizaron una serie de experimentos donde se analizó el efecto de la información en torno a la desigualdad en Estados Unidos sobre la percepción de desigualdad y la actitud hacia justicia económica. Los autores evidenciaron un incremento de la percepción de desigualdad general en quienes fueron expuestos al tratamiento, como también un efecto negativo sobre la evaluación sobre la justicia económica. Adicionalmente, los autores evidenciaron un nulo efecto sobre medidas mitigadoras como la intervención del Estado o la reducción de la desigualdad en general.  
 
 <!--
 ## Evidencia para el caso de Chile
@@ -167,7 +165,7 @@ D_1 = \ln\Bigg(\frac{\text{Máximo salario recomendado}}{\text{Mínimo salario r
 (\#eq:des1)
 \end{equation}
 ```
-Adicionalmente, calculamos el mismo índice en base al salario de la ocupación de mayor y menor estatus [@Jasso1999], media que ha sido empleadas anteriormente en estudios realizados en Chile [@Castillo2012a_justice; @Castillo2012_medicion] y que permite disponer de una aproximación adicional a la desigualdad percibida y al salario justo. Para el cálculo del índice, la ecuación \@ref(eq:des2) muestra que el salario de "Un gerente de una gran empresa" es la ocupación de mayor estatus y que el salario de "Un obrero no calificado de una fábrica" es la ocupación de menor estatus. 
+Adicionalmente, calculamos el mismo índice en base al salario de la ocupación de mayor y menor estatus [@Jasso1999], media que ha sido empleadas anteriormente en estudios realizados en Chile [@Castillo2012a_justice; @Castillo2012_medicion] y que permite disponer de una aproximación adicional a la desigualdad percibida y al salario justo. Para el cálculo del índice, la ecuación \@ref(eq:des2) muestra que el salario de "Un gerente de una gran empresa" es la ocupación de mayor estatus y que el salario de "Un obrero no calificado de una fábrica" es la ocupación de menor estatus.
 
 
 ```{=tex}
@@ -213,8 +211,71 @@ Los resultados generales del experimento son presentados en la Figura \@ref(fig:
 A partir de la Figura \@ref(fig:barplot1), los resultados sugieren que al recibir el tratamiento de información sobre desigualdad, no existen diferencias estadísticamente significativas en términos de la desigualdad recomendada general ($D_1$) para el grupo tratamiento respecto al grupo control. Estos resultados sugieren que, contrario a las expectativas iniciales, individuos que son más conscientes de la desigualdad a nivel estructural no cambian sus preferencias en términos de el salario que consideran justo.
 
 ```{r barplot1, echo=FALSE, fig.cap = "Resultados del experimento, en base a los valores predichos para la desigualdad recomendada general.", fig.align='center'}
-knitr::include_graphics('output/images/barplot1.png')
+pacman::p_load(dplyr,ggplot2,grid,gridExtra)
+theme_set(new = theme_classic(base_family = "serif"))
+load("input/data/proc/st.a_mm.Rdata")
+load("input/data/proc/st.b_mm.Rdata")
+load("input/data/proc/st.c_mm.Rdata")
+load("input/data/proc/st_a.Rdata")
+load("input/data/proc/st_b.Rdata")
+load("input/data/proc/st_c.Rdata")
+
+e1ad03 <- lm(log_reco~treat_a, data = st.a_mm) # A vs D 
+e1bd03 <- lm(log_reco~treat_b, data = st.b_mm) # B vs D 
+e2cd03 <- lm(log_reco~treat_c, data = st.c_mm) # C vs D 
+predad05 <- data.frame(predict.lm(e1ad03, interval = "confidence")) #loged
+predbd05 <- data.frame(predict.lm(e1bd03, interval = "confidence")) #loged
+predcd05 <- data.frame(predict.lm(e2cd03, interval = "confidence")) #loged
+
+m01 <- st.a_mm %>% select(COR,log_reco) %>% na.omit()
+m02 <- st.b_mm %>% select(COR,log_reco) %>% na.omit()
+m03 <- st.c_mm %>% select(COR,log_reco) %>% na.omit()
+
+f04 <- cbind(m01,predad05)
+f05 <- cbind(m02,predbd05)
+f06 <- cbind(m03,predcd05)
+
+tpad2lg <- merge(st.a,f04, by="COR") #para hacer los barplot 
+tpbd2lg <- merge(st.b,f05, by="COR") #para hacer los barplot
+tpcd2lg <- merge(st.c,f06, by="COR") #para hacer los barplot
+
+
+bar_col <- c("gray35", "gray87")
+p1.log <- ggplot(tpad2lg, aes(factor(treat_a),fit, fill=factor(treat_a), colour=factor(treat_a))) +
+  stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  guides(fill=FALSE)+
+  guides(color=FALSE) +
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))
+
+p2.log <- ggplot(tpbd2lg, aes(factor(treat_b),fit, fill=factor(treat_b),colour=factor(treat_b))) +
+  stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
+  scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  guides(fill=FALSE)+
+  guides(color=FALSE) +
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))
+
+p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=factor(treat_c))) +
+  stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ( '*D[1]*' )'), limits = c(0,3))+
+  guides(fill=FALSE)+
+  guides(color=FALSE) +
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))
+
+barplot01 <- grid.arrange(p3.log,p2.log,p1.log,ncol=3) #Logaritmizado
+# knitr::include_graphics('output/images/barplot1.png')
 ```
+
+
 
 Conforme a lo anterior, se realizó el análisis posterior para determinar el efecto del tratamiento sobre la desigualdad recomendada en base al índice propuesto por @Jasso1999, considerando el salario recomendado para las ocupaciones de alto y bajo estatus.
 
@@ -225,11 +286,95 @@ Estos resultados se explican principalmente por el incremento del salario recome
 La evidencia ofrece evidencia a favor de la hipótesis que sostiene que manipular la percepción de desigualdad de las personas a través de información factual sobre los salarios de ocupaciones de distinto estatus se traduce en mayor justificación de desigualdad. Respecto del mecanismo que podría estar operando, @Trump2017 plantea que el cambio en las preferencias se genera a partir del sesgo de anclaje y de justificación racional. Por un lado, el sesgo de anclaje implica que los individuos ajustan sus preferencias respecto a la percepción. En este caso, la actualización respecto al salario real de la ocupación de alto estatus, genera que la persona justifique racionalmente que determinada ocupación obtenga dicho salario, lo cual se traduce en un incremento del promedio en la brecha salarial justa.
 
 ```{r barplot2, echo=FALSE, fig.cap = "Resultados del experimento, en base a los valores predichos para la desigualdad recomendada según ocupaciones de alto y bajo estatus.", fig.align='center'}
-knitr::include_graphics('output/images/barplot2.png')
+pacman::p_load(dplyr,ggplot2,grid,gridExtra)
+theme_set(new = theme_classic(base_family = "serif"))
+load("input/data/proc/st_a-sinout.Rdata")
+load("input/data/proc/st_b-sinout.Rdata")
+load("input/data/proc/st_c-sinout.Rdata")
+load("input/data/proc/st_a.Rdata")
+load("input/data/proc/st_b.Rdata")
+load("input/data/proc/st_c.Rdata")
+
+
+e1ad04.so <- lm(log_reco_OG~treat_a, data = na.omit(st.a.sinout)) # A vs D 
+e1bd04.so <- lm(log_reco_OG~treat_b, data = na.omit(st.b.sinout)) # B vs D 
+e2cd04.so <- lm(log_reco_OG~treat_c, data = na.omit(st.c.sinout)) # C vs D 
+
+predad04 <- data.frame(predict.lm(e1ad04.so, interval = "confidence")) #loged
+predbd04 <- data.frame(predict.lm(e1bd04.so, interval = "confidence")) #loged
+predcd04 <- data.frame(predict.lm(e2cd04.so, interval = "confidence")) #loged
+
+m01 <- st.a.sinout %>% select(COR,log_reco_OG,treat_a,just,ppol,log_perc_OG,educ) %>%
+  na.omit() %>% 
+  select(COR,-log_reco_OG,-treat_a,-just,-ppol,-log_perc_OG)
+m02 <- st.b.sinout %>% select(COR,log_reco_OG,treat_b,just,ppol,log_perc_OG,educ) %>% 
+  na.omit() %>% 
+  select(COR,-log_reco_OG,-treat_b,-just,-ppol,-log_perc_OG)
+m03 <- st.c.sinout %>% select(COR,log_reco_OG,treat_c,just,ppol,log_perc_OG,educ) %>%
+  na.omit() %>% 
+  select(COR,-log_reco_OG,-treat_c,-just,-ppol,-log_perc_OG)
+
+f04 <- cbind(m01,predad04)
+f05 <- cbind(m02,predbd04)
+f06 <- cbind(m03,predcd04)
+
+tpad2lg <- merge(st.a,f04, by="COR")#para hacer los barplot 
+tpbd2lg <- merge(st.b,f05, by="COR")#para hacer los barplot
+tpcd2lg <- merge(st.c,f06, by="COR")#para hacer los barplot
+
+bar_col <- c("gray35", "gray87")
+p1.log <- ggplot(tpad2lg, aes(factor(treat_a),fit, fill=factor(treat_a), colour=factor(treat_a))) +
+  stat_summary(geom= 'bar',fun = mean, width =0.8, colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  scale_x_discrete(name="Condición C",labels=c("Control","Tratamiento"))+
+  guides(fill=FALSE)+
+  guides(color=FALSE) +
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))
+
+p2.log <- ggplot(tpbd2lg, aes(factor(treat_b),fit, fill=factor(treat_b),colour=factor(treat_b))) +
+  stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
+  scale_x_discrete(name="Condición B",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = " ", limits = c(0,3))+
+  guides(fill=FALSE)+
+  guides(color=FALSE) +
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))
+
+p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=factor(treat_c))) +
+  stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
+  geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
+  scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ( '*D[2]*' )'), limits = c(0,3))+
+  guides(fill=FALSE)+
+  guides(color=FALSE) +
+  scale_fill_manual(values=bar_col)+
+  scale_colour_manual(values=c("white","black"))
+
+barplot02 <- grid.arrange(p3.log,p2.log,p1.log,ncol=3) #Logaritmizado
+# knitr::include_graphics('output/images/barplot2.png')
 ```
 
 ```{r tab-model1, echo=FALSE, results='asis'}
-load("output/tables/modelos02.RData")
+pacman::p_load(estimatr,texreg)
+is_word_output <- function(fmt = knitr:::pandoc_to()) {
+  length(fmt) == 1 && fmt == "docx"
+}
+load("input/data/proc/st_a-sinout.Rdata")
+load("input/data/proc/st_b-sinout.Rdata")
+load("input/data/proc/st_c-sinout.Rdata")
+e1ad04.so.r <- lm_robust(log_reco_OG~treat_a, data = na.omit(st.a.sinout),alpha = 0.05) # A vs D 
+e1bd04.so.r <- lm_robust(log_reco_OG~treat_b, data = na.omit(st.b.sinout),alpha = 0.05) # B vs D 
+e2cd04.so.r <- lm_robust(log_reco_OG~treat_c, data = na.omit(st.c.sinout),alpha = 0.05) # C vs D 
+logOGcov1.so.r <- lm_robust(log_reco_OG~treat_a+just+ppol+log_perc_OG+educ, data = st.a.sinout,alpha = 0.05) # A vs D
+logOGcov2.so.r <- lm_robust(log_reco_OG~treat_b+just+ppol+log_perc_OG+educ, data = st.b.sinout,alpha = 0.05) # B vs D
+logOGcov3.so.r <- lm_robust(log_reco_OG~treat_c+just+ppol+log_perc_OG+educ, data = st.c.sinout,alpha = 0.05) # C vs D
+is_word_output <- function(fmt = knitr:::pandoc_to()) {
+  length(fmt) == 1 && fmt == "docx"
+}
+
 cap <- "Modelos de regresión para desigualdad recomendada."
 custom.coef.names = c("Intercepto","Tratamiento","Creencia Mundo Justo",
                       "Centro (ref: Izquierda)", "Derecha", "Ninguno", "No sabe",
@@ -246,7 +391,10 @@ texreg::htmlreg(l = list(e2cd04.so.r,logOGcov3.so.r,e1bd04.so.r,logOGcov2.so.r,e
         doctype = FALSE,
         reorder.coef = c(2:9, 1),
         caption = paste("(\\#tab:tab-model1)",cap),
-        caption.above = T, include.rs = FALSE, include.rmse = FALSE,include.ci = FALSE,
+        caption.above = T, 
+        include.rs = FALSE, 
+        include.rmse = FALSE,
+        include.ci = FALSE,
         custom.note = custom.note)
 }
 
@@ -260,7 +408,8 @@ texreg::texreg(l = list(e2cd04.so.r,logOGcov3.so.r,e1bd04.so.r,logOGcov2.so.r,e1
         caption = paste("(\\#tab:tab-model1)",cap),
         center = TRUE,
         caption.above = T,scalebox = 0.8,
-        float.pos = "H", booktabs = TRUE, use.packages = F, include.rs = FALSE, include.rmse = FALSE,include.ci = FALSE,
+        float.pos = "H", booktabs = TRUE, use.packages = F, 
+        include.rs = FALSE, include.rmse = FALSE,include.ci = FALSE,
         custom.note = custom.note)
 }
 ```
@@ -295,15 +444,134 @@ A diferencia de los experimentos en contextos cerrados y controlados, la realiza
 `r if (knitr::is_latex_output()){ '\\appendix'}` `r if (knitr::is_latex_output()){ '\\section{Anexos}'}`
 
 ```{r obgapb, echo=FALSE, fig.cap = "Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento.", fig.align='center',out.width='75%'}
-knitr::include_graphics('output/images/obgapb.png')
+pacman::p_load(ggplot2,scales)
+load("input/data/proc/st_a-sinout.Rdata")
+load("input/data/proc/st_b-sinout.Rdata")
+load("input/data/proc/st_c-sinout.Rdata")
+st.a.sinout$treat_a.2 <- factor(st.a.sinout$treat_a, levels = c(0,1), labels = c("Control", "Tratamiento"))
+st.b.sinout$treat_b.2 <- factor(st.b.sinout$treat_b, levels = c(0,1), labels = c("Control", "Tratamiento"))
+st.c.sinout$treat_c.2 <- factor(st.c.sinout$treat_c, levels = c(0,1), labels = c("Control", "Tratamiento"))
+#----parrafo + lista de salarios -----
+
+ob1b <- ggplot(data = st.a.sinout,aes(x=treat_a.2, y=saljusobr,fill=factor(treat_a.2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label ="Parrafo reforma educacional y lista de salarios por ocupación")+ 
+  scale_y_continuous(limits = c(0, 8000000),breaks = seq(0,8000000,1000000),labels = label_dollar(big.mark = ".")) +
+  coord_flip() +
+  xlab("")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+#----PARRAFO  -----------------------
+
+ob2b <- ggplot(data = st.b.sinout ,aes(x=treat_b.2, y=saljusobr,fill=factor(treat_b.2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Párrafo sobre reforma educacional") + 
+  scale_y_continuous(limits = c(0, 8000000),breaks = seq(0,8000000,1000000),labels = label_dollar(big.mark = ".")) +
+  coord_flip() +
+  xlab("")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+#----lista de salarios-------------
+
+ob3b <- ggplot(data = st.c.sinout ,aes(x=treat_c.2, y=saljusobr,fill=factor(treat_c.2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Lista de salarios por ocupación")+ 
+  scale_y_continuous(limits = c(0, 8000000),breaks = seq(0,8000000,1000000),labels = label_dollar(big.mark = ".")) +
+  coord_flip()+
+  xlab("")+ ylab("Salario en pesos Chilenos (CLP)") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+obgapb <- grid.arrange(ob1b, ob2b, ob3b, nrow = 3,
+                        top = textGrob("Salario justo: Un obrero no calificado de una fábrica",
+                                       gp=gpar(fontsize=15,font=2))) #Normal
+# knitr::include_graphics('output/images/obgapb.png')
 ```
 
 ```{r gergapb, echo=FALSE, fig.cap = "Comparación de la distribución de salario recomendado para un Gerente según asignación del tratamiento.", fig.align='center',out.width='75%'}
-knitr::include_graphics('output/images/gergapb.png')
+pacman::p_load(ggplot2,scales)
+load("input/data/proc/st_a-sinout.Rdata")
+load("input/data/proc/st_b-sinout.Rdata")
+load("input/data/proc/st_c-sinout.Rdata")
+st.a.sinout$treat_a.2 <- factor(st.a.sinout$treat_a, levels = c(0,1), labels = c("Control", "Tratamiento"))
+st.b.sinout$treat_b.2 <- factor(st.b.sinout$treat_b, levels = c(0,1), labels = c("Control", "Tratamiento"))
+st.c.sinout$treat_c.2 <- factor(st.c.sinout$treat_c, levels = c(0,1), labels = c("Control", "Tratamiento"))
+
+#----parrafo + lista de salarios -----
+ger1b <- ggplot(data = st.a.sinout,aes(x=treat_a.2, y=saljusger,fill=factor(treat_a.2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3) +
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Parrafo reforma educacional y lista de salarios por ocupación") + 
+  scale_y_continuous(limits = c(0,30000000), breaks = seq(0,30000000,5000000),labels = label_dollar(big.mark = ".")) +
+  coord_flip() +
+  xlab("")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+#----PARRAFO  -----------------------
+ger2b <- ggplot(data = st.b.sinout,aes(x=treat_b.2, y=saljusger,fill=factor(treat_b.2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Párrafo sobre reforma educacional")+ 
+  scale_y_continuous(limits = c(0,30000000), breaks = seq(0,30000000,5000000),labels = label_dollar(big.mark = ".")) +
+  xlab("")+
+  coord_flip()+
+  xlab("")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+#----lista de salarios-------------
+ger3b <- ggplot(data = st.c.sinout,aes(x=treat_c.2, y=saljusger,fill=factor(treat_c.2))) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  guides(fill=FALSE) +
+  scale_fill_manual(values=c("snow1", "snow3")) +
+  ggtitle(label = "Lista de salarios por ocupación")+ 
+  scale_y_continuous(limits = c(0,30000000), breaks = seq(0,30000000,5000000),labels = label_dollar(big.mark = ".")) +
+  coord_flip()+
+  xlab("")+ ylab("Salario en pesos Chilenos (CLP)") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+gergapb <- grid.arrange(ger1b, ger2b, ger3b, nrow = 3,
+                        top = textGrob("Salario justo: Un gerente de una gran empresa",
+                                       gp=gpar(fontsize=15,font=2))) #Normal
+# knitr::include_graphics('output/images/gergapb.png')
 ```
 
 ```{r tab-balance, echo=FALSE, results='asis'}
-load("output/tables/balance-models01.RData")
+pacman::p_load(texreg)
+is_word_output <- function(fmt = knitr:::pandoc_to()) {
+  length(fmt) == 1 && fmt == "docx"
+}
+load("input/data/proc/st2014.Rdata")
+load("input/data/proc/st2014sinout.Rdata")
+bal1 <- lm(as.numeric(treat_a)~sexo+edad+educ+just+ppol+log_perc_OG,data =st)# balance asignacion aleatoria Grupo A vs D
+bal2 <- lm(as.numeric(treat_b)~sexo+edad+educ+just+ppol+log_perc_OG,data =st)# balance asignacion aleatoria Grupo B vs D
+bal3 <- lm(as.numeric(treat_c)~sexo+edad+educ+just+ppol+log_perc_OG,data =st)# balance asignacion aleatoria Grupo C vs D
+bal.st.a<- 
+  st_1 %>% select(COR,treat_a,log_reco_OG,just,ppol,log_perc_OG,educ) %>% na.omit()
+bal.st.b<- 
+  st_1 %>% select(COR,treat_b,log_reco_OG,just,ppol,log_perc_OG,educ) %>% na.omit()
+bal.st.c<- 
+  st_1 %>% select(COR,treat_c,log_reco_OG,just,ppol,log_perc_OG,educ) %>% na.omit()
+st.bal <- st[,c("COR","sexo","edad")]
+bal.st.a<- bal.st.a %>% left_join(st.bal)
+bal.st.b<- bal.st.b %>% left_join(st.bal)
+bal.st.c<- bal.st.c %>% left_join(st.bal)
+bal1.so <- lm(as.numeric(treat_a)~sexo+edad+educ+just+ppol+log_perc_OG,data =bal.st.a)# balance asignacion aleatoria Grupo A vs D
+bal2.so <- lm(as.numeric(treat_b)~sexo+edad+educ+just+ppol+log_perc_OG,data =bal.st.b)# balance asignacion aleatoria Grupo B vs D
+bal3.so <- lm(as.numeric(treat_c)~sexo+edad+educ+just+ppol+log_perc_OG,data =bal.st.c)# balance asignacion aleatoria Grupo C vs D
+
+# load("output/tables/balance-models01.RData")
 coef <- c("(Intercepto)","Sexo (ref: Mujer)","Edad","Educación",
           "Creencia Mundo Justo",
           "Centro (ref: Izquierda)",
@@ -339,7 +607,15 @@ texreg::texreg(l = list(bal3,bal2,bal1,bal3.so,bal2.so,bal1.so),
 ```
 
 ```{r tab-modelz, echo=FALSE, results='asis'}
-load("output/tables/modelos_z.RData")
+pacman::p_load(estimatr)
+load("input/data/proc/st_a-sinout.Rdata")
+load("input/data/proc/st_b-sinout.Rdata")
+load("input/data/proc/st_c-sinout.Rdata")
+# load("output/tables/modelos_z.RData")
+logOGcov1a <- lm_robust(zlog~treat_a+just+ppol+log_perc_OG+educ, data = na.omit(st.a.sinout)) # A vs D | ln(ger/ob) + cov
+logOGcov2b <- lm_robust(zlog~treat_b+just+ppol+log_perc_OG+educ, data = na.omit(st.b.sinout)) # B vs D | ln(ger/ob) + cov
+logOGcov3c <- lm_robust(zlog~treat_c+just+ppol+log_perc_OG+educ, data = na.omit(st.c.sinout)) # C vs D | ln(ger/ob) + cov
+
 
 cap <- "Modelos de regresión para Desigualdad recomendada (estandarizada)"
 custom.note = "Intervalos de confianza entre paréntesis calculados al 95\\% empleando errores estándar robustos (HC2)"
