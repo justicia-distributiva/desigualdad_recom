@@ -370,6 +370,28 @@ texreg::knitreg(l = c(m0a,ac,m0b,bc,m0c,cc),custom.coef.names = custom.coef.name
 3.  Si vemos la sección \@ref(modelos-variable-estandarizada), los tratamientos se complementan, es decir, el efecto de ambos en conjunto es más alto. Siendo la lista de salarios por ocupación (Tratamiento C) el que tiene un mayor efecto sobre la brecha justa.
 4.  Los modelos con errores estándar robustos (HC2) mantienen los resultados.
 
+## Analisis de heterogeneidad 
+
+```{r heterogeneidad, eval=FALSE, include=FALSE}
+pacman::p_load(estimatr)
+load("input/data/proc/st_a.Rdata")
+load("input/data/proc/st_b.Rdata")
+load("input/data/proc/st_c.Rdata")
+load("input/data/proc/st_a-sinout.Rdata")
+load("input/data/proc/st_b-sinout.Rdata")
+load("input/data/proc/st_c-sinout.Rdata")
+# load("output/tables/modelos_z.RData")
+lin_treat_a <- lm_lin(log_reco_OG~treat_a,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.a))
+lin_treat_b <- lm_lin(log_reco_OG~treat_b,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.b))
+lin_treat_c <- lm_lin(log_reco_OG~treat_c,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.c))
+lin_treat_a.sinout <- lm_lin(log_reco_OG~treat_a,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.a.sinout))
+lin_treat_b.sinout <- lm_lin(log_reco_OG~treat_b,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.b.sinout))
+lin_treat_c.sinout <- lm_lin(log_reco_OG~treat_c,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.c.sinout))
+texreg::knitreg(l = list(lin_treat_a,lin_treat_b,lin_treat_c,
+                         lin_treat_a.sinout,lin_treat_b.sinout,lin_treat_c.sinout), 
+                include.ci=F)
+```
+
 # Plots
 
 ```{r}
@@ -427,7 +449,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ( '*D[1]*' )'), limits = c(0,3))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad justa ( '*D[1]*' )'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+
@@ -496,7 +518,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada ( '*D[2]*' )'), limits = c(0,3))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad justa ( '*D[2]*' )'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   # geom_text(aes(label=round(fit,2)), vjust=5, size=3.8)+

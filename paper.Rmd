@@ -253,7 +253,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada (   '*D[1]*' )'), limits = c(0,3))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad justa (   '*D[1]*' )'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   scale_fill_manual(values=bar_col)+
@@ -334,7 +334,7 @@ p3.log <- ggplot(tpcd2lg, aes(factor(treat_c),fit, fill=factor(treat_c),colour=f
   stat_summary(geom= 'bar',fun = mean, width =0.8,colour="black") + 
   geom_errorbar(aes(ymin=lwr, ymax=upr), width = 0.08, colour ="black") +
   scale_x_discrete(name="Condición A",labels=c("Control","Tratamiento"))+
-  scale_y_continuous(name = bquote('Ratio Desigualdad recomendada (   '*D[2]*' )'), limits = c(0,3))+
+  scale_y_continuous(name = bquote('Ratio Desigualdad justa (   '*D[2]*' )'), limits = c(0,3))+
   guides(fill=FALSE)+
   guides(color=FALSE) +
   scale_fill_manual(values=bar_col)+
@@ -432,6 +432,49 @@ Dicho lo anterior, nuestros resultados poseen implicancias en el estudio de las 
 # (APPENDIX) Anexos {.unnumbered}
 
 `r if (knitr::is_latex_output()){ '\\appendix'}` `r if (knitr::is_latex_output()){ '\\section{Anexos}'}`
+
+```{r perc-salarios, echo=FALSE, fig.cap = "Salarios y percepción de desigualdad salarial para un obrero no calificado de una fábrica y Gerente", fig.align='center',out.width='100%',fig.height=4}
+pacman::p_load(ggplot2,scales)
+load("input/data/proc/st2014sinout.Rdata")
+
+box_salperobr <- 
+ggplot(data = st_1,aes(y=salperobr)) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  guides(fill=FALSE) +
+  ggtitle(label ="")+ 
+  scale_y_continuous(limits = c(0, 8000000),breaks = seq(0,8000000,1000000),labels = label_dollar(big.mark = ".")) +
+  coord_flip() +
+  xlab("Obrero")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+box_salperger <- 
+ggplot(data = st_1,aes(y=salperger)) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  guides(fill=FALSE) +
+  ggtitle(label ="")+ 
+  scale_y_continuous(limits = c(0, 8000000),breaks = seq(0,8000000,1000000),labels = label_dollar(big.mark = ".")) +
+  coord_flip() +
+  xlab("Gerente")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+box_perc_OG <- 
+ggplot(data = st_1,aes(y=perc_OG)) + 
+  stat_boxplot(geom = "errorbar", width=0.3)+
+  geom_boxplot(notch = FALSE,width=0.3, outlier.shape = TRUE) +
+  guides(fill=FALSE) +
+  ggtitle(label ="")+ 
+  scale_y_continuous(limits = c(0, 100),
+                     breaks = seq(0,100,5)) +
+  coord_flip() +
+  xlab("Brecha percibida \n (Gerente/Obrero)")+ ylab(" ") + 
+  theme(plot.title = element_text(size = 12, face = "plain"))
+
+box_salper <- 
+  grid.arrange(box_salperobr,box_salperger,box_perc_OG, nrow = 3) 
+```
+
 
 ```{r obgapb, echo=FALSE, fig.cap = "Comparación de la distribución de salario recomendado para un obrero no calificado de una fábrica según asignación del tratamiento.", fig.align='center',out.width='100%',fig.height=4}
 pacman::p_load(ggplot2,scales)
@@ -538,7 +581,7 @@ gergapb <- grid.arrange(ger1b, ger2b, ger3b, nrow = 3,
 ```
 
 ```{r tab-balance, echo=FALSE, results='asis'}
-pacman::p_load(texreg)
+pacman::p_load(texreg,dplyr)
 is_word_output <- function(fmt = knitr:::pandoc_to()) {
   length(fmt) == 1 && fmt == "docx"
 }
@@ -660,3 +703,65 @@ knitr::include_graphics('output/images/treat2.png')
 ```{r flujo, echo=FALSE, fig.cap = "Flujo de procesamiento de datos.", fig.align='center',out.width='100%'}
 knitr::include_graphics('output/images/flujo-experimento.png')
 ```
+
+```{r heterogeneidad, eval=FALSE, include=FALSE}
+pacman::p_load(estimatr)
+load("input/data/proc/st_a.Rdata")
+load("input/data/proc/st_b.Rdata")
+load("input/data/proc/st_c.Rdata")
+load("input/data/proc/st_a-sinout.Rdata")
+load("input/data/proc/st_b-sinout.Rdata")
+load("input/data/proc/st_c-sinout.Rdata")
+# load("output/tables/modelos_z.RData")
+lin_treat_a <- lm_lin(log_reco_OG~treat_a,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.a))
+lin_treat_b <- lm_lin(log_reco_OG~treat_b,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.b))
+lin_treat_c <- lm_lin(log_reco_OG~treat_c,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.c))
+lin_treat_a.sinout <- lm_lin(log_reco_OG~treat_a,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.a.sinout))
+lin_treat_b.sinout <- lm_lin(log_reco_OG~treat_b,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.b.sinout))
+lin_treat_c.sinout <- lm_lin(log_reco_OG~treat_c,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.c.sinout))
+texreg::knitreg(l = list(lin_treat_a,lin_treat_b,lin_treat_c,
+                         lin_treat_a.sinout,lin_treat_b.sinout,lin_treat_c.sinout), 
+                include.ci=F)
+```
+
+```{r desc-treat, echo=FALSE,results='asis'}
+pacman::p_load(dplyr,gtsummary,kableExtra,forcats)
+table_format = if (knitr::is_html_output()) {
+   #conditional instructions for kable
+   "html" #if html set "html" in format
+ } else if (knitr::is_latex_output()) {
+   "latex"#if latex set "latex" in format
+ }
+
+load("input/data/proc/st2014.Rdata")
+load("input/data/proc/st2014sinout.Rdata")
+# make dataset with a few variables to summarize
+trial2 <- st %>% select(log_reco_OG,treat,just,ppol,log_perc_OG,educ)
+
+trial2$treat <- 
+  forcats::fct_relevel(.f = trial2$treat,
+                       c("C: salarios","B: parrafo",
+                         "A: parrafo-salarios","D: control"))
+
+trial2$treat <- factor(trial2$treat,
+                       labels = c("A: Salarios","B: Párrafo",
+                                  "C: Salario y Párrafo",
+                                  "D: Control"))
+# summarize the data with our package
+tbl_summary(trial2,by = treat,
+            missing_text = "Perdidos",
+            statistic = list(all_continuous() ~ "{mean} ({sd})",
+                             all_categorical() ~ "{n} ({p}%)")) %>%
+  add_n() %>% 
+  add_overall() %>% 
+  modify_header(list(label ~ "**Variable**",
+                     stat_0 ~ "**Total**, N = 732")) %>% 
+  as_kable_extra(booktabs=T, 
+                 linesep = "",
+                 format=table_format,
+                 caption= "Descriptivos por condición de tratamiento") %>% 
+  kable_styling(latex_options = "scale_down") %>% 
+  column_spec(column = 2:7,width = "2.5cm")
+```
+
+
