@@ -780,7 +780,7 @@ ggsave("../output/images/gergapb.pdf", gergapb,units = "cm", width = 27,height =
 
 ## Desc. tratamiento x covs
 
-```{r desc-treat, echo=TRUE, results='asis'}
+```{r desc-treat, echo=FALSE, results='asis'}
 pacman::p_load(dplyr,gtsummary,kableExtra,forcats)
 table_format = if (knitr::is_html_output()) {
    #conditional instructions for kable

@@ -1,20 +1,19 @@
 ---
-author: " "
 bibliography:
-- 'input/bib/zlibrary.bib'
+- '../input/bib/referencias.bib'
 csl:
-- 'input/bib/apa6.csl'
+- '../input/bib/apa6.csl'
 title: " "
 output:
     bookdown::html_document2:
         smart: false
         includes:
-          in_header: "input/head_github-activity.html"
+          in_header: "head_github-activity.html"
 ---
 
 <br>
 
-# This is the project website for the paper "Economic inequality and its influence on the justification of legitimate income differences. {.left}
+# This is the project website for the paper "Economic inequality and its influence on the justification of legitimate income differences. {-}
 
 Last update: `r format(Sys.time(), "%A %d %B %Y %X")`
 
