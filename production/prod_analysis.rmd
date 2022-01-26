@@ -8,12 +8,11 @@ output:
     toc_float:
         collapsed: false
     toc_depth: 2
-    code_folding: "hide"
 editor_options:
   chunk_output_type: console
 ---
 
-```{r eval=FALSE, include=FALSE}
+```{r render, eval=FALSE, include=FALSE}
 rmarkdown::render("production/prod_analysis.rmd",
                   output_dir = "production",
                   encoding = "UTF-8");browseURL("production/prod_analysis.html")
@@ -23,7 +22,10 @@ rmarkdown::render("production/prod_analysis.rmd",
 knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE, 
                       cache = FALSE,
-                      results = "hold")
+                      echo = FALSE,
+                      results = "hold", 
+                      fig.height = 5, 
+                      fig.width = 10)
 options(scipen=999)
 rm(list=ls())
 options(knitr.kable.NA = '')
@@ -109,7 +111,7 @@ print(dfSummary(st, headings = FALSE,
       max.tbl.height = 500)
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 st.a.sinout %>% select(treat_a,log_reco_OG,just,ppol,log_perc_OG,educ) %>% na.omit() %>% summary()
 st.b.sinout %>% select(treat_b,log_reco_OG,just,ppol,log_perc_OG,educ) %>% na.omit() %>% summary()
 st.c.sinout %>% select(treat_c,log_reco_OG,just,ppol,log_perc_OG,educ) %>% na.omit() %>% summary()
@@ -237,7 +239,7 @@ save(e1ad04,logOGcov1,e1bd04,logOGcov2,e2cd04,logOGcov3,file = "../output/tables
 
 ### Base sin outliers
 
-> Comentario de Luis (diciembre 2020). Se realizan análisis simultáneos.
+<!-- Comentario de Luis (diciembre 2020). Se realizan análisis simultáneos. -->
 
 ```{r}
 e1ad04.so <- lm(log_reco_OG~treat_a, data = na.omit(st.a.sinout)) # A vs D 
@@ -307,11 +309,6 @@ texreg::htmlreg(l = list(e2cd04.so.r,logOGcov3.so.r,e1bd04.so.r,logOGcov2.so.r,e
 ```
 
 
-
-
-
-
-
 ```{r}
 save(e1ad04.so.r,logOGcov1.so.r,e1bd04.so.r,logOGcov2.so.r,e2cd04.so.r,logOGcov3.so.r,file = "../output/tables/modelos02.RData")
 ```
@@ -372,14 +369,16 @@ texreg::knitreg(l = c(m0a,ac,m0b,bc,m0c,cc),custom.coef.names = custom.coef.name
 
 ## Analisis de heterogeneidad 
 
-```{r heterogeneidad, eval=FALSE, include=FALSE}
+Usando el método de Lin (2013), realizamos análisis de heterogeneidad causal para observar si el tratamiento se ve afectado por alguna covariable.
+
+```{r heterogeneidad, echo=FALSE, results='asis'}
 pacman::p_load(estimatr)
-load("input/data/proc/st_a.Rdata")
-load("input/data/proc/st_b.Rdata")
-load("input/data/proc/st_c.Rdata")
-load("input/data/proc/st_a-sinout.Rdata")
-load("input/data/proc/st_b-sinout.Rdata")
-load("input/data/proc/st_c-sinout.Rdata")
+load("../input/data/proc/st_a.Rdata")
+load("../input/data/proc/st_b.Rdata")
+load("../input/data/proc/st_c.Rdata")
+load("../input/data/proc/st_a-sinout.Rdata")
+load("../input/data/proc/st_b-sinout.Rdata")
+load("../input/data/proc/st_c-sinout.Rdata")
 # load("output/tables/modelos_z.RData")
 lin_treat_a <- lm_lin(log_reco_OG~treat_a,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.a))
 lin_treat_b <- lm_lin(log_reco_OG~treat_b,covariates = ~ just+ppol+log_perc_OG+educ, data = na.omit(st.b))
@@ -601,7 +600,6 @@ texreg::knitreg(
   leading.zero = TRUE,
   include.rs = FALSE,
   include.rmse = FALSE,
-  doctype = F,
   custom.note = custom.note)
 
 texreg::htmlreg(
@@ -616,7 +614,6 @@ texreg::htmlreg(
   leading.zero = TRUE,
   include.rs = FALSE,
   include.rmse = FALSE,
-  doctype = F,
   custom.note = custom.note,
   file = "../output/tables/tab_modelos_z.xls")
 ```
@@ -779,4 +776,46 @@ gergapb <- grid.arrange(ger1b, ger2b, ger3b, nrow = 3,
 ```{r}
 ggsave("../output/images/gergapb.png", gergapb,units = "cm", width = 27,height = 15)
 ggsave("../output/images/gergapb.pdf", gergapb,units = "cm", width = 27,height = 15)
+```
+
+## Desc. tratamiento x covs
+
+```{r desc-treat, echo=TRUE, results='asis'}
+pacman::p_load(dplyr,gtsummary,kableExtra,forcats)
+table_format = if (knitr::is_html_output()) {
+   #conditional instructions for kable
+   "html" #if html set "html" in format
+ } else if (knitr::is_latex_output()) {
+   "latex"#if latex set "latex" in format
+ }
+
+load("../input/data/proc/st2014.Rdata")
+load("../input/data/proc/st2014sinout.Rdata")
+# make dataset with a few variables to summarize
+trial2 <- st %>% select(log_reco_OG,treat,just,ppol,log_perc_OG,educ)
+
+trial2$treat <- 
+  forcats::fct_relevel(.f = trial2$treat,
+                       c("C: salarios","B: parrafo",
+                         "A: parrafo-salarios","D: control"))
+
+trial2$treat <- factor(trial2$treat,
+                       labels = c("A: Salarios","B: Párrafo",
+                                  "C: Salario y Párrafo",
+                                  "D: Control"))
+# summarize the data with our package
+tbl_summary(trial2,by = treat,
+            missing_text = "Perdidos",
+            statistic = list(all_continuous() ~ "{mean} ({sd})",
+                             all_categorical() ~ "{n} ({p}%)")) %>%
+  add_n() %>% 
+  add_overall() %>% 
+  modify_header(list(label ~ "**Variable**",
+                     stat_0 ~ "**Total**, N = 732")) %>% 
+  as_kable_extra(booktabs=T, 
+                 linesep = "",
+                 format="html",
+                 caption= "Descriptivos por condición de tratamiento") %>% 
+  kable_styling(latex_options = "scale_down") %>% 
+  column_spec(column = 2:7,width = "2.5cm")
 ```
